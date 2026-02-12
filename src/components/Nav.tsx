@@ -72,7 +72,7 @@ export function Nav() {
             type="button"
             onClick={toggle}
             aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
-            className="ml-2 p-2 rounded-lg text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800/50 transition-colors"
+            className="ml-2 p-2 rounded-lg text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800/50 transition-colors cursor-pointer"
           >
             {theme === "dark" ? <SunIcon /> : <MoonIcon />}
           </button>
@@ -83,7 +83,7 @@ export function Nav() {
             type="button"
             onClick={toggle}
             aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
-            className="p-2 rounded-lg text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800/50 transition-colors"
+            className="p-2 rounded-lg text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800/50 transition-colors cursor-pointer"
           >
             {theme === "dark" ? <SunIcon /> : <MoonIcon />}
           </button>
@@ -92,7 +92,7 @@ export function Nav() {
             aria-label="Toggle menu"
             aria-expanded={open}
             onClick={() => setOpen((o) => !o)}
-            className="p-2 rounded-lg text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800/50"
+            className="p-2 rounded-lg text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800/50 cursor-pointer"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               {open ? (
