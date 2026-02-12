@@ -1,35 +1,32 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Nav } from "@/components/Nav";
+import { Intro } from "@/components/sections/Intro";
+import { Skills } from "@/components/sections/Skills";
+import { Projects } from "@/components/sections/Projects";
+import { Journey } from "@/components/sections/Journey";
+import { PublicVideos } from "@/components/sections/PublicVideos";
+import { Hobbies } from "@/components/sections/Hobbies";
+import { Contact } from "@/components/sections/Contact";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="min-h-screen">
+      <Nav />
+      <main>
+        <Intro />
+        <Skills />
+        <Projects />
+        <Journey />
+        <PublicVideos />
+        <Hobbies />
+        <Contact />
+      </main>
+      <footer className="border-t border-zinc-200 dark:border-zinc-800/50 py-8">
+        <div className="container-narrow text-center text-sm text-zinc-500">
+          © {new Date().getFullYear()} {import.meta.env.VITE_SITE_NAME ?? "Jeoffrey Fischer"}
+        </div>
+      </footer>
+    </div>
+  );
 }
 
-export default App
+export default App;
