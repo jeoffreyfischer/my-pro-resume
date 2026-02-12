@@ -46,7 +46,7 @@ export const skills = [
 export const timeline = [
   {
     type: "education" as const,
-    title: "PhD in Aerospace Engineering",
+    title: "🚀 PhD - Aerospace Engineering",
     org: "University of Poitiers, France",
     period: "Sep 2009 – Mar 2013",
     description:
@@ -54,7 +54,7 @@ export const timeline = [
   },
   {
     type: "work" as const,
-    title: "Lecturer (Full-Time, Fixed-Term)",
+    title: "🧑‍🏫 Lecturer (Full-Time, Fixed-Term)",
     org: "IUT Civil Engineering, Bordeaux, France",
     period: "Sep 2013 – Aug2015",
     description:
@@ -62,7 +62,7 @@ export const timeline = [
   },
   {
     type: "work" as const,
-    title: "Research Associate – Aerospace",
+    title: "🚀 Research Associate – Aerospace Engineering",
     org: "University of New South Wales (UNSW), Sydney, Australia",
     period: "May 2015 – Oct 2022",
     description:
@@ -70,7 +70,15 @@ export const timeline = [
   },
   {
     type: "education" as const,
-    title: "Full-Stack Developer Internship",
+    title: "🏋️ Certificate III & IV in Fitness",
+    org: "AIF, Sydney, Australia",
+    period: "Oct 2022 – May 2023",
+    description:
+      "Followed the AIF program to become a certified Personal Trainer.",
+  },
+  {
+    type: "education" as const,
+    title: "💻 Full-Stack Developer Internship",
     org: "SSW, Sydney, Australia",
     period: "May 2023 – Oct 2023",
     description:
@@ -78,7 +86,7 @@ export const timeline = [
   },
   {
     type: "work" as const,
-    title: "Software Engineer",
+    title: "💻 Software Engineer",
     org: "SSW, Sydney, Australia",
     period: "Oct 2023 – Present",
     description:
@@ -94,17 +102,17 @@ export const projects = [
   },
   {
     title: "Delta Elcom · Caprice Plaster · Seventh Day Adventist Church",
-    role: "Short-term client",
-    description: "Power Apps and B2C solutions.",
+    role: "Short-term clients",
+    description: "Power Apps · B2C solutions.",
   },
   {
-    title: "Spec reviews & Initial meetings",
-    role: "Multiple clients",
-    description: "Auction Plus, CommBox, CR Formulations, Knight Frank Valuation (Power Apps), Toll, and others.",
+    title: "Auction Plus · CommBox · CR Formulation · Knight Frank Valuation · Toll",
+    role: "Specification Reviews & Initial Meetings",
+    description: "Power Apps · B2C solutions.",
   },
   {
-    title: "Angular workshops",
-    role: "Sydney & Melbourne",
+    title: "Angular SuperPowers",
+    role: "2-day Workshop",
     description: "Ran Angular workshops for clients.",
   },
 ];
@@ -131,18 +139,18 @@ export const certifications = [
 export const hobbies = [
   {
     title: "Guitar",
-    detail: "25 years – Led Zeppelin all the way!",
+    detail: "25 years – ",
     placeholder: "video" as const,
     embedUrl: "https://www.youtube.com/embed/WS0HWQtoBv8",
   },
   {
     title: "Fitness & Personal Training",
-    detail: "Certificates 3 & 4 – From Bicep files to Biceps",
+    detail: "From Bicep files to Biceps",
     placeholder: "none" as const,
   },
   {
     title: "Running",
-    detail: "Staying active outdoors.",
+    detail: "Half-marathon but double-pain",
     placeholder: "image" as const,
     imageSrc: "/images/2025-sydney-half-marathon.png",
   },
