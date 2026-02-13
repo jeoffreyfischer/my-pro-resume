@@ -19,26 +19,17 @@ function isStrongSkill(item: string): boolean {
 const CARD_CLASS =
   "rounded-xl border border-zinc-200 dark:border-zinc-700/50 bg-white dark:bg-zinc-800/30 p-4 sm:p-5 hover:border-zinc-300 dark:hover:border-zinc-600/50 transition-colors shadow-sm dark:shadow-none";
 
-/* Grid positions around the orbit: 2 above, 2 left/right, 2 below (md and up) */
-const ORBIT_GRID_POSITIONS: Array<{ row: number; col: number; align: string }> = [
-  { row: 1, col: 1, align: "justify-self-center self-end" },
-  { row: 1, col: 3, align: "justify-self-center self-end" },
-  { row: 2, col: 1, align: "justify-self-end self-center" },
-  { row: 2, col: 3, align: "justify-self-start self-center" },
-  { row: 3, col: 1, align: "justify-self-center self-start" },
-  { row: 3, col: 3, align: "justify-self-center self-start" },
-];
+/* Desktop: left column = indices 0,2,4; right column = indices 1,3,5 */
+const CARD_GAP = "gap-6";
 
 function SkillCard({
   group,
   index,
   className,
-  style,
 }: {
   group: (typeof skills)[number];
   index: number;
   className?: string;
-  style?: React.CSSProperties;
 }) {
   return (
     <motion.div
@@ -47,7 +38,6 @@ function SkillCard({
       viewport={{ once: true }}
       transition={{ delay: index * 0.05 }}
       className={className}
-      style={style}
     >
       <div className={`${CARD_CLASS} max-w-[200px] md:max-w-[220px] lg:max-w-[240px] min-w-0`}>
         <h3 className="text-base font-semibold text-blue-600 dark:text-blue-400 mb-3">{group.category}</h3>
@@ -122,37 +112,20 @@ export function Skills() {
           </div>
         </div>
 
-        {/* Desktop: cards around the circle (2 above, 2 left/right, 2 below) */}
+        {/* Desktop: 2 columns aligned to top, same vertical gap between the 3 cards in each column */}
         <motion.div
           initial={{ opacity: 0, scale: 0.98 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          className="hidden md:grid gap-4 lg:gap-6 items-center justify-items-center"
-          style={{
-            gridTemplateColumns: "minmax(0,1fr) auto minmax(0,1fr)",
-            gridTemplateRows: "minmax(0,1fr) auto minmax(0,1fr)",
-            maxWidth: "min(100%, 900px)",
-            marginLeft: "auto",
-            marginRight: "auto",
-            minHeight: "520px",
-          }}
+          className="hidden md:flex items-stretch justify-center gap-4 lg:gap-6 max-w-[900px] mx-auto"
         >
-          {skills.map((group, i) => (
-            <SkillCard
-              key={group.category}
-              group={group}
-              index={i}
-              className={ORBIT_GRID_POSITIONS[i].align}
-              style={{
-                gridRow: ORBIT_GRID_POSITIONS[i].row,
-                gridColumn: ORBIT_GRID_POSITIONS[i].col,
-              }}
-            />
-          ))}
-          <div
-            className="relative flex size-[340px] lg:size-[400px] items-center justify-center"
-            style={{ gridRow: 2, gridColumn: 2 }}
-          >
+          <div className={`flex flex-col items-end ${CARD_GAP}`}>
+            {[skills[0], skills[2], skills[4]].map((group, i) => (
+              <SkillCard key={group.category} group={group} index={[0, 2, 4][i]} />
+            ))}
+          </div>
+          <div className="relative flex flex-col items-center justify-center self-stretch min-h-0">
+            <div className="relative flex size-[340px] lg:size-[400px] shrink-0 items-center justify-center">
             <OrbitingCircles
               radius={120}
               duration={24}
@@ -170,9 +143,15 @@ export function Skills() {
                 </div>
               ))}
             </OrbitingCircles>
-            <div className="absolute flex flex-col items-center justify-center text-center">
+            <div className="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
               <span className="text-2xl sm:text-3xl font-semibold text-zinc-400 dark:text-zinc-500">SKILLS</span>
             </div>
+            </div>
+          </div>
+          <div className={`flex flex-col items-start ${CARD_GAP} min-h-0`}>
+            {[skills[1], skills[3], skills[5]].map((group, i) => (
+              <SkillCard key={group.category} group={group} index={[1, 3, 5][i]} />
+            ))}
           </div>
         </motion.div>
       </div>
