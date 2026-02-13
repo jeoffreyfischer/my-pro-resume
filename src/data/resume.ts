@@ -121,18 +121,22 @@ export const certifications = [
   {
     name: "Certified Scrum Master – Scrum Alliance",
     url: "https://www.scrumalliance.org/get-certified/scrum-master-track/certified-scrummaster",
+    logoSrc: "/images/badge-scrum-master-removebg.png",
   },
   {
     name: "AI-900 (Azure AI Fundamentals) – Microsoft",
     url: "https://learn.microsoft.com/en-us/credentials/certifications/azure-ai-fundamentals/",
+    logoSrc: "/images/badge-az-fund-removebg.png",
   },
   {
     name: "AZ-900 (Azure Fundamentals) – Microsoft",
     url: "https://learn.microsoft.com/en-us/credentials/certifications/azure-fundamentals/",
+    logoSrc: "/images/badge-az-fund-removebg.png",
   },
   {
     name: "GitOps Fundamentals – Octopus Deploy",
     url: "https://learning.octopus.com/course/gitops-fundamentals",
+    logoSrc: "/images/badge-gitops-fund-removebg.png",
   },
 ];
 
