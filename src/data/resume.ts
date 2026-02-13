@@ -143,7 +143,7 @@ export const certifications = [
 export const hobbies = [
   {
     title: "🎸 Guitar",
-    detail: "25 years – ",
+    detail: "25 years – I can play a few chords",
     placeholder: "video" as const,
     embedUrl: "https://www.youtube.com/embed/WS0HWQtoBv8",
   },

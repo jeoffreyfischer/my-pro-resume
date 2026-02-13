@@ -18,7 +18,7 @@ export function PublicVideos() {
           viewport={{ once: true }}
           className="text-zinc-600 dark:text-zinc-400 mb-8 max-w-xl"
         >
-          Talks, demos, and other public content.
+          Talks, demos, and other public content. Check out my YouTube Playlist below.
         </motion.p>
 
         {/* YouTube playlist embed */}
