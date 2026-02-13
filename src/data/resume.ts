@@ -103,12 +103,12 @@ export const projects = [
   {
     title: "Delta Elcom · Caprice Plaster · Seventh Day Adventist Church",
     role: "Short-term clients",
-    description: "Power Apps · B2C solutions.",
+    description: "Power Apps · Azure B2C",
   },
   {
     title: "Auction Plus · CommBox · CR Formulation · Knight Frank Valuation · Toll",
     role: "Specification Reviews & Initial Meetings",
-    description: "Power Apps · B2C solutions.",
+    description: ".NET · OAuth2 · AI · Power Apps",
   },
   {
     title: "Angular SuperPowers",
