@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+  <!-- SSW icon: four squares (top-left, top-right, bottom-left, bottom-right) -->
+  <path fill="#797979" d="M2 2h9v9H2z"/>
+  <path fill="#333333" d="M13 2h9v9h-9z"/>
+  <path fill="#AAAAAA" d="M2 13h9v9H2z"/>
+  <path fill="#CC4141" d="M13 13h9v9h-9z"/>
+</svg>

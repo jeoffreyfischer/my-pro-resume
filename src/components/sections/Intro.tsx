@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { SiGithub, SiLinkedin } from "react-icons/si";
 import { site } from "@/data/resume";
 
 export function Intro() {
@@ -91,6 +92,7 @@ export function Intro() {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-zinc-300 dark:border-zinc-600 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800/50 text-sm transition-colors"
               >
+                <SiGithub className="size-5 shrink-0" aria-hidden />
                 GitHub
               </a>
               <a
@@ -99,6 +101,7 @@ export function Intro() {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-zinc-300 dark:border-zinc-600 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800/50 text-sm transition-colors"
               >
+                <SiLinkedin className="size-5 shrink-0" aria-hidden />
                 LinkedIn
               </a>
             </motion.div>

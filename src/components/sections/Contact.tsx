@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { SiGithub, SiGooglescholar, SiLinkedin, SiYoutube } from "react-icons/si";
 import { site } from "@/data/resume";
 
 export function Contact() {
@@ -42,6 +43,7 @@ export function Contact() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-zinc-300 dark:border-zinc-600 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800/50 font-medium transition-colors"
           >
+            <SiLinkedin className="size-5 shrink-0" aria-hidden />
             LinkedIn
           </a>
           <a
@@ -50,6 +52,7 @@ export function Contact() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-zinc-300 dark:border-zinc-600 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800/50 font-medium transition-colors"
           >
+            <SiGithub className="size-5 shrink-0" aria-hidden />
             GitHub
           </a>
           <a
@@ -58,6 +61,7 @@ export function Contact() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-zinc-300 dark:border-zinc-600 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800/50 font-medium transition-colors"
           >
+            <img src="/images/ssw-logo.svg" alt="" className="size-5 shrink-0" aria-hidden />
             SSW profile
           </a>
           <a
@@ -66,6 +70,7 @@ export function Contact() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-zinc-300 dark:border-zinc-600 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800/50 font-medium transition-colors"
           >
+            <SiYoutube className="size-5 shrink-0" aria-hidden />
             Public videos
           </a>
           <a
@@ -74,6 +79,7 @@ export function Contact() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-zinc-300 dark:border-zinc-600 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800/50 font-medium transition-colors"
           >
+            <SiGooglescholar className="size-5 shrink-0" aria-hidden />
             Publications
           </a>
         </motion.div>

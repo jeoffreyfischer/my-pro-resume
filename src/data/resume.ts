@@ -7,7 +7,7 @@ export const site = {
   summary:
     "Full-Stack Software Engineer with a PhD in Aerospace. After 10+ years in academia, I transitioned into fast-evolving software development, applying rigorous problem solving to build scalable web applications, APIs, and Cloud solutions. I specialize in .NET, Angular, and Azure, leveraging AI tools to improve development efficiency.",
   links: {
-    email: "mailto:your.email@example.com",
+    email: "mailto:jeoffrey.fischer@gmail.com",
     github: "https://github.com/jeoffreyfischer",
     linkedin: "https://www.linkedin.com/in/jeoffrey-fischer-9403b9a4/",
     professionalProfile: "https://www.ssw.com.au/people/jeoffrey-fischer/",
