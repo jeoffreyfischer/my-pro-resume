@@ -53,7 +53,8 @@ export function Nav() {
       <nav className="container-narrow flex h-14 sm:h-16 items-center justify-between">
         <a
           href="#intro"
-          className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 hover:text-zinc-700 dark:hover:text-white transition-colors"
+          className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors"
+          aria-label="Back to top"
         >
           JF
         </a>

@@ -2,7 +2,7 @@ export const site = {
   name: "Jeoffrey Fischer",
   suffix: "PhD",
   title: "Full-Stack Software Engineer",
-  tagline: "From shipping rockets to shipping software",
+  tagline: "From shipping rockets to shipping software 🚀",
   location: "Strasbourg, France",
   summary:
     "Full-Stack Software Engineer with a PhD in Aerospace. After 10+ years in academia, I transitioned into fast-evolving software development, applying rigorous problem solving to build scalable web applications, APIs, and Cloud solutions. I specialize in .NET, Angular, and Azure, leveraging AI tools to improve development efficiency.",
@@ -107,7 +107,7 @@ export const projects = [
   },
   {
     title: "Auction Plus · CommBox · CR Formulation · Knight Frank Valuation · Toll",
-    role: "Specification Reviews & Initial Meetings",
+    role: "Specification Reviews",
     description: ".NET · OAuth2 · AI · Power Apps",
   },
   {

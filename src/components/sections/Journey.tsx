@@ -36,12 +36,12 @@ export function Journey() {
                   className={`absolute left-0 top-1.5 w-6 h-6 sm:w-8 sm:h-8 rounded-full border-2 flex items-center justify-center ${
                     item.type === "work"
                       ? "border-blue-500 bg-blue-500/20"
-                      : "border-zinc-400 dark:border-zinc-500 bg-zinc-200 dark:bg-zinc-700/30"
+                      : "border-violet-500 bg-violet-500/20 dark:bg-violet-500/15"
                   }`}
                 >
                   <span
                     className={`w-2 h-2 rounded-full ${
-                      item.type === "work" ? "bg-blue-500" : "bg-zinc-500"
+                      item.type === "work" ? "bg-blue-500" : "bg-violet-500"
                     }`}
                   />
                 </span>
@@ -50,7 +50,7 @@ export function Journey() {
                   <div className="flex flex-wrap items-baseline gap-2">
                     <span
                       className={`text-xs font-medium uppercase tracking-wider ${
-                        item.type === "work" ? "text-blue-600 dark:text-blue-400" : "text-zinc-500"
+                        item.type === "work" ? "text-blue-600 dark:text-blue-400" : "text-violet-600 dark:text-violet-400"
                       }`}
                     >
                       {item.type === "work" ? "Work" : "Education"}
