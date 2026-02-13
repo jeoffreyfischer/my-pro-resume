@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { OrbitingCircles } from "@/components/ui/orbiting-circles";
 import { skills } from "@/data/resume";
@@ -7,13 +8,17 @@ const ORBIT_LOGOS: Array<{ label: string; logoSrc: string }> = [
   { label: ".NET", logoSrc: "/images/logo-dotnet.png" },
   { label: "Angular", logoSrc: "/images/logo-angular.png" },
   { label: "Azure", logoSrc: "/images/logo-azure.png" },
-  { label: "Scrum Master", logoSrc: "/images/logo-scrum.png" },
   { label: "Cursor", logoSrc: "/images/logo-cursor.webp" },
+  { label: "Scrum Master", logoSrc: "/images/logo-scrum.png" },
   { label: "Matlab", logoSrc: "/images/logo-matlab.png" },
 ];
 
 function isStrongSkill(item: string): boolean {
   return ORBIT_LOGOS.some(({ label }) => item === label || item.startsWith(label));
+}
+
+function isActiveOrbitSkill(item: string, activeLabel: string): boolean {
+  return item === activeLabel || item.startsWith(activeLabel);
 }
 
 const CARD_CLASS =
@@ -22,14 +27,42 @@ const CARD_CLASS =
 /* Desktop: left column = indices 0,2,4; right column = indices 1,3,5 */
 const CARD_GAP = "gap-6";
 
+function OrbitItem({
+  label,
+  logoSrc,
+  isActive,
+}: {
+  label: string;
+  logoSrc: string;
+  isActive: boolean;
+}) {
+  return (
+    <motion.div
+      className="flex size-full items-center justify-center rounded-full bg-white dark:bg-zinc-800"
+      title={label}
+      animate={{
+        scale: isActive ? 1.1 : 1,
+        boxShadow: isActive
+          ? "0 0 0 3px rgb(234 179 8)"
+          : "0 0 0 0px transparent",
+      }}
+      transition={{ type: "spring", stiffness: 400, damping: 25 }}
+    >
+      <img src={logoSrc} alt="" className="size-6 sm:size-7 object-contain" aria-hidden />
+    </motion.div>
+  );
+}
+
 function SkillCard({
   group,
   index,
   className,
+  activeLabel,
 }: {
   group: (typeof skills)[number];
   index: number;
   className?: string;
+  activeLabel?: string;
 }) {
   return (
     <motion.div
@@ -44,17 +77,25 @@ function SkillCard({
         <ul className="flex flex-wrap gap-2">
           {group.items.map((item) => {
             const strong = isStrongSkill(item);
+            const active = activeLabel != null && isActiveOrbitSkill(item, activeLabel);
             return (
-              <li
+              <motion.li
                 key={item}
+                layout
+                animate={{
+                  scale: active ? 1.08 : 1,
+                }}
+                transition={{ type: "spring", stiffness: 400, damping: 25 }}
                 className={
-                  strong
-                    ? "text-base font-semibold text-blue-700 dark:text-blue-300 bg-blue-100 dark:bg-blue-950/50 border border-blue-300/60 dark:border-blue-700/50 px-3 py-1.5 rounded-md"
-                    : "text-base text-zinc-600 dark:text-zinc-300 bg-zinc-200/80 dark:bg-zinc-700/40 px-3 py-1.5 rounded-md"
+                  active
+                    ? "text-base font-semibold text-yellow-900 dark:text-yellow-100 bg-yellow-200 dark:bg-yellow-900/60 border-2 border-yellow-500 dark:border-yellow-400 px-3 py-1.5 rounded-md"
+                    : strong
+                      ? "text-base font-semibold text-blue-700 dark:text-blue-300 bg-blue-100 dark:bg-blue-950/50 border border-blue-300/60 dark:border-blue-700/50 px-3 py-1.5 rounded-md"
+                      : "text-base text-zinc-600 dark:text-zinc-300 bg-zinc-200/80 dark:bg-zinc-700/40 px-3 py-1.5 rounded-md"
                 }
               >
                 {item}
-              </li>
+              </motion.li>
             );
           })}
         </ul>
@@ -64,6 +105,14 @@ function SkillCard({
 }
 
 export function Skills() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const activeLabel = ORBIT_LOGOS[activeIndex].label;
+
+  useEffect(() => {
+    const id = setInterval(() => setActiveIndex((i) => (i + 1) % 6), 2000);
+    return () => clearInterval(id);
+  }, []);
+
   return (
     <section id="skills" className="section-pad bg-zinc-100 dark:bg-zinc-900/30">
       <div className="container-narrow">
@@ -91,14 +140,8 @@ export function Skills() {
               iconSize={44}
               className="size-11 sm:size-12 rounded-full border-2 border-zinc-200 dark:border-zinc-600 bg-white dark:bg-zinc-800 shadow-md dark:shadow-none"
             >
-              {ORBIT_LOGOS.map(({ label, logoSrc }) => (
-                <div
-                  key={label}
-                  className="flex size-full items-center justify-center rounded-full bg-white dark:bg-zinc-800"
-                  title={label}
-                >
-                  <img src={logoSrc} alt="" className="size-6 sm:size-7 object-contain" aria-hidden />
-                </div>
+              {ORBIT_LOGOS.map(({ label, logoSrc }, i) => (
+                <OrbitItem key={label} label={label} logoSrc={logoSrc} isActive={i === activeIndex} />
               ))}
             </OrbitingCircles>
             <div className="absolute flex flex-col items-center justify-center text-center">
@@ -107,7 +150,7 @@ export function Skills() {
           </motion.div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
             {skills.map((group, i) => (
-              <SkillCard key={group.category} group={group} index={i} className="[&>div]:max-w-none" />
+              <SkillCard key={group.category} group={group} index={i} className="[&>div]:max-w-none" activeLabel={activeLabel} />
             ))}
           </div>
         </div>
@@ -121,7 +164,7 @@ export function Skills() {
         >
           <div className={`flex flex-col items-end ${CARD_GAP}`}>
             {[skills[0], skills[2], skills[4]].map((group, i) => (
-              <SkillCard key={group.category} group={group} index={[0, 2, 4][i]} />
+              <SkillCard key={group.category} group={group} index={[0, 2, 4][i]} activeLabel={activeLabel} />
             ))}
           </div>
           <div className="relative flex flex-col items-center justify-center self-stretch min-h-0">
@@ -133,14 +176,8 @@ export function Skills() {
               iconSize={44}
               className="size-11 sm:size-12 rounded-full border-2 border-zinc-200 dark:border-zinc-600 bg-white dark:bg-zinc-800 shadow-md dark:shadow-none"
             >
-              {ORBIT_LOGOS.map(({ label, logoSrc }) => (
-                <div
-                  key={label}
-                  className="flex size-full items-center justify-center rounded-full bg-white dark:bg-zinc-800"
-                  title={label}
-                >
-                  <img src={logoSrc} alt="" className="size-6 sm:size-7 object-contain" aria-hidden />
-                </div>
+              {ORBIT_LOGOS.map(({ label, logoSrc }, i) => (
+                <OrbitItem key={label} label={label} logoSrc={logoSrc} isActive={i === activeIndex} />
               ))}
             </OrbitingCircles>
             <div className="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
@@ -150,7 +187,7 @@ export function Skills() {
           </div>
           <div className={`flex flex-col items-start ${CARD_GAP} min-h-0`}>
             {[skills[1], skills[3], skills[5]].map((group, i) => (
-              <SkillCard key={group.category} group={group} index={[1, 3, 5][i]} />
+              <SkillCard key={group.category} group={group} index={[1, 3, 5][i]} activeLabel={activeLabel} />
             ))}
           </div>
         </motion.div>
