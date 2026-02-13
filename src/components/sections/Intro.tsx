@@ -66,7 +66,7 @@ export function Intro() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="mt-6 text-zinc-600 dark:text-zinc-400 leading-relaxed max-w-xl"
+              className="mt-6 text-zinc-600 dark:text-zinc-400 leading-relaxed"
             >
               {site.summary}
             </motion.p>
