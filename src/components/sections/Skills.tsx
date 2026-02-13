@@ -82,17 +82,16 @@ function SkillCard({
             return (
               <motion.li
                 key={item}
-                layout
                 animate={{
                   scale: active ? 1.08 : 1,
                 }}
                 transition={{ type: "spring", stiffness: 400, damping: 25 }}
                 className={
                   active
-                    ? "text-base font-semibold text-yellow-900 dark:text-yellow-100 bg-yellow-200 dark:bg-yellow-900/60 border-2 border-yellow-500 dark:border-yellow-400 px-3 py-1.5 rounded-md"
+                    ? "text-base font-semibold text-yellow-900 dark:text-yellow-100 bg-yellow-200 dark:bg-yellow-900/60 border-2 border-yellow-500 dark:border-yellow-400 px-3 py-1.5 rounded-md origin-center"
                     : strong
-                      ? "text-base font-semibold text-blue-700 dark:text-blue-300 bg-blue-100 dark:bg-blue-950/50 border border-blue-300/60 dark:border-blue-700/50 px-3 py-1.5 rounded-md"
-                      : "text-base text-zinc-600 dark:text-zinc-300 bg-zinc-200/80 dark:bg-zinc-700/40 px-3 py-1.5 rounded-md"
+                      ? "text-base font-semibold text-blue-700 dark:text-blue-300 bg-blue-100 dark:bg-blue-950/50 border-2 border-blue-300/60 dark:border-blue-700/50 px-3 py-1.5 rounded-md origin-center"
+                      : "text-base text-zinc-600 dark:text-zinc-300 bg-zinc-200/80 dark:bg-zinc-700/40 border-2 border-transparent px-3 py-1.5 rounded-md origin-center"
                 }
               >
                 {item}
