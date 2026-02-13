@@ -1,32 +1,22 @@
 import { motion } from "framer-motion";
-import { FaMicrosoft } from "react-icons/fa";
-import {
-  SiAngular,
-  SiDotnet,
-  SiNextdotjs,
-  SiNodedotjs,
-  SiOctopusdeploy,
-  SiReact,
-  SiTypescript,
-} from "react-icons/si";
 import { OrbitingCircles } from "@/components/ui/orbiting-circles";
 import { skills } from "@/data/resume";
 
-/* Brand colors from Simple Icons / official guidelines; darkColor for icons that are black on light */
-const SKILL_ICONS: Array<{
-  Icon: typeof SiDotnet;
-  label: string;
-  color: string;
-  darkColor?: string;
-}> = [
-  { Icon: SiDotnet, label: ".NET", color: "#512BD4" },
-  { Icon: SiAngular, label: "Angular", color: "#DD0031" },
-  { Icon: SiReact, label: "React", color: "#61DAFB" },
-  { Icon: SiNextdotjs, label: "Next.js", color: "#000000", darkColor: "#ffffff" },
-  { Icon: SiTypescript, label: "TypeScript", color: "#3178C6" },
-  { Icon: SiNodedotjs, label: "Node.js", color: "#339933" },
-  { Icon: FaMicrosoft, label: "Azure", color: "#00A4EF" },
-  { Icon: SiOctopusdeploy, label: "GitOps", color: "#2F93E0" },
+/** Strong skills to highlight in the cards */
+const STRONG_SKILLS = [".NET", "Angular", "Azure", "Scrum Master", "Cursor", "Matlab"];
+
+function isStrongSkill(item: string): boolean {
+  return STRONG_SKILLS.some((strong) => item === strong || item.startsWith(strong));
+}
+
+/* Orbiting circle logos (public/images) */
+const ORBIT_LOGOS: Array<{ label: string; logoSrc: string }> = [
+  { label: ".NET", logoSrc: "/images/logo-dotnet.png" },
+  { label: "Angular", logoSrc: "/images/logo-angular.png" },
+  { label: "Azure", logoSrc: "/images/logo-azure.png" },
+  { label: "Scrum Master", logoSrc: "/images/logo-scrum.png" },
+  { label: "Cursor", logoSrc: "/images/logo-cursor.webp" },
+  { label: "Matlab", logoSrc: "/images/logo-matlab.png" },
 ];
 
 export function Skills() {
@@ -55,32 +45,18 @@ export function Skills() {
             iconSize={44}
             className="size-11 sm:size-12 rounded-full border-2 border-zinc-200 dark:border-zinc-600 bg-white dark:bg-zinc-800 shadow-md dark:shadow-none"
           >
-            {SKILL_ICONS.map(({ Icon, label, color, darkColor }) => (
+            {ORBIT_LOGOS.map(({ label, logoSrc }) => (
               <div
                 key={label}
                 className="flex size-full items-center justify-center rounded-full bg-white dark:bg-zinc-800"
                 title={label}
               >
-                {darkColor ? (
-                  <>
-                    <Icon
-                      className="size-6 sm:size-7 dark:hidden"
-                      style={{ color }}
-                      aria-hidden
-                    />
-                    <Icon
-                      className="size-6 sm:size-7 hidden dark:block"
-                      style={{ color: darkColor }}
-                      aria-hidden
-                    />
-                  </>
-                ) : (
-                  <Icon
-                    className="size-6 sm:size-7"
-                    style={{ color }}
-                    aria-hidden
-                  />
-                )}
+                <img
+                  src={logoSrc}
+                  alt=""
+                  className="size-6 sm:size-7 object-contain"
+                  aria-hidden
+                />
               </div>
             ))}
           </OrbitingCircles>
@@ -102,16 +78,23 @@ export function Skills() {
               transition={{ delay: i * 0.05 }}
               className="rounded-xl border border-zinc-200 dark:border-zinc-700/50 bg-white dark:bg-zinc-800/30 p-5 hover:border-zinc-300 dark:hover:border-zinc-600/50 transition-colors shadow-sm dark:shadow-none"
             >
-              <h3 className="text-sm font-semibold text-blue-600 dark:text-blue-400 mb-3">{group.category}</h3>
+              <h3 className="text-base font-semibold text-blue-600 dark:text-blue-400 mb-3">{group.category}</h3>
               <ul className="flex flex-wrap gap-2">
-                {group.items.map((item) => (
-                  <li
-                    key={item}
-                    className="text-sm text-zinc-600 dark:text-zinc-300 bg-zinc-200/80 dark:bg-zinc-700/40 px-2.5 py-1 rounded-md"
-                  >
-                    {item}
-                  </li>
-                ))}
+                {group.items.map((item) => {
+                  const strong = isStrongSkill(item);
+                  return (
+                    <li
+                      key={item}
+                      className={
+                        strong
+                          ? "text-base font-semibold text-blue-700 dark:text-blue-300 bg-blue-100 dark:bg-blue-950/50 border border-blue-300/60 dark:border-blue-700/50 px-3 py-1.5 rounded-md"
+                          : "text-base text-zinc-600 dark:text-zinc-300 bg-zinc-200/80 dark:bg-zinc-700/40 px-3 py-1.5 rounded-md"
+                      }
+                    >
+                      {item}
+                    </li>
+                  );
+                })}
               </ul>
             </motion.div>
           ))}
