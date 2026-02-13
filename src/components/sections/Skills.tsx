@@ -2,14 +2,7 @@ import { motion } from "framer-motion";
 import { OrbitingCircles } from "@/components/ui/orbiting-circles";
 import { skills } from "@/data/resume";
 
-/** Strong skills to highlight in the cards */
-const STRONG_SKILLS = [".NET", "Angular", "Azure", "Scrum Master", "Cursor", "Matlab"];
-
-function isStrongSkill(item: string): boolean {
-  return STRONG_SKILLS.some((strong) => item === strong || item.startsWith(strong));
-}
-
-/* Orbiting circle logos (public/images) */
+/* Single source of truth: the 6 logos in the orbit (public/images) */
 const ORBIT_LOGOS: Array<{ label: string; logoSrc: string }> = [
   { label: ".NET", logoSrc: "/images/logo-dotnet.png" },
   { label: "Angular", logoSrc: "/images/logo-angular.png" },
@@ -18,6 +11,10 @@ const ORBIT_LOGOS: Array<{ label: string; logoSrc: string }> = [
   { label: "Cursor", logoSrc: "/images/logo-cursor.webp" },
   { label: "Matlab", logoSrc: "/images/logo-matlab.png" },
 ];
+
+function isStrongSkill(item: string): boolean {
+  return ORBIT_LOGOS.some(({ label }) => item === label || item.startsWith(label));
+}
 
 export function Skills() {
   return (
