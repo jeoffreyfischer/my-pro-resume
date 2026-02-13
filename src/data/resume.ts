@@ -142,25 +142,25 @@ export const certifications = [
 
 export const hobbies = [
   {
-    title: "Guitar",
+    title: "🎸 Guitar",
     detail: "25 years – ",
     placeholder: "video" as const,
     embedUrl: "https://www.youtube.com/embed/WS0HWQtoBv8",
   },
   {
-    title: "Fitness & Personal Training",
-    detail: "From Bicep files to Biceps",
+    title: "💃🕺 Salsa & Bachata",
+    detail: "8 years – Still stepping on some unlucky toes…",
     placeholder: "none" as const,
   },
   {
-    title: "Running",
+    title: "🏃‍♂️ Running",
     detail: "Half-marathon but double-pain",
     placeholder: "image" as const,
     imageSrc: "/images/2025-sydney-half-marathon.png",
   },
   {
-    title: "Salsa & Bachata",
-    detail: "8 years – Still stepping on some unlucky toes…",
+    title: "🏋️💪 Fitness & Personal Training",
+    detail: "From Bicep files to Biceps",
     placeholder: "none" as const,
   },
 ];
