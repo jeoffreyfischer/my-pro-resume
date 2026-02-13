@@ -31,7 +31,7 @@ export const skills = [
   },
   {
     category: "AI",
-    items: ["Cursor", "ChatGPT"],
+    items: ["Cursor", "ChatGPT", "Copilot", "Claude", "YakShaver"],
   },
   {
     category: "Leadership",
