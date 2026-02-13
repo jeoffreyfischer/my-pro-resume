@@ -46,8 +46,16 @@ export function Projects() {
                   href={cert.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-zinc-600 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-700/50 px-3 py-2 rounded-lg inline-block hover:bg-zinc-200 dark:hover:bg-zinc-700/50 hover:border-zinc-300 dark:hover:border-zinc-600 transition-colors"
+                  className="inline-flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-700/50 px-3 py-2 rounded-lg hover:bg-zinc-200 dark:hover:bg-zinc-700/50 hover:border-zinc-300 dark:hover:border-zinc-600 transition-colors"
                 >
+                  {cert.logoSrc && (
+                    <img
+                      src={cert.logoSrc}
+                      alt=""
+                      className="size-5 shrink-0 object-contain"
+                      aria-hidden
+                    />
+                  )}
                   {cert.name}
                 </a>
               </li>
