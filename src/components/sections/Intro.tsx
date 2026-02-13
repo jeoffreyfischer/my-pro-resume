@@ -16,7 +16,7 @@ export function Intro() {
             <img
               src="/images/Jeoffrey-Fischer-Profile.jpg"
               alt="Jeoffrey Fischer"
-              className="w-40 h-40 sm:w-52 sm:h-52 lg:flex-1 lg:min-h-0 lg:w-full rounded-2xl object-cover object-top border border-zinc-300 dark:border-zinc-700/50"
+              className="profile-photo-shape w-40 h-40 sm:w-52 sm:h-52 lg:flex-1 lg:min-h-0 lg:w-full object-cover object-top border-2 border-zinc-300 dark:border-zinc-700/50"
             />
           </motion.div>
 
