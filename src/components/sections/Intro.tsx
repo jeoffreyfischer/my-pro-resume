@@ -1,11 +1,24 @@
 import { motion } from "framer-motion";
 import { SiGithub, SiLinkedin } from "react-icons/si";
+import { Confetti } from "@/components/ui/confetti";
 import { site } from "@/data/resume";
 
 export function Intro() {
   return (
-    <section id="intro" className="section-pad min-h-[90vh] flex flex-col justify-center">
-      <div className="container-narrow">
+    <section id="intro" className="section-pad min-h-[90vh] flex flex-col justify-center relative overflow-hidden">
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <Confetti
+          className="w-full h-full block"
+          style={{ width: "100%", height: "100%", minHeight: "100%" }}
+          options={{
+            particleCount: 80,
+            spread: 70,
+            origin: { x: 0.5, y: 0.4 },
+            startVelocity: 30,
+          }}
+        />
+      </div>
+      <div className="container-narrow relative z-10">
         <div className="flex flex-col lg:grid lg:grid-cols-[18rem_1fr] lg:items-stretch lg:gap-16 gap-10">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
