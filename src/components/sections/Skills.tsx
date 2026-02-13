@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { OrbitingCircles } from "@/components/ui/orbiting-circles";
+import { SkillsOrbitControls } from "@/components/sections/SkillsOrbitControls";
 import { skills } from "@/data/resume";
+import { useSkillsHighlight } from "@/hooks/useSkillsHighlight";
 
 /* Single source of truth: the 6 logos in the orbit (public/images) */
 const ORBIT_LOGOS: Array<{ label: string; logoSrc: string }> = [
@@ -105,13 +106,9 @@ function SkillCard({
 }
 
 export function Skills() {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const activeLabel = ORBIT_LOGOS[activeIndex].label;
-
-  useEffect(() => {
-    const id = setInterval(() => setActiveIndex((i) => (i + 1) % 6), 2000);
-    return () => clearInterval(id);
-  }, []);
+  const highlight = useSkillsHighlight();
+  const { activeIndex } = highlight;
+  const activeLabel = activeIndex !== null ? ORBIT_LOGOS[activeIndex].label : undefined;
 
   return (
     <section id="skills" className="section-pad bg-zinc-100 dark:bg-zinc-900/30">
@@ -127,27 +124,32 @@ export function Skills() {
 
         {/* Mobile/tablet: orbit on top, then 2-col grid of cards */}
         <div className="md:hidden space-y-8">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.98 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="relative mx-auto flex size-[280px] sm:size-[340px] items-center justify-center"
-          >
-            <OrbitingCircles
-              radius={120}
-              duration={24}
-              path
-              iconSize={44}
-              className="size-11 sm:size-12 rounded-full border-2 border-zinc-200 dark:border-zinc-600 bg-white dark:bg-zinc-800 shadow-md dark:shadow-none"
+          <div className="flex flex-col items-center">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.98 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              className="relative mx-auto flex size-[280px] sm:size-[340px] items-center justify-center"
             >
-              {ORBIT_LOGOS.map(({ label, logoSrc }, i) => (
-                <OrbitItem key={label} label={label} logoSrc={logoSrc} isActive={i === activeIndex} />
-              ))}
-            </OrbitingCircles>
-            <div className="absolute flex flex-col items-center justify-center text-center">
-              <span className="text-2xl sm:text-3xl font-semibold text-zinc-400 dark:text-zinc-500">SKILLS</span>
-            </div>
-          </motion.div>
+              <OrbitingCircles
+                radius={120}
+                duration={24}
+                path
+                iconSize={44}
+                className="size-11 sm:size-12 rounded-full border-2 border-zinc-200 dark:border-zinc-600 bg-white dark:bg-zinc-800 shadow-md dark:shadow-none"
+              >
+                {ORBIT_LOGOS.map(({ label, logoSrc }, i) => (
+                  <OrbitItem key={label} label={label} logoSrc={logoSrc} isActive={activeIndex !== null && i === activeIndex} />
+                ))}
+              </OrbitingCircles>
+              <div className="absolute inset-0 flex items-center justify-center text-center pointer-events-none">
+                <span className="text-2xl sm:text-3xl font-semibold tracking-[0.12em] text-zinc-400 dark:text-zinc-500">S K I L L S</span>
+              </div>
+              <div className="absolute left-1/2 top-[54%] -translate-x-1/2 -translate-y-0 pointer-events-auto">
+                <SkillsOrbitControls {...highlight} />
+              </div>
+            </motion.div>
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
             {skills.map((group, i) => (
               <SkillCard key={group.category} group={group} index={i} className="[&>div]:max-w-none" activeLabel={activeLabel} />
@@ -169,20 +171,23 @@ export function Skills() {
           </div>
           <div className="relative flex flex-col items-center justify-center self-stretch min-h-0">
             <div className="relative flex size-[340px] lg:size-[400px] shrink-0 items-center justify-center">
-            <OrbitingCircles
-              radius={120}
-              duration={24}
-              path
-              iconSize={44}
-              className="size-11 sm:size-12 rounded-full border-2 border-zinc-200 dark:border-zinc-600 bg-white dark:bg-zinc-800 shadow-md dark:shadow-none"
-            >
-              {ORBIT_LOGOS.map(({ label, logoSrc }, i) => (
-                <OrbitItem key={label} label={label} logoSrc={logoSrc} isActive={i === activeIndex} />
-              ))}
-            </OrbitingCircles>
-            <div className="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
-              <span className="text-2xl sm:text-3xl font-semibold text-zinc-400 dark:text-zinc-500">SKILLS</span>
-            </div>
+              <OrbitingCircles
+                radius={120}
+                duration={24}
+                path
+                iconSize={44}
+                className="size-11 sm:size-12 rounded-full border-2 border-zinc-200 dark:border-zinc-600 bg-white dark:bg-zinc-800 shadow-md dark:shadow-none"
+              >
+                {ORBIT_LOGOS.map(({ label, logoSrc }, i) => (
+                  <OrbitItem key={label} label={label} logoSrc={logoSrc} isActive={activeIndex !== null && i === activeIndex} />
+                ))}
+              </OrbitingCircles>
+              <div className="absolute inset-0 flex items-center justify-center text-center pointer-events-none">
+                <span className="text-2xl sm:text-3xl font-semibold tracking-[0.12em] text-zinc-400 dark:text-zinc-500">S K I L L S</span>
+              </div>
+              <div className="absolute left-1/2 top-[54%] -translate-x-1/2 -translate-y-0 pointer-events-auto">
+                <SkillsOrbitControls {...highlight} />
+              </div>
             </div>
           </div>
           <div className={`flex flex-col items-start ${CARD_GAP} min-h-0`}>
