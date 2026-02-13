@@ -5,7 +5,11 @@ export const site = {
   tagline: "From shipping rockets to shipping software 🚀",
   location: "Strasbourg, France",
   summary:
-    "Full-Stack Software Engineer with a PhD in Aerospace. After 10+ years in academia, I transitioned into fast-evolving software development, applying rigorous problem solving to build scalable web applications, APIs, and Cloud solutions. I specialize in .NET, Angular, and Azure, leveraging AI tools to improve development efficiency.",
+    "Full-Stack Software Engineer with a PhD in Aerospace. After 10+ years in academia, I transitioned into software development, applying rigorous problem solving to build scalable web applications, APIs, and Cloud solutions.",
+  specialty:
+    "I specialize in .NET, Angular, and Azure, leveraging AI tools to improve development efficiency - and occasionally write awesome resumes.",
+  passion:
+    "I'm passionate about applying Scrum practices to strengthen team communication and continuously improve product quality.",
   links: {
     email: "mailto:jeoffrey.fischer@gmail.com",
     github: "https://github.com/jeoffreyfischer",

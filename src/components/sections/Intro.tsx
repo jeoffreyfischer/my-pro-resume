@@ -1,9 +1,14 @@
 import { motion } from "framer-motion";
 import { SiGithub, SiLinkedin } from "react-icons/si";
 import { Confetti } from "@/components/ui/confetti";
+import { Highlight } from "@/components/ui/hero-highlight";
 import { site } from "@/data/resume";
 
 export function Intro() {
+  const [summaryBefore, summaryAfter] = site.summary.split("problem solving");
+  const [specialtyBefore, specialtyAfter] = site.specialty.split(".NET");
+  const [passionBefore, passionAfter] = site.passion.split("Scrum");
+
   return (
     <section id="intro" className="section-pad min-h-[90vh] flex flex-col justify-center relative overflow-hidden">
       <div className="absolute inset-0 z-0 pointer-events-none">
@@ -82,7 +87,31 @@ export function Intro() {
               transition={{ delay: 0.2 }}
               className="mt-6 text-zinc-600 dark:text-zinc-400 leading-relaxed"
             >
-              {site.summary}
+              {summaryBefore}
+              <Highlight>problem solving</Highlight>
+              {summaryAfter}
+            </motion.p>
+            <motion.p
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.212 }}
+              className="mt-4 text-zinc-600 dark:text-zinc-400 leading-relaxed"
+            >
+              {specialtyBefore}
+              <Highlight>.NET</Highlight>
+              {specialtyAfter}
+            </motion.p>
+            <motion.p
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.225 }}
+              className="mt-4 text-zinc-600 dark:text-zinc-400 leading-relaxed"
+            >
+              {passionBefore}
+              <Highlight>Scrum</Highlight>
+              {passionAfter}
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 12 }}
