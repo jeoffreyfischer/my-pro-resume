@@ -30,12 +30,12 @@ export const skills = [
     items: ["Azure", "Power Apps", "CI/CD", "GitOps (Octopus Deploy)"],
   },
   {
-    category: "Leadership",
-    items: ["Scrum Master", "Client workshops", "Team mentoring"],
-  },
-  {
     category: "AI",
     items: ["Cursor", "ChatGPT"],
+  },
+  {
+    category: "Leadership",
+    items: ["Scrum Master", "Client workshops", "Team mentoring"],
   },
   {
     category: "Research & Data",
