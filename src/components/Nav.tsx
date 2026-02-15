@@ -5,8 +5,8 @@ import { useTheme } from "@/hooks/useTheme";
 const NAV_LINKS = [
   { id: "intro", label: "Intro" },
   { id: "skills", label: "Skills" },
-  { id: "projects", label: "Projects" },
   { id: "certifications", label: "Certifications" },
+  { id: "projects", label: "Projects" },
   { id: "journey", label: "Journey" },
   { id: "public-videos", label: "Videos" },
   { id: "hobbies", label: "Hobbies" },

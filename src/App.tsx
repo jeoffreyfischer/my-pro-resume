@@ -15,8 +15,8 @@ function App() {
       <main>
         <Intro />
         <Skills />
-        <Projects />
         <Certifications />
+        <Projects />
         <Journey />
         <PublicVideos />
         <Hobbies />
