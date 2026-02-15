@@ -4,7 +4,7 @@ import { site } from "@/data/resume";
 
 export function Contact() {
   return (
-    <section id="contact" className="section-pad">
+    <section id="contact" className="section-pad bg-zinc-100 dark:bg-zinc-900/30">
       <div className="container-narrow">
         <motion.h2
           initial={{ opacity: 0, y: 16 }}

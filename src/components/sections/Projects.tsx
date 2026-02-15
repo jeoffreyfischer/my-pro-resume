@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { projects } from "@/data/resume";
 
 const CARD_CLASS =
-  "rounded-xl border border-zinc-200 dark:border-zinc-700/50 bg-white dark:bg-zinc-800/20 p-5 sm:p-6 hover:border-zinc-300 dark:hover:border-zinc-600/50 transition-colors shadow-sm dark:shadow-none";
+  "rounded-xl border border-zinc-200 dark:border-zinc-700/50 bg-white dark:bg-zinc-800/30 p-5 sm:p-6 hover:border-zinc-300 dark:hover:border-zinc-600/50 transition-colors shadow-sm dark:shadow-none";
 
 const CATEGORY_PILL: Record<string, string> = {
   internal:
@@ -58,7 +58,7 @@ function ProjectCard({
 
 export function Projects() {
   return (
-    <section id="projects" className="section-pad">
+    <section id="projects" className="section-pad bg-zinc-100 dark:bg-zinc-900/30">
       <div className="container-narrow">
         <motion.h2
           initial={{ opacity: 0, y: 16 }}

@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 
 export function PublicVideos() {
   return (
-    <section id="public-videos" className="section-pad">
+    <section id="public-videos" className="section-pad bg-zinc-100 dark:bg-zinc-900/30">
       <div className="container-narrow">
         <motion.h2
           initial={{ opacity: 0, y: 16 }}
@@ -26,7 +26,7 @@ export function PublicVideos() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="aspect-video w-full max-w-3xl mx-auto rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-700/50 shadow-sm"
+          className="aspect-video w-full max-w-3xl mx-auto rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-700/50 bg-white dark:bg-zinc-800/80 shadow-sm"
         >
           <iframe
             src="https://www.youtube.com/embed/fGVnV1yX4Ts?list=PLpiOR7CBNvlqbUE95zfRuNDodbZI3aEJW"

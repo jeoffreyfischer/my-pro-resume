@@ -4,7 +4,7 @@ import { timeline } from "@/data/resume";
 type TimelineItem = (typeof timeline)[number];
 
 const CARD_CLASS =
-  "rounded-xl border border-zinc-200 dark:border-zinc-700/50 bg-white dark:bg-zinc-800/20 p-4 sm:p-5 hover:border-zinc-300 dark:hover:border-zinc-600/50 transition-colors shadow-sm dark:shadow-none";
+  "rounded-xl border border-zinc-200 dark:border-zinc-700/50 bg-white dark:bg-zinc-800/30 p-4 sm:p-5 hover:border-zinc-300 dark:hover:border-zinc-600/50 transition-colors shadow-sm dark:shadow-none";
 
 function TimelineCard({ item }: { item: TimelineItem }) {
   const isWork = item.type === "work";
@@ -44,7 +44,7 @@ const reversed = [...timeline].reverse();
 
 export function Journey() {
   return (
-    <section id="journey" className="section-pad bg-zinc-100 dark:bg-zinc-900/30">
+    <section id="journey" className="section-pad">
       <div className="container-narrow">
         <motion.h2
           initial={{ opacity: 0, y: 16 }}

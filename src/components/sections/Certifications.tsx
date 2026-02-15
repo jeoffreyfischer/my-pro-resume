@@ -32,11 +32,12 @@ export function Certifications() {
                 gradientFrom={isDark ? "#60a5fa" : "#3b82f6"}
                 gradientTo={isDark ? "#a78bfa" : "#8b5cf6"}
               >
+                <div className="absolute inset-0 rounded-[inherit] bg-white dark:bg-zinc-800/30 z-0" aria-hidden />
                 <a
                   href={cert.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex flex-col items-center gap-3 p-5 min-h-[120px] justify-center text-center hover:opacity-95 transition-opacity"
+                  className="relative z-10 flex flex-col items-center gap-3 p-5 min-h-[120px] justify-center text-center hover:opacity-95 transition-opacity"
                 >
                   {cert.logoSrc && (
                     <img

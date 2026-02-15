@@ -11,7 +11,7 @@ const OTHER_HOBBIES = hobbies.filter((h) => h.placeholder === "none");
 
 export function Hobbies() {
   return (
-    <section id="hobbies" className="section-pad bg-zinc-100 dark:bg-zinc-900/30">
+    <section id="hobbies" className="section-pad">
       <div className="container-narrow">
         <motion.h2
           initial={{ opacity: 0, y: 16 }}
@@ -39,7 +39,7 @@ export function Hobbies() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.06 }}
-              className="rounded-xl border border-zinc-200 dark:border-zinc-700/50 bg-white dark:bg-zinc-800/20 overflow-hidden hover:border-zinc-300 dark:hover:border-zinc-600/50 transition-colors shadow-sm dark:shadow-none"
+              className="rounded-xl border border-zinc-200 dark:border-zinc-700/50 bg-white dark:bg-zinc-800/30 overflow-hidden hover:border-zinc-300 dark:hover:border-zinc-600/50 transition-colors shadow-sm dark:shadow-none"
             >
               <div className="aspect-[9/16] w-full max-w-[280px] mx-auto bg-zinc-200 dark:bg-zinc-800/60 border-b border-zinc-200 dark:border-zinc-700/50 overflow-hidden">
                 {"embedUrl" in hobby && hobby.embedUrl ? (
@@ -75,7 +75,7 @@ export function Hobbies() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: (VERTICAL_MEDIA.length + i) * 0.06 }}
-              className="rounded-xl border border-zinc-200 dark:border-zinc-700/50 bg-white dark:bg-zinc-800/20 p-5 sm:p-6 hover:border-zinc-300 dark:hover:border-zinc-600/50 transition-colors shadow-sm dark:shadow-none"
+              className="rounded-xl border border-zinc-200 dark:border-zinc-700/50 bg-white dark:bg-zinc-800/30 p-5 sm:p-6 hover:border-zinc-300 dark:hover:border-zinc-600/50 transition-colors shadow-sm dark:shadow-none"
             >
               <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">{hobby.title}</h3>
               <p className="text-sm text-zinc-600 dark:text-zinc-400 mt-1">{hobby.detail}</p>
