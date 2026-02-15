@@ -102,25 +102,25 @@ export const projects = [
   {
     title: "SSW TimePro",
     category: "Internal",
-    description: "Internal time tracking and project management product.",
-    tech: [".NET", "Angular", "SQL Server", "React", "Next.js", "Azure"],
+    description: "Web-based time tracking, invoicing and receipting application that integrates with Dynamics 365 and Azure DevOps.",
+    tech: [".NET", "ASP.NET Core", "EF Core", "SQL Server", "Angular", "Azure Devops"],
   },
   {
     title: "SSW EagleEye",
     category: "Internal",
-    description: "Internal monitoring and observability platform.",
-    tech: [".NET", "Angular", "SQL Server", "React", "Next.js", "Azure"],
+    description: "AI-based reporting solution for emails and GitHub that intergrates with PowerBI",
+    tech: [".NET", "Semantic Kernel", "SQL Server", "Next.js", "Azure", "PowerBI"],
   },
   {
     title: "SSW Website",
     category: "Internal",
-    description: "SSW company website and marketing presence.",
-    tech: [".NET", "Angular", "SQL Server", "React", "Next.js", "Azure"],
+    description: "SSW company website and marketing presence",
+    tech: ["React", "NextJS", "TinaCMS", "Docker", "Azure"],
   },
   {
     title: "Berkley",
     category: "Client",
-    description: "Improving .NET + Angular application.",
+    description: "Improving the client facing portal for Berkley, a global insurance company",
     tech: [".NET", "Angular"],
   },
   {
