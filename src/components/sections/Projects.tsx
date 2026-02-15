@@ -1,5 +1,7 @@
 import { motion } from "framer-motion";
 import { BentoGrid } from "@/components/ui/bento-grid";
+import { MagicCard } from "@/components/ui/magic-card";
+import { useTheme } from "@/hooks/useTheme";
 import { projects } from "@/data/resume";
 
 const CARD_CLASS =
@@ -47,37 +49,79 @@ function ProjectCard({
   project,
   index,
   gridSpan = "",
+  isDark,
 }: {
   project: (typeof projects)[number];
   index: number;
   gridSpan?: string;
+  isDark: boolean;
 }) {
+  const cardContent = (
+    <>
+      <div
+        className="absolute inset-0 rounded-[inherit] bg-zinc-50 dark:bg-zinc-800/30 z-0 pointer-events-none"
+        aria-hidden
+      />
+      <div className="relative z-10 p-5 sm:p-6">
+        <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2">
+          <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">{project.title}</h3>
+          <span className={getCategoryPillClass(project.category)}>{project.category}</span>
+        </div>
+        <p className="mt-2 text-zinc-600 dark:text-zinc-400 text-sm leading-relaxed">{project.description}</p>
+        {project.tech.length > 0 && (
+          <div className="mt-3 flex flex-wrap gap-1.5">
+            {project.tech.map((t) => (
+              <span
+                key={t}
+                className="inline-flex items-center rounded-md bg-zinc-100 dark:bg-zinc-700/50 px-2 py-0.5 text-xs font-medium text-zinc-700 dark:text-zinc-300"
+              >
+                {t}
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
+    </>
+  );
   return (
-    <motion.article
+    <motion.div
       initial={{ opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: index * 0.05 }}
-      className={`${CARD_CLASS} ${gridSpan}`.trim()}
+      className={gridSpan}
     >
-      <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2">
-        <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">{project.title}</h3>
-        <span className={getCategoryPillClass(project.category)}>{project.category}</span>
-      </div>
-      <p className="mt-2 text-zinc-600 dark:text-zinc-400 text-sm leading-relaxed">{project.description}</p>
-      {project.tech.length > 0 && (
-        <div className="mt-3 flex flex-wrap gap-1.5">
-          {project.tech.map((t) => (
-            <span
-              key={t}
-              className="inline-flex items-center rounded-md bg-zinc-100 dark:bg-zinc-700/50 px-2 py-0.5 text-xs font-medium text-zinc-700 dark:text-zinc-300"
-            >
-              {t}
-            </span>
-          ))}
-        </div>
+      {isDark ? (
+        <MagicCard
+          className="rounded-xl border border-zinc-200 dark:border-zinc-700/50 overflow-hidden h-full"
+          gradientColor="rgba(255,255,255,0.12)"
+          gradientFrom="#60a5fa"
+          gradientTo="#a78bfa"
+        >
+          {cardContent}
+        </MagicCard>
+      ) : (
+        <article className={CARD_CLASS}>
+          <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2">
+            <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">{project.title}</h3>
+            <span className={getCategoryPillClass(project.category)}>{project.category}</span>
+          </div>
+          <p className="mt-2 text-zinc-600 dark:text-zinc-400 text-sm leading-relaxed">{project.description}</p>
+          {project.tech.length > 0 && (
+            <div className="mt-3 flex flex-wrap gap-1.5">
+              {project.tech.map((t) => (
+                <span
+                  key={t}
+                  className="inline-flex items-center rounded-md bg-zinc-100 dark:bg-zinc-700/50 px-2 py-0.5 text-xs font-medium text-zinc-700 dark:text-zinc-300"
+                >
+                  {t}
+                </span>
+              ))}
+            </div>
+          )}
+        </article>
       )}
-    </motion.article>
+    </motion.div>
   );
 }
 
@@ -88,6 +132,8 @@ const clientProjects = projects.filter((p) => p.category.toLowerCase().includes(
 const workshopProjects = projects.filter((p) => p.category.toLowerCase().includes("workshop"));
 
 export function Projects() {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
   const clientIndexStart = internalProjects.length;
   const workshopIndexStart = clientIndexStart + clientProjects.length;
   return (
@@ -111,6 +157,7 @@ export function Projects() {
                 project={project}
                 index={i}
                 gridSpan={getInternalSpan()}
+                isDark={isDark}
               />
             ))}
           </BentoGrid>
@@ -123,6 +170,7 @@ export function Projects() {
                 project={project}
                 index={clientIndexStart + i}
                 gridSpan={getClientSpan(project)}
+                isDark={isDark}
               />
             ))}
           </BentoGrid>
@@ -135,6 +183,7 @@ export function Projects() {
                 project={project}
                 index={workshopIndexStart + i}
                 gridSpan={getWorkshopSpan(project)}
+                isDark={isDark}
               />
             ))}
           </BentoGrid>

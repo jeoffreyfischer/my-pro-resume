@@ -1,4 +1,6 @@
 import { motion } from "framer-motion";
+import { MagicCard } from "@/components/ui/magic-card";
+import { useTheme } from "@/hooks/useTheme";
 import { timeline } from "@/data/resume";
 
 type TimelineItem = (typeof timeline)[number];
@@ -6,8 +8,43 @@ type TimelineItem = (typeof timeline)[number];
 const CARD_CLASS =
   "rounded-xl border border-zinc-200 dark:border-zinc-700/50 bg-zinc-50 dark:bg-zinc-800/30 p-4 sm:p-5 hover:border-zinc-300 dark:hover:border-zinc-600/50 transition-colors shadow-sm dark:shadow-none";
 
-function TimelineCard({ item }: { item: TimelineItem }) {
+function TimelineCard({ item, isDark }: { item: TimelineItem; isDark: boolean }) {
   const isWork = item.type === "work";
+  const cardContent = (
+    <>
+      <div
+        className="absolute inset-0 rounded-[inherit] bg-zinc-50 dark:bg-zinc-800/30 z-0 pointer-events-none"
+        aria-hidden
+      />
+      <div className="relative z-10 p-4 sm:p-5">
+        <div className="flex flex-wrap items-baseline gap-2">
+          <span
+            className={`text-xs font-medium uppercase tracking-wider ${
+              isWork ? "text-blue-600 dark:text-blue-400" : "text-violet-600 dark:text-violet-400"
+            }`}
+          >
+            {isWork ? "Work" : "Education"}
+          </span>
+          <span className="text-xs text-zinc-500">{item.period}</span>
+        </div>
+        <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100 mt-1">{item.title}</h3>
+        <p className="text-sm text-zinc-500 mt-0.5">{item.org}</p>
+        <p className="text-sm text-zinc-600 dark:text-zinc-400 mt-2 leading-relaxed">{item.description}</p>
+      </div>
+    </>
+  );
+  if (isDark) {
+    return (
+      <MagicCard
+        className="rounded-xl border border-zinc-200 dark:border-zinc-700/50 overflow-hidden h-full"
+        gradientColor="rgba(255,255,255,0.12)"
+        gradientFrom="#60a5fa"
+        gradientTo="#a78bfa"
+      >
+        {cardContent}
+      </MagicCard>
+    );
+  }
   return (
     <div className={CARD_CLASS}>
       <div className="flex flex-wrap items-baseline gap-2">
@@ -43,6 +80,8 @@ function Dot({ isWork, onLine }: { isWork: boolean; onLine?: boolean }) {
 const reversed = [...timeline].reverse();
 
 export function Journey() {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
   return (
     <section id="journey" className="section-pad">
       <div className="container-narrow">
@@ -72,7 +111,7 @@ export function Journey() {
                 className="relative pl-10 sm:pl-12"
               >
                 <Dot isWork={item.type === "work"} onLine={false} />
-                <TimelineCard item={item} />
+                <TimelineCard item={item} isDark={isDark} />
               </motion.li>
             ))}
           </ul>
@@ -101,7 +140,7 @@ export function Journey() {
                   <div className="pr-6 flex justify-end">
                     {!isWork && (
                       <div className="w-full max-w-[calc(100%-1rem)]">
-                        <TimelineCard item={item} />
+                        <TimelineCard item={item} isDark={isDark} />
                       </div>
                     )}
                   </div>
@@ -109,7 +148,7 @@ export function Journey() {
                   <div className="pl-6 flex justify-start">
                     {isWork && (
                       <div className="w-full max-w-[calc(100%-1rem)]">
-                        <TimelineCard item={item} />
+                        <TimelineCard item={item} isDark={isDark} />
                       </div>
                     )}
                   </div>
