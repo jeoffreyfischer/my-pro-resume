@@ -26,7 +26,7 @@ export function PublicVideos() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="aspect-video w-full max-w-3xl mx-auto rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-700/50 bg-white dark:bg-zinc-800/80 shadow-sm"
+          className="aspect-video w-full max-w-3xl mx-auto rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-700/50 bg-zinc-50 dark:bg-zinc-800/80 shadow-sm"
         >
           <iframe
             src="https://www.youtube.com/embed/fGVnV1yX4Ts?list=PLpiOR7CBNvlqbUE95zfRuNDodbZI3aEJW"

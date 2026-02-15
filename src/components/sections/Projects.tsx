@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { projects } from "@/data/resume";
 
 const CARD_CLASS =
-  "rounded-xl border border-zinc-200 dark:border-zinc-700/50 bg-white dark:bg-zinc-800/30 p-5 sm:p-6 hover:border-zinc-300 dark:hover:border-zinc-600/50 transition-colors shadow-sm dark:shadow-none";
+  "rounded-xl border border-zinc-200 dark:border-zinc-700/50 bg-zinc-50 dark:bg-zinc-800/30 p-5 sm:p-6 hover:border-zinc-300 dark:hover:border-zinc-600/50 transition-colors shadow-sm dark:shadow-none";
 
 const CATEGORY_PILL: Record<string, string> = {
   internal:

@@ -23,7 +23,7 @@ function isActiveOrbitSkill(item: string, activeLabel: string): boolean {
 }
 
 const CARD_CLASS =
-  "rounded-xl border border-zinc-200 dark:border-zinc-700/50 bg-white dark:bg-zinc-800/30 p-4 sm:p-5 hover:border-zinc-300 dark:hover:border-zinc-600/50 transition-colors shadow-sm dark:shadow-none";
+  "rounded-xl border border-zinc-200 dark:border-zinc-700/50 bg-zinc-50 dark:bg-zinc-800/30 p-4 sm:p-5 hover:border-zinc-300 dark:hover:border-zinc-600/50 transition-colors shadow-sm dark:shadow-none";
 
 /* Desktop: left column = indices 0,2,4; right column = indices 1,3,5 */
 const CARD_GAP = "gap-6";
@@ -39,7 +39,7 @@ function OrbitItem({
 }) {
   return (
     <motion.div
-      className="flex size-full items-center justify-center rounded-full bg-white dark:bg-zinc-800"
+      className="flex size-full items-center justify-center rounded-full bg-zinc-50 dark:bg-zinc-800"
       title={label}
       animate={{
         scale: isActive ? 1.1 : 1,
@@ -135,7 +135,7 @@ export function Skills() {
                 duration={24}
                 path
                 iconSize={44}
-                className="size-11 sm:size-12 rounded-full border-2 border-zinc-200 dark:border-zinc-600 bg-white dark:bg-zinc-800 shadow-md dark:shadow-none"
+                className="size-11 sm:size-12 rounded-full border-2 border-zinc-200 dark:border-zinc-600 bg-zinc-50 dark:bg-zinc-800 shadow-md dark:shadow-none"
               >
                 {ORBIT_LOGOS.map(({ label, logoSrc }, i) => (
                   <OrbitItem key={label} label={label} logoSrc={logoSrc} isActive={activeIndex !== null && i === activeIndex} />
@@ -175,7 +175,7 @@ export function Skills() {
                 duration={24}
                 path
                 iconSize={44}
-                className="size-11 sm:size-12 rounded-full border-2 border-zinc-200 dark:border-zinc-600 bg-white dark:bg-zinc-800 shadow-md dark:shadow-none"
+                className="size-11 sm:size-12 rounded-full border-2 border-zinc-200 dark:border-zinc-600 bg-zinc-50 dark:bg-zinc-800 shadow-md dark:shadow-none"
               >
                 {ORBIT_LOGOS.map(({ label, logoSrc }, i) => (
                   <OrbitItem key={label} label={label} logoSrc={logoSrc} isActive={activeIndex !== null && i === activeIndex} />

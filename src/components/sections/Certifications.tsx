@@ -32,7 +32,7 @@ export function Certifications() {
                 gradientFrom={isDark ? "#60a5fa" : "#3b82f6"}
                 gradientTo={isDark ? "#a78bfa" : "#8b5cf6"}
               >
-                <div className="absolute inset-0 rounded-[inherit] bg-white dark:bg-zinc-800/30 z-0" aria-hidden />
+                <div className="absolute inset-0 rounded-[inherit] bg-zinc-50 dark:bg-zinc-800/30 z-0" aria-hidden />
                 <a
                   href={cert.url}
                   target="_blank"
