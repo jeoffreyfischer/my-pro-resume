@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { BentoGrid } from "@/components/ui/bento-grid";
 import { projects } from "@/data/resume";
 
 const CARD_CLASS =
@@ -13,6 +14,28 @@ const CATEGORY_PILL: Record<string, string> = {
     "inline-flex shrink-0 text-xs font-medium px-2.5 py-1 rounded-md border text-green-700 dark:text-green-300 bg-green-100 dark:bg-green-950/50 border-green-200 dark:border-green-800/50",
 };
 
+function isShortContent(project: (typeof projects)[number]): boolean {
+  return (
+    project.description.length <= 55 ||
+    (project.description.length <= 75 && project.tech.length <= 4)
+  );
+}
+
+/** Internal: one row, all same width (3-col grid, each col-span-1). */
+function getInternalSpan(): string {
+  return "lg:col-span-1";
+}
+
+/** Client: content-based width. */
+function getClientSpan(project: (typeof projects)[number]): string {
+  return isShortContent(project) ? "lg:col-span-1" : "lg:col-span-2";
+}
+
+/** Workshop: single row, content-based. */
+function getWorkshopSpan(project: (typeof projects)[number]): string {
+  return isShortContent(project) ? "lg:col-span-1" : "lg:col-span-2";
+}
+
 function getCategoryPillClass(category: string): string {
   const c = category.toLowerCase();
   if (c.includes("internal")) return CATEGORY_PILL.internal;
@@ -23,17 +46,19 @@ function getCategoryPillClass(category: string): string {
 function ProjectCard({
   project,
   index,
+  gridSpan = "",
 }: {
   project: (typeof projects)[number];
   index: number;
+  gridSpan?: string;
 }) {
   return (
     <motion.article
-      initial={{ opacity: 0, x: -12 }}
-      whileInView={{ opacity: 1, x: 0 }}
+      initial={{ opacity: 0, y: 12 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ delay: index * 0.06 }}
-      className={CARD_CLASS}
+      transition={{ delay: index * 0.05 }}
+      className={`${CARD_CLASS} ${gridSpan}`.trim()}
     >
       <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2">
         <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">{project.title}</h3>
@@ -56,7 +81,15 @@ function ProjectCard({
   );
 }
 
+const internalProjects = projects.filter((p) =>
+  p.category.toLowerCase().includes("internal")
+);
+const clientProjects = projects.filter((p) => p.category.toLowerCase().includes("client"));
+const workshopProjects = projects.filter((p) => p.category.toLowerCase().includes("workshop"));
+
 export function Projects() {
+  const clientIndexStart = internalProjects.length;
+  const workshopIndexStart = clientIndexStart + clientProjects.length;
   return (
     <section id="projects" className="section-pad bg-zinc-100 dark:bg-zinc-900/30">
       <div className="container-narrow">
@@ -68,10 +101,43 @@ export function Projects() {
         >
           Projects & client work
         </motion.h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {projects.map((project, i) => (
-            <ProjectCard key={project.title} project={project} index={i} />
-          ))}
+
+        <div className="space-y-8 sm:space-y-10">
+          {/* Internal: all on one row, similar width (3-col grid) */}
+          <BentoGrid className="lg:grid-cols-3">
+            {internalProjects.map((project, i) => (
+              <ProjectCard
+                key={project.title}
+                project={project}
+                index={i}
+                gridSpan={getInternalSpan()}
+              />
+            ))}
+          </BentoGrid>
+
+          {/* Client: several rows */}
+          <BentoGrid>
+            {clientProjects.map((project, i) => (
+              <ProjectCard
+                key={project.title}
+                project={project}
+                index={clientIndexStart + i}
+                gridSpan={getClientSpan(project)}
+              />
+            ))}
+          </BentoGrid>
+
+          {/* Workshop: new line */}
+          <BentoGrid>
+            {workshopProjects.map((project, i) => (
+              <ProjectCard
+                key={project.title}
+                project={project}
+                index={workshopIndexStart + i}
+                gridSpan={getWorkshopSpan(project)}
+              />
+            ))}
+          </BentoGrid>
         </div>
       </div>
     </section>
