@@ -1,0 +1,60 @@
+import { motion } from "framer-motion";
+import { MagicCard } from "@/components/ui/magic-card";
+import { useTheme } from "@/hooks/useTheme";
+import { certifications } from "@/data/resume";
+
+export function Certifications() {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+  return (
+    <section id="certifications" className="section-pad">
+      <div className="container-narrow">
+        <motion.h2
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-2xl sm:text-3xl font-bold text-zinc-900 dark:text-zinc-100 mb-10"
+        >
+          Certifications
+        </motion.h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {certifications.map((cert, i) => (
+            <motion.div
+              key={cert.name}
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.05 }}
+            >
+              <MagicCard
+                className="rounded-xl border border-zinc-200 dark:border-zinc-700/50 overflow-hidden h-full"
+                gradientColor={isDark ? "rgba(255,255,255,0.12)" : "oklch(0.95 0 0 / 0.5)"}
+                gradientFrom={isDark ? "#60a5fa" : "#3b82f6"}
+                gradientTo={isDark ? "#a78bfa" : "#8b5cf6"}
+              >
+                <a
+                  href={cert.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex flex-col items-center gap-3 p-5 min-h-[120px] justify-center text-center hover:opacity-95 transition-opacity"
+                >
+                  {cert.logoSrc && (
+                    <img
+                      src={cert.logoSrc}
+                      alt=""
+                      className="size-14 sm:size-16 object-contain shrink-0"
+                      aria-hidden
+                    />
+                  )}
+                  <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300 leading-tight">
+                    {cert.name}
+                  </span>
+                </a>
+              </MagicCard>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
