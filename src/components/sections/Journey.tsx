@@ -28,7 +28,7 @@ function TimelineCard({ item }: { item: TimelineItem }) {
 }
 
 function Dot({ isWork, onLine }: { isWork: boolean; onLine?: boolean }) {
-  const position = onLine ? "left-1/2 top-1.5 -translate-x-1/2" : "left-0 top-1.5";
+  const position = onLine ? "left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" : "left-0 top-1.5";
   return (
     <span
       className={`absolute w-6 h-6 sm:w-8 sm:h-8 rounded-full border-2 flex items-center justify-center z-10 ${position} ${
