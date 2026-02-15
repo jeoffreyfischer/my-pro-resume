@@ -18,20 +18,9 @@ export function Certifications() {
           Certifications
         </motion.h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {certifications.map((cert, i) => (
-            <motion.div
-              key={cert.name}
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.05 }}
-            >
-              <MagicCard
-                className="rounded-xl border border-zinc-200 dark:border-zinc-700/50 overflow-hidden h-full"
-                gradientColor={isDark ? "rgba(255,255,255,0.12)" : "oklch(0.95 0 0 / 0.5)"}
-                gradientFrom={isDark ? "#60a5fa" : "#3b82f6"}
-                gradientTo={isDark ? "#a78bfa" : "#8b5cf6"}
-              >
+          {certifications.map((cert, i) => {
+            const cardContent = (
+              <>
                 <div className="absolute inset-0 rounded-[inherit] bg-zinc-50 dark:bg-zinc-800/30 z-0" aria-hidden />
                 <a
                   href={cert.url}
@@ -51,9 +40,33 @@ export function Certifications() {
                     {cert.name}
                   </span>
                 </a>
-              </MagicCard>
-            </motion.div>
-          ))}
+              </>
+            );
+            return (
+              <motion.div
+                key={cert.name}
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.05 }}
+              >
+                {isDark ? (
+                  <MagicCard
+                    className="rounded-xl border border-zinc-200 dark:border-zinc-700/50 overflow-hidden h-full"
+                    gradientColor="rgba(255,255,255,0.12)"
+                    gradientFrom="#60a5fa"
+                    gradientTo="#a78bfa"
+                  >
+                    {cardContent}
+                  </MagicCard>
+                ) : (
+                  <div className="relative rounded-xl border border-zinc-200 dark:border-zinc-700/50 overflow-hidden h-full bg-zinc-50 dark:bg-zinc-800/30">
+                    {cardContent}
+                  </div>
+                )}
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>
