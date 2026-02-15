@@ -100,24 +100,82 @@ export const timeline = [
 
 export const projects = [
   {
+    title: "SSW TimePro",
+    category: "Internal",
+    description: "Internal time tracking and project management product.",
+    tech: [".NET", "Angular", "SQL Server", "React", "Next.js", "Azure"],
+  },
+  {
+    title: "SSW EagleEye",
+    category: "Internal",
+    description: "Internal monitoring and observability platform.",
+    tech: [".NET", "Angular", "SQL Server", "React", "Next.js", "Azure"],
+  },
+  {
+    title: "SSW Website",
+    category: "Internal",
+    description: "SSW company website and marketing presence.",
+    tech: [".NET", "Angular", "SQL Server", "React", "Next.js", "Azure"],
+  },
+  {
     title: "Berkley",
-    role: "Long-term client",
+    category: "Client",
     description: "Improving .NET + Angular application.",
+    tech: [".NET", "Angular"],
   },
   {
-    title: "Delta Elcom · Caprice Plaster · Seventh Day Adventist Church",
-    role: "Short-term clients",
-    description: "Power Apps · Azure B2C",
+    title: "Delta Elcom",
+    category: "Client",
+    description: "Power Apps and Azure B2C solutions.",
+    tech: ["Power Apps", "Azure B2C"],
   },
   {
-    title: "Auction Plus · CommBox · CR Formulation · Knight Frank Valuation · Toll",
-    role: "Specification Reviews",
-    description: ".NET · OAuth2 · AI · Power Apps",
+    title: "Caprice Plaster",
+    category: "Client",
+    description: "Power Apps and Azure B2C solutions.",
+    tech: ["Power Apps", "Azure B2C"],
+  },
+  {
+    title: "Seventh Day Adventist Church",
+    category: "Client",
+    description: "Power Apps and Azure B2C solutions.",
+    tech: ["Power Apps", "Azure B2C"],
+  },
+  {
+    title: "Auction Plus",
+    category: "Client",
+    description: "Technical specification review.",
+    tech: [".NET", "OAuth2", "AI", "Power Apps"],
+  },
+  {
+    title: "CommBox",
+    category: "Client",
+    description: "Technical specification review.",
+    tech: [".NET", "OAuth2", "AI", "Power Apps"],
+  },
+  {
+    title: "CR Formulation",
+    category: "Client",
+    description: "Technical specification review.",
+    tech: [".NET", "OAuth2", "AI", "Power Apps"],
+  },
+  {
+    title: "Knight Frank Valuation",
+    category: "Client",
+    description: "Technical specification review.",
+    tech: [".NET", "OAuth2", "AI", "Power Apps"],
+  },
+  {
+    title: "Toll",
+    category: "Client",
+    description: "Technical specification review.",
+    tech: [".NET", "OAuth2", "AI", "Power Apps"],
   },
   {
     title: "Angular SuperPowers",
-    role: "2-day Workshop",
+    category: "Workshop",
     description: "Ran Angular workshops for clients.",
+    tech: ["Angular"],
   },
 ];
 

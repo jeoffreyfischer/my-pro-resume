@@ -1,11 +1,19 @@
 import { motion } from "framer-motion";
-import { MagicCard } from "@/components/ui/magic-card";
-import { useTheme } from "@/hooks/useTheme";
-import { projects, certifications } from "@/data/resume";
+import { projects } from "@/data/resume";
+
+/* Pill style aligned with Skills section (e.g. Matlab, Cursor): soft bg + border + text */
+function getCategoryColorClass(category: string): string {
+  const base = "inline-flex shrink-0 text-xs font-medium px-2.5 py-1 rounded-md border";
+  if (category.toLowerCase().includes("internal")) {
+    return `${base} text-red-700 dark:text-red-300 bg-red-100 dark:bg-red-950/50 border-red-200 dark:border-red-800/50`;
+  }
+  if (category.toLowerCase().includes("workshop")) {
+    return `${base} text-blue-700 dark:text-blue-300 bg-blue-100 dark:bg-blue-950/50 border-blue-300/60 dark:border-blue-700/50`;
+  }
+  return `${base} text-green-700 dark:text-green-300 bg-green-100 dark:bg-green-950/50 border-green-200 dark:border-green-800/50`;
+}
 
 export function Projects() {
-  const { theme } = useTheme();
-  const isDark = theme === "dark";
   return (
     <section id="projects" className="section-pad">
       <div className="container-narrow">
@@ -17,7 +25,7 @@ export function Projects() {
         >
           Projects & client work
         </motion.h2>
-        <div className="grid gap-6 sm:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {projects.map((project, i) => (
             <motion.article
               key={project.title}
@@ -29,58 +37,24 @@ export function Projects() {
             >
               <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2">
                 <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">{project.title}</h3>
-                <span className="text-sm text-zinc-500">{project.role}</span>
+                <span className={getCategoryColorClass(project.category)}>{project.category}</span>
               </div>
               <p className="mt-2 text-zinc-600 dark:text-zinc-400 text-sm leading-relaxed">{project.description}</p>
+              {project.tech.length > 0 && (
+                <div className="mt-3 flex flex-wrap gap-1.5">
+                  {project.tech.map((t) => (
+                    <span
+                      key={t}
+                      className="inline-flex items-center rounded-md bg-zinc-100 dark:bg-zinc-700/50 px-2 py-0.5 text-xs font-medium text-zinc-700 dark:text-zinc-300"
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              )}
             </motion.article>
           ))}
         </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mt-12"
-        >
-          <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100 mb-4">Certifications</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {certifications.map((cert, i) => (
-              <motion.div
-                key={cert.name}
-                initial={{ opacity: 0, y: 12 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.05 }}
-              >
-                <MagicCard
-                  className="rounded-xl border border-zinc-200 dark:border-zinc-700/50 overflow-hidden h-full"
-                  gradientColor={isDark ? "rgba(255,255,255,0.12)" : "oklch(0.95 0 0 / 0.5)"}
-                  gradientFrom={isDark ? "#60a5fa" : "#3b82f6"}
-                  gradientTo={isDark ? "#a78bfa" : "#8b5cf6"}
-                >
-                  <a
-                    href={cert.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex flex-col items-center gap-3 p-5 min-h-[120px] justify-center text-center hover:opacity-95 transition-opacity"
-                  >
-                    {cert.logoSrc && (
-                      <img
-                        src={cert.logoSrc}
-                        alt=""
-                        className="size-14 sm:size-16 object-contain shrink-0"
-                        aria-hidden
-                      />
-                    )}
-                    <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300 leading-tight">
-                      {cert.name}
-                    </span>
-                  </a>
-                </MagicCard>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
       </div>
     </section>
   );
