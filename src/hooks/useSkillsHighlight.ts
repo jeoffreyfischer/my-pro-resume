@@ -4,7 +4,7 @@ const SKILLS_COUNT = 6;
 const INTERVAL_MIN_MS = 100;
 const INTERVAL_MAX_MS = 5000;
 const INTERVAL_STEP_MS = 500;
-const INTERVAL_DEFAULT_MS = 2000;
+const INTERVAL_DEFAULT_MS = 1500;
 
 export function useSkillsHighlight() {
   const [activeIndex, setActiveIndex] = useState<number | null>(0);
