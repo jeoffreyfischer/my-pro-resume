@@ -152,31 +152,31 @@ export const projects = [
   {
     title: "Auction Plus",
     category: "Client",
-    description: "Specification Review - Involved a Spec Review for Auction Plus, an auction company.",
+    description: "Specification Review - Involved in a Spec Review for Auction Plus, an auction company.",
     tech: [".NET", "OAuth2", "AI", "Power Apps"],
   },
   {
     title: "CommBox",
     category: "Client",
-    description: "Specification Review - Involved a Spec Review for CommBox, a communication company.",
+    description: "Specification Review - Involved in a Spec Review for CommBox, a communication company.",
     tech: ["OAuth2"],
   },
   {
     title: "CR Formulation",
     category: "Client",
-    description: "Specification Review - Involved a Spec Review for CR Formulation, a beauty products company.",
+    description: "Specification Review - Involved in a Spec Review for CR Formulation, a beauty products company.",
     tech: ["AI"],
   },
   {
     title: "Knight Frank Valuation",
     category: "Client",
-    description: "Specification Review - Involved a Spec Review for Knight Frank Valuation, a property valuation company.",
+    description: "Specification Review - Involved in a Spec Review for Knight Frank Valuation, a property valuation company.",
     tech: ["Power Apps"],
   },
   {
     title: "Toll",
     category: "Client",
-    description: "Specification Review - Involved a Spec Review for Toll, a toll road company.",
+    description: "Specification Review - Involved in a Spec Review for Toll, a toll road company.",
     tech: [".NET", "OAuth2", "AI", "Power Apps"],
   },
   {
