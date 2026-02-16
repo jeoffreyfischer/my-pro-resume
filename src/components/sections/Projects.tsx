@@ -107,32 +107,37 @@ const internalProjects = projects.filter((p) =>
 const clientProjects = projects.filter((p) => p.category.toLowerCase().includes("client"));
 const workshopProjects = projects.filter((p) => p.category.toLowerCase().includes("workshop"));
 
-function SectionDivider() {
+function SectionDivider({ label }: { label: string }) {
   return (
-    <div className="py-6 sm:py-8" aria-hidden>
-      <span className="block h-px w-full bg-gradient-to-r from-transparent via-zinc-300 dark:via-zinc-600 to-transparent" />
+    <div className="flex items-center gap-4 py-6 sm:py-8" aria-hidden>
+      <span className="flex-1 h-px bg-gradient-to-r from-transparent via-zinc-300 dark:via-zinc-600 to-transparent" />
+      <span className="text-xs font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500 shrink-0">
+        {label}
+      </span>
+      <span className="flex-1 h-px bg-gradient-to-l from-transparent via-zinc-300 dark:via-zinc-600 to-transparent" />
     </div>
   );
 }
 
-export function Projects() {
+export function WorkProjects() {
   const { theme } = useTheme();
   const isDark = theme === "dark";
   const clientIndexStart = internalProjects.length;
   const workshopIndexStart = clientIndexStart + clientProjects.length;
   return (
-    <section id="projects" className="section-pad bg-zinc-100 dark:bg-zinc-900/30">
-      <div className="container-narrow">
-        <motion.h2
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-2xl sm:text-3xl font-bold text-zinc-900 dark:text-zinc-100 mb-10"
-        >
-          Work Projects
-        </motion.h2>
+    <div id="work-projects">
+      <motion.h3
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="text-xl sm:text-2xl font-bold text-zinc-900 dark:text-zinc-100 mb-8"
+      >
+        Work Projects
+      </motion.h3>
 
-        <div className="space-y-8 sm:space-y-10">
+      <div className="space-y-8 sm:space-y-10">
+          <SectionDivider label="Internal" />
+
           {/* Internal: all on one row, similar width (3-col grid) */}
           <BentoGrid className="lg:grid-cols-3">
             {internalProjects.map((project, i) => (
@@ -146,7 +151,7 @@ export function Projects() {
             ))}
           </BentoGrid>
 
-          <SectionDivider />
+          <SectionDivider label="Client" />
 
           {/* Client: several rows */}
           <BentoGrid>
@@ -161,7 +166,7 @@ export function Projects() {
             ))}
           </BentoGrid>
 
-          <SectionDivider />
+          <SectionDivider label="Workshop" />
 
           {/* Workshop: new line */}
           <BentoGrid>
@@ -176,7 +181,6 @@ export function Projects() {
             ))}
           </BentoGrid>
         </div>
-      </div>
-    </section>
+    </div>
   );
 }

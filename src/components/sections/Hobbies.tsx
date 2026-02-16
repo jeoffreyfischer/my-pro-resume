@@ -24,15 +24,6 @@ export function Hobbies() {
         >
           Hobbies
         </motion.h2>
-        <motion.p
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-zinc-600 dark:text-zinc-400 mb-10 max-w-xl"
-        >
-          Beyond code: fitness, music, and dance.
-        </motion.p>
-
         {/* Three hobby cards: 1 col mobile, 2 cols tablet, 3 cols desktop */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-10 sm:mb-12">
           {VERTICAL_MEDIA.map((hobby, i) => (

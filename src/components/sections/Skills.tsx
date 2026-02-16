@@ -110,7 +110,7 @@ export function Skills() {
   const activeLabel = activeIndex !== null ? ORBIT_LOGOS[activeIndex].label : undefined;
 
   return (
-    <section id="skills" className="section-pad bg-zinc-100 dark:bg-zinc-900/30">
+    <section id="skills" className="section-pad">
       <div className="container-narrow">
         <motion.h2
           initial={{ opacity: 0, y: 16 }}

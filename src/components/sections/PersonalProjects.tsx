@@ -5,24 +5,15 @@ const EMBED_URL = "https://lateststack.com/";
 
 export function PersonalProjects() {
   return (
-    <section id="personal-projects" className="section-pad">
-      <div className="container-narrow">
-        <motion.h2
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-2xl sm:text-3xl font-bold text-zinc-900 dark:text-zinc-100 mb-6"
-        >
-          Personal Project
-        </motion.h2>
-        <motion.p
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-zinc-600 dark:text-zinc-400 mb-6 max-w-xl"
-        >
-          Latest Stack Versions – stay up to date with current versions of popular frameworks and tools.
-        </motion.p>
+    <div id="personal-projects">
+      <motion.h3
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="text-xl sm:text-2xl font-bold text-zinc-900 dark:text-zinc-100 mb-6"
+      >
+        Personal Project
+      </motion.h3>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -50,7 +41,6 @@ export function PersonalProjects() {
             />
           </div>
         </motion.div>
-      </div>
-    </section>
+    </div>
   );
 }

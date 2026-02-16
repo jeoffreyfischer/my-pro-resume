@@ -7,7 +7,6 @@ const NAV_LINKS = [
   { id: "skills", label: "Skills" },
   { id: "certifications", label: "Certifications" },
   { id: "projects", label: "Projects" },
-  { id: "personal-projects", label: "Personal Projects" },
   { id: "journey", label: "Journey" },
   { id: "public-videos", label: "Videos" },
   { id: "hobbies", label: "Hobbies" },
