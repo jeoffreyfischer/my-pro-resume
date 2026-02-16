@@ -80,7 +80,7 @@ export function MagicCard({
 
   return (
     <div
-      className={cn("group relative rounded-[inherit]", className)}
+      className={cn("magic-card group relative rounded-[inherit]", className)}
       onPointerMove={handlePointerMove}
       onPointerLeave={reset}
       onPointerEnter={reset}

@@ -68,6 +68,11 @@
   border-radius: 50% 37% 54% 46% / 34% 48% 52% 45%;
 }
 
+/* Torch cursor on MagicCard in dark mode (hover) */
+[data-theme="dark"] .magic-card {
+  cursor: url("/cursors/torch.svg") 16 16, auto;
+}
+
 /* Skip link for accessibility */
 .skip-link {
   position: absolute;
