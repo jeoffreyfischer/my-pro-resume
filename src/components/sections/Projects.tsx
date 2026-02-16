@@ -28,9 +28,9 @@ function getInternalSpan(): string {
   return "lg:col-span-1";
 }
 
-/** Client: content-based width. */
-function getClientSpan(project: (typeof projects)[number]): string {
-  return isShortContent(project) ? "lg:col-span-1" : "lg:col-span-2";
+/** Client: uniform width (all same size). */
+function getClientSpan(): string {
+  return "lg:col-span-1";
 }
 
 /** Workshop: single row, content-based. */
@@ -145,7 +145,7 @@ export function Projects() {
                 key={project.title}
                 project={project}
                 index={clientIndexStart + i}
-                gridSpan={getClientSpan(project)}
+                gridSpan={getClientSpan()}
                 isDark={isDark}
               />
             ))}
