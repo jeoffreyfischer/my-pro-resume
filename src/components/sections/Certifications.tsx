@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { HiArrowTopRightOnSquare } from "react-icons/hi2";
 import { MagicCard, MAGIC_CARD_DARK_PROPS, MAGIC_CARD_OVERLAY_CLASS } from "@/components/ui/magic-card";
 import { useTheme } from "@/hooks/useTheme";
 import { certifications } from "@/data/resume";
@@ -22,12 +23,16 @@ export function Certifications() {
             const cardContent = (
               <>
                 <div className={MAGIC_CARD_OVERLAY_CLASS} aria-hidden />
-                <a
-                  href={cert.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="relative z-10 flex flex-col items-center gap-3 p-5 min-h-[120px] justify-center text-center hover:opacity-95 transition-opacity"
-                >
+                <div className="relative z-10 flex flex-col items-center gap-3 p-5 min-h-[120px] justify-center text-center">
+                  <a
+                    href={cert.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="absolute top-3 right-3 z-20 cursor-pointer rounded p-2 text-zinc-400 dark:text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors"
+                    aria-label={`Open ${cert.name} in a new tab`}
+                  >
+                    <HiArrowTopRightOnSquare className="size-6 shrink-0" aria-hidden />
+                  </a>
                   {cert.logoSrc && (
                     <img
                       src={cert.logoSrc}
@@ -39,7 +44,7 @@ export function Certifications() {
                   <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300 leading-tight">
                     {cert.name}
                   </span>
-                </a>
+                </div>
               </>
             );
             return (
