@@ -107,6 +107,14 @@ const internalProjects = projects.filter((p) =>
 const clientProjects = projects.filter((p) => p.category.toLowerCase().includes("client"));
 const workshopProjects = projects.filter((p) => p.category.toLowerCase().includes("workshop"));
 
+function SectionDivider() {
+  return (
+    <div className="py-6 sm:py-8" aria-hidden>
+      <span className="block h-px w-full bg-gradient-to-r from-transparent via-zinc-300 dark:via-zinc-600 to-transparent" />
+    </div>
+  );
+}
+
 export function Projects() {
   const { theme } = useTheme();
   const isDark = theme === "dark";
@@ -121,7 +129,7 @@ export function Projects() {
           viewport={{ once: true }}
           className="text-2xl sm:text-3xl font-bold text-zinc-900 dark:text-zinc-100 mb-10"
         >
-          Projects, Clients & Workshops
+          Work Projects
         </motion.h2>
 
         <div className="space-y-8 sm:space-y-10">
@@ -138,6 +146,8 @@ export function Projects() {
             ))}
           </BentoGrid>
 
+          <SectionDivider />
+
           {/* Client: several rows */}
           <BentoGrid>
             {clientProjects.map((project, i) => (
@@ -150,6 +160,8 @@ export function Projects() {
               />
             ))}
           </BentoGrid>
+
+          <SectionDivider />
 
           {/* Workshop: new line */}
           <BentoGrid>

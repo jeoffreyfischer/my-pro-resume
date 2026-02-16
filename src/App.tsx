@@ -2,6 +2,7 @@ import { Nav } from "@/components/Nav";
 import { Intro } from "@/components/sections/Intro";
 import { Skills } from "@/components/sections/Skills";
 import { Projects } from "@/components/sections/Projects";
+import { PersonalProjects } from "@/components/sections/PersonalProjects";
 import { Certifications } from "@/components/sections/Certifications";
 import { Journey } from "@/components/sections/Journey";
 import { PublicVideos } from "@/components/sections/PublicVideos";
@@ -17,6 +18,7 @@ function App() {
         <Skills />
         <Certifications />
         <Projects />
+        <PersonalProjects />
         <Journey />
         <PublicVideos />
         <Hobbies />
