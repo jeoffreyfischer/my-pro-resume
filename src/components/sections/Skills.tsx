@@ -13,7 +13,7 @@ const ORBIT_LOGOS: Array<{ label: string; logoSrc: string }> = [
   { label: "Azure", logoSrc: "/images/logo-azure.png" },
   { label: "Cursor", logoSrc: "/images/logo-cursor.webp" },
   { label: "Scrum Master", logoSrc: "/images/logo-scrum.png" },
-  { label: "Matlab", logoSrc: "/images/logo-matlab.png" },
+  { label: "MATLAB", logoSrc: "/images/logo-matlab.png" },
 ];
 
 function isStrongSkill(item: string): boolean {

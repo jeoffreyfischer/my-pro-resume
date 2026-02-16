@@ -51,7 +51,7 @@ export const skills = [
   },
   {
     category: "Research & Data",
-    items: ["Matlab", "Data analysis", "Publications", "Technical writing"],
+    items: ["MATLAB", "Data analysis", "Publications", "Technical writing"],
   },
 ] as const;
 
