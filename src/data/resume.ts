@@ -4,6 +4,7 @@ export const site = {
   title: "Full-Stack Software Engineer",
   tagline: "From shipping rockets to shipping software 🚀",
   location: "Strasbourg, France",
+  citizenship: "French Australian citizen",
   summary:
     "Full-Stack Software Engineer with a PhD in Aerospace. After 10+ years in academia, I transitioned into software development, applying rigorous problem solving to build scalable web applications, APIs, and Cloud solutions.",
   specialty:

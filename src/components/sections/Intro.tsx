@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { SiGithub, SiLinkedin } from "react-icons/si";
+import { AU, FR } from "country-flag-icons/react/3x2";
 import { Confetti } from "@/components/ui/confetti";
 import { Highlight } from "@/components/ui/hero-highlight";
 import { site } from "@/data/resume";
@@ -44,9 +45,19 @@ export function Intro() {
               initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-sm font-medium text-blue-600 dark:text-blue-400 mb-2"
+              className="text-sm font-medium text-blue-600 dark:text-blue-400 mb-2 flex flex-wrap items-center gap-x-2 gap-y-1"
             >
-              {site.location}
+              <span>{site.location}</span>
+              {"citizenship" in site && site.citizenship && (
+                <>
+                  <span className="text-zinc-400 dark:text-zinc-500" aria-hidden>·</span>
+                  <span>{site.citizenship}</span>
+                  <span className="inline-flex items-center gap-1 shrink-0" aria-hidden title="France, Australia">
+                    <FR className="h-3.5 w-auto rounded-sm border border-zinc-300/80 dark:border-zinc-600/80" title="France" />
+                    <AU className="h-3.5 w-auto rounded-sm border border-zinc-300/80 dark:border-zinc-600/80" title="Australia" />
+                  </span>
+                </>
+              )}
             </motion.p>
             <motion.h1
               initial={{ opacity: 0, y: 12 }}
