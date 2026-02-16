@@ -8,7 +8,7 @@ export function PersonalProjects() {
   return (
     <div id="personal-projects">
       <SectionHeading as="h3" className="mb-6">
-        Personal Projects
+        Personal Project
       </SectionHeading>
       <motion.div
           initial={{ opacity: 0, y: 20 }}
