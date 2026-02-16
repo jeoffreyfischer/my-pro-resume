@@ -6,8 +6,11 @@ const VERTICAL_MEDIA = hobbies.filter(
   (h) => (h.placeholder === "video" && "embedUrl" in h) || (h.placeholder === "image" && "imageSrc" in h)
 );
 
+type TextOnlyHobby = { title: string; detail: string };
 /** Other hobby cards (no media) */
-const OTHER_HOBBIES = hobbies.filter((h) => h.placeholder === "none");
+const OTHER_HOBBIES: TextOnlyHobby[] = hobbies.filter(
+  (h) => (h as { placeholder: string }).placeholder === "none"
+) as TextOnlyHobby[];
 
 export function Hobbies() {
   return (
