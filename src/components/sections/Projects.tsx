@@ -121,7 +121,7 @@ export function Projects() {
           viewport={{ once: true }}
           className="text-2xl sm:text-3xl font-bold text-zinc-900 dark:text-zinc-100 mb-10"
         >
-          Projects & client work
+          Projects, Clients & Workshops
         </motion.h2>
 
         <div className="space-y-8 sm:space-y-10">
