@@ -210,19 +210,15 @@ export const hobbies = [
     embedUrl: "https://www.youtube.com/embed/WS0HWQtoBv8",
   },
   {
+    title: "🏋️ Fitness",
+    detail: "12 years – From Bicep files to Biceps",
+    placeholder: "image" as const,
+    imageSrc: "/images/hobbies-fitness.png",
+  },
+  {
     title: "💃🕺 Salsa & Bachata",
     detail: "8 years – Still stepping on some unlucky toes…",
-    placeholder: "none" as const,
-  },
-  {
-    title: "🏃‍♂️ Running",
-    detail: "Half-marathon but double-pain",
     placeholder: "image" as const,
-    imageSrc: "/images/2025-sydney-half-marathon.png",
-  },
-  {
-    title: "🏋️💪 Fitness & Personal Training",
-    detail: "From Bicep files to Biceps",
-    placeholder: "none" as const,
+    imageSrc: "/images/hobbies-salsa.jpg",
   },
 ];
