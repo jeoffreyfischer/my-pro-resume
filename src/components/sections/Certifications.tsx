@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { MagicCard } from "@/components/ui/magic-card";
+import { MagicCard, MAGIC_CARD_DARK_PROPS, MAGIC_CARD_OVERLAY_CLASS } from "@/components/ui/magic-card";
 import { useTheme } from "@/hooks/useTheme";
 import { certifications } from "@/data/resume";
 
@@ -21,7 +21,7 @@ export function Certifications() {
           {certifications.map((cert, i) => {
             const cardContent = (
               <>
-                <div className="absolute inset-0 rounded-[inherit] bg-zinc-50 dark:bg-zinc-800/30 z-0" aria-hidden />
+                <div className={MAGIC_CARD_OVERLAY_CLASS} aria-hidden />
                 <a
                   href={cert.url}
                   target="_blank"
@@ -51,12 +51,7 @@ export function Certifications() {
                 transition={{ delay: i * 0.05 }}
               >
                 {isDark ? (
-                  <MagicCard
-                    className="rounded-xl border border-zinc-200 dark:border-zinc-700/50 overflow-hidden h-full"
-                    gradientColor="rgba(255,255,255,0.12)"
-                    gradientFrom="#60a5fa"
-                    gradientTo="#a78bfa"
-                  >
+                  <MagicCard {...MAGIC_CARD_DARK_PROPS}>
                     {cardContent}
                   </MagicCard>
                 ) : (

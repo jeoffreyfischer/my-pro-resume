@@ -3,6 +3,18 @@ import { motion, useMotionTemplate, useMotionValue } from "motion/react"
 
 import { cn } from "@/lib/utils"
 
+/** Shared props for dark-mode MagicCard (hover gradient). */
+export const MAGIC_CARD_DARK_PROPS = {
+  className: "rounded-xl border border-zinc-200 dark:border-zinc-700/50 overflow-hidden h-full",
+  gradientColor: "rgba(255,255,255,0.12)" as const,
+  gradientFrom: "#60a5fa",
+  gradientTo: "#a78bfa",
+} as const
+
+/** Overlay div class for MagicCard content (bg + pointer-events-none). */
+export const MAGIC_CARD_OVERLAY_CLASS =
+  "absolute inset-0 rounded-[inherit] bg-zinc-50 dark:bg-zinc-800/30 z-0 pointer-events-none"
+
 interface MagicCardProps {
   children?: React.ReactNode
   className?: string
