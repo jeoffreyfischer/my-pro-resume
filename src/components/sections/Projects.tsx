@@ -1,11 +1,12 @@
 import { motion } from "framer-motion";
 import { BentoGrid } from "@/components/ui/bento-grid";
 import { MagicCard, MAGIC_CARD_DARK_PROPS, MAGIC_CARD_OVERLAY_CLASS } from "@/components/ui/magic-card";
+import { SectionHeading } from "@/components/ui/section-heading";
 import { useTheme } from "@/hooks/useTheme";
 import { projects } from "@/data/resume";
+import { SECTION_CARD_BASE } from "@/lib/constants";
 
-const CARD_CLASS =
-  "rounded-xl border border-zinc-200 dark:border-zinc-700/50 bg-zinc-50 dark:bg-zinc-800/30 p-5 sm:p-6 hover:border-zinc-300 dark:hover:border-zinc-600/50 transition-colors shadow-sm dark:shadow-none";
+const CARD_CLASS = `${SECTION_CARD_BASE} p-5 sm:p-6`;
 
 const CATEGORY_PILL: Record<string, string> = {
   internal:
@@ -126,14 +127,9 @@ export function WorkProjects() {
   const workshopIndexStart = clientIndexStart + clientProjects.length;
   return (
     <div id="work-projects">
-      <motion.h3
-        initial={{ opacity: 0, y: 16 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="text-xl sm:text-2xl font-bold text-zinc-900 dark:text-zinc-100 mb-8"
-      >
+      <SectionHeading as="h3" className="mb-8">
         Work Projects
-      </motion.h3>
+      </SectionHeading>
 
       <div className="space-y-8 sm:space-y-10">
           <SectionDivider label="Internal" />

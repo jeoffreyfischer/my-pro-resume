@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { HiArrowTopRightOnSquare } from "react-icons/hi2";
 import { MagicCard, MAGIC_CARD_DARK_PROPS, MAGIC_CARD_OVERLAY_CLASS } from "@/components/ui/magic-card";
+import { SectionHeading } from "@/components/ui/section-heading";
 import { useTheme } from "@/hooks/useTheme";
 import { certifications } from "@/data/resume";
 
@@ -10,14 +11,7 @@ export function Certifications() {
   return (
     <section id="certifications" className="section-pad">
       <div className="container-narrow">
-        <motion.h2
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-2xl sm:text-3xl font-bold text-zinc-900 dark:text-zinc-100 mb-10"
-        >
-          Certifications
-        </motion.h2>
+        <SectionHeading className="mb-10">Certifications</SectionHeading>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {certifications.map((cert, i) => {
             const cardContent = (

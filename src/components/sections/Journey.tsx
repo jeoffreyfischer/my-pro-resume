@@ -1,12 +1,13 @@
 import { motion } from "framer-motion";
 import { MagicCard, MAGIC_CARD_DARK_PROPS, MAGIC_CARD_OVERLAY_CLASS } from "@/components/ui/magic-card";
+import { SectionHeading } from "@/components/ui/section-heading";
 import { useTheme } from "@/hooks/useTheme";
 import { timeline } from "@/data/resume";
+import { SECTION_CARD_BASE } from "@/lib/constants";
 
 type TimelineItem = (typeof timeline)[number];
 
-const CARD_CLASS =
-  "rounded-xl border border-zinc-200 dark:border-zinc-700/50 bg-zinc-50 dark:bg-zinc-800/30 p-4 sm:p-5 hover:border-zinc-300 dark:hover:border-zinc-600/50 transition-colors shadow-sm dark:shadow-none";
+const CARD_CLASS = `${SECTION_CARD_BASE} p-4 sm:p-5`;
 
 function TimelineCardBody({ item }: { item: TimelineItem }) {
   const isWork = item.type === "work";
@@ -63,14 +64,7 @@ export function Journey() {
   return (
     <section id="journey" className="section-pad">
       <div className="container-narrow">
-        <motion.h2
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-2xl sm:text-3xl font-bold text-zinc-900 dark:text-zinc-100 mb-12"
-        >
-          Journey
-        </motion.h2>
+        <SectionHeading className="mb-12">Journey</SectionHeading>
 
         {/* Small screens: single column, line on left, all blocks on the right */}
         <div className="relative lg:hidden">

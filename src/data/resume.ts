@@ -20,6 +20,14 @@ export const site = {
   },
 } as const;
 
+/** Public video embeds (id = YouTube video ID). */
+export const publicVideos = [
+  { id: "IwvCTwz0C7M", title: "Do you share secrets securely?" },
+  { id: "-0PUveZg3wk", title: "3 tips to a clean Sprint board" },
+  { id: "K-YUqVTyU3k", title: "SSW TimePro - Create a new tenant" },
+  { id: "IjsXSMOAMCA", title: "Do you know to stretch when working at a desk?" },
+] as const;
+
 export const skills = [
   {
     category: "Backend",

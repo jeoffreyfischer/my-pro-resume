@@ -1,20 +1,16 @@
 import { motion } from "framer-motion";
 import { HiArrowTopRightOnSquare } from "react-icons/hi2";
+import { SectionHeading } from "@/components/ui/section-heading";
 
 const EMBED_URL = "https://lateststack.com/";
 
 export function PersonalProjects() {
   return (
     <div id="personal-projects">
-      <motion.h3
-        initial={{ opacity: 0, y: 16 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="text-xl sm:text-2xl font-bold text-zinc-900 dark:text-zinc-100 mb-6"
-      >
-        Personal Project
-      </motion.h3>
-        <motion.div
+      <SectionHeading as="h3" className="mb-6">
+        Personal Projects
+      </SectionHeading>
+      <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}

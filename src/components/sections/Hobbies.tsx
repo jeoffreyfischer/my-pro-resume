@@ -1,5 +1,7 @@
 import { motion } from "framer-motion";
 import { hobbies } from "@/data/resume";
+import { SectionHeading } from "@/components/ui/section-heading";
+import { SECTION_CARD_BASE } from "@/lib/constants";
 
 /** Vertical (portrait) media - guitar video & fitness/salsa photos */
 const VERTICAL_MEDIA = hobbies.filter(
@@ -16,14 +18,7 @@ export function Hobbies() {
   return (
     <section id="hobbies" className="section-pad">
       <div className="container-narrow">
-        <motion.h2
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-2xl sm:text-3xl font-bold text-zinc-900 dark:text-zinc-100 mb-6"
-        >
-          Hobbies
-        </motion.h2>
+        <SectionHeading className="mb-6">Hobbies</SectionHeading>
         {/* Three hobby cards: 1 col mobile, 2 cols tablet, 3 cols desktop */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-10 sm:mb-12">
           {VERTICAL_MEDIA.map((hobby, i) => (
@@ -33,7 +28,7 @@ export function Hobbies() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.06 }}
-              className="rounded-xl border border-zinc-200 dark:border-zinc-700/50 bg-zinc-50 dark:bg-zinc-800/30 overflow-hidden hover:border-zinc-300 dark:hover:border-zinc-600/50 transition-colors shadow-sm dark:shadow-none"
+              className={`${SECTION_CARD_BASE} overflow-hidden`}
             >
               <div className="aspect-[9/16] w-full max-w-[280px] lg:max-w-none mx-auto bg-zinc-200 dark:bg-zinc-800/60 border-b border-zinc-200 dark:border-zinc-700/50 overflow-hidden">
                 {"embedUrl" in hobby && hobby.embedUrl ? (
@@ -69,7 +64,7 @@ export function Hobbies() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: (VERTICAL_MEDIA.length + i) * 0.06 }}
-              className="rounded-xl border border-zinc-200 dark:border-zinc-700/50 bg-zinc-50 dark:bg-zinc-800/30 p-5 sm:p-6 hover:border-zinc-300 dark:hover:border-zinc-600/50 transition-colors shadow-sm dark:shadow-none"
+              className={`${SECTION_CARD_BASE} p-5 sm:p-6`}
             >
               <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">{hobby.title}</h3>
               <p className="text-sm text-zinc-600 dark:text-zinc-400 mt-1">{hobby.detail}</p>

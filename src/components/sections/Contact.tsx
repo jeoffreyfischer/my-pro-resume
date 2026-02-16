@@ -1,19 +1,16 @@
 import { motion } from "framer-motion";
 import { SiGithub, SiGooglescholar, SiLinkedin, SiYoutube } from "react-icons/si";
 import { site } from "@/data/resume";
+import { SectionHeading } from "@/components/ui/section-heading";
+
+const CONTACT_LINK_CLASS =
+  "inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-zinc-300 dark:border-zinc-600 bg-white dark:bg-transparent text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800/50 font-medium transition-colors";
 
 export function Contact() {
   return (
     <section id="contact" className="section-pad">
       <div className="container-narrow">
-        <motion.h2
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-2xl sm:text-3xl font-bold text-zinc-900 dark:text-zinc-100 mb-6"
-        >
-          Contact
-        </motion.h2>
+        <SectionHeading className="mb-6">Contact</SectionHeading>
         <motion.p
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -41,7 +38,7 @@ export function Contact() {
             href={site.links.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-zinc-300 dark:border-zinc-600 bg-white dark:bg-transparent text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800/50 font-medium transition-colors"
+            className={CONTACT_LINK_CLASS}
           >
             <SiLinkedin className="size-5 shrink-0" aria-hidden />
             LinkedIn
@@ -50,7 +47,7 @@ export function Contact() {
             href={site.links.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-zinc-300 dark:border-zinc-600 bg-white dark:bg-transparent text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800/50 font-medium transition-colors"
+            className={CONTACT_LINK_CLASS}
           >
             <SiGithub className="size-5 shrink-0" aria-hidden />
             GitHub
@@ -59,7 +56,7 @@ export function Contact() {
             href={site.links.professionalProfile}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-zinc-300 dark:border-zinc-600 bg-white dark:bg-transparent text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800/50 font-medium transition-colors"
+            className={CONTACT_LINK_CLASS}
           >
             <img src="/images/ssw-logo.svg" alt="" className="size-5 shrink-0" aria-hidden />
             SSW profile
@@ -68,7 +65,7 @@ export function Contact() {
             href={site.links.publicVideos}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-zinc-300 dark:border-zinc-600 bg-white dark:bg-transparent text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800/50 font-medium transition-colors"
+            className={CONTACT_LINK_CLASS}
           >
             <SiYoutube className="size-5 shrink-0" aria-hidden />
             Public videos
@@ -77,7 +74,7 @@ export function Contact() {
             href={site.links.publications}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-zinc-300 dark:border-zinc-600 bg-white dark:bg-transparent text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800/50 font-medium transition-colors"
+            className={CONTACT_LINK_CLASS}
           >
             <SiGooglescholar className="size-5 shrink-0" aria-hidden />
             Publications

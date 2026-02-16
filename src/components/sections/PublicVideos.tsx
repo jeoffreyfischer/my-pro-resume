@@ -1,15 +1,8 @@
 import { motion } from "framer-motion";
 import { HiArrowTopRightOnSquare } from "react-icons/hi2";
-import { site } from "@/data/resume";
+import { site, publicVideos } from "@/data/resume";
+import { SectionHeading } from "@/components/ui/section-heading";
 
-const VIDEOS: { id: string; title: string }[] = [
-  { id: "IwvCTwz0C7M", title: "Do you share secrets securely?" },
-  { id: "-0PUveZg3wk", title: "3 tips to a clean Sprint board" },
-  { id: "K-YUqVTyU3k", title: "SSW TimePro - Create a new tenant" },
-  { id: "IjsXSMOAMCA", title: "Do you know to stretch when working at a desk?" },
-];
-
-const IFRAME_CLASS = "w-full h-full";
 const IFRAME_ALLOW =
   "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
 
@@ -17,17 +10,10 @@ export function PublicVideos() {
   return (
     <section id="public-videos" className="section-pad">
       <div className="container-narrow">
-        <motion.h2
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-2xl sm:text-3xl font-bold text-zinc-900 dark:text-zinc-100 mb-6"
-        >
-          Public videos
-        </motion.h2>
+        <SectionHeading className="mb-6">Public videos</SectionHeading>
         {/* Responsive grid: 1 col mobile, 2 cols sm+ */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-8">
-          {VIDEOS.map((video, i) => (
+          {publicVideos.map((video, i) => (
             <motion.figure
               key={video.id}
               initial={{ opacity: 0, y: 20 }}
@@ -42,7 +28,7 @@ export function PublicVideos() {
                   title={video.title}
                   allow={IFRAME_ALLOW}
                   allowFullScreen
-                  className={IFRAME_CLASS}
+                  className="w-full h-full"
                 />
               </div>
               <figcaption className="mt-2 text-base font-bold text-zinc-700 dark:text-zinc-300">
@@ -62,7 +48,7 @@ export function PublicVideos() {
             href={site.links.publicVideos}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-lg font-medium text-zinc-700 dark:text-zinc-300 bg-zinc-50 dark:bg-zinc-800/30 border border-zinc-200 dark:border-zinc-700/50 hover:bg-zinc-100 dark:hover:bg-zinc-800/50 hover:border-zinc-300 dark:hover:border-zinc-600/50 transition-colors"
+            className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-base font-medium text-zinc-700 dark:text-zinc-300 bg-zinc-50 dark:bg-zinc-800/30 border border-zinc-200 dark:border-zinc-700/50 hover:bg-zinc-100 dark:hover:bg-zinc-800/50 hover:border-zinc-300 dark:hover:border-zinc-600/50 transition-colors"
           >
             Watch full playlist
             <HiArrowTopRightOnSquare className="size-6 shrink-0" aria-hidden />

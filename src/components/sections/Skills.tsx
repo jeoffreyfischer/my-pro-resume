@@ -1,8 +1,10 @@
 import { motion } from "framer-motion";
 import { OrbitingCircles } from "@/components/ui/orbiting-circles";
 import { SkillsOrbitControls } from "@/components/sections/SkillsOrbitControls";
+import { SectionHeading } from "@/components/ui/section-heading";
 import { skills } from "@/data/resume";
 import { useSkillsHighlight } from "@/hooks/useSkillsHighlight";
+import { SECTION_CARD_BASE } from "@/lib/constants";
 
 /* Single source of truth: the 6 logos in the orbit (public/images) */
 const ORBIT_LOGOS: Array<{ label: string; logoSrc: string }> = [
@@ -22,8 +24,7 @@ function isActiveOrbitSkill(item: string, activeLabel: string): boolean {
   return item === activeLabel || item.startsWith(activeLabel);
 }
 
-const CARD_CLASS =
-  "rounded-xl border border-zinc-200 dark:border-zinc-700/50 bg-zinc-50 dark:bg-zinc-800/30 p-4 sm:p-5 hover:border-zinc-300 dark:hover:border-zinc-600/50 transition-colors shadow-sm dark:shadow-none";
+const CARD_CLASS = `${SECTION_CARD_BASE} p-4 sm:p-5`;
 
 /* Desktop: left column = indices 0,2,4; right column = indices 1,3,5 */
 const CARD_GAP = "gap-6";
@@ -112,14 +113,7 @@ export function Skills() {
   return (
     <section id="skills" className="section-pad">
       <div className="container-narrow">
-        <motion.h2
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-2xl sm:text-3xl font-bold text-zinc-900 dark:text-zinc-100 mb-10"
-        >
-          Skills
-        </motion.h2>
+        <SectionHeading className="mb-10">Skills</SectionHeading>
 
         {/* Mobile/tablet: orbit on top, then 2-col grid of cards */}
         <div className="md:hidden space-y-8">
