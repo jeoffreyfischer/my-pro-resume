@@ -70,7 +70,7 @@ function SkillCard({
       transition={{ delay: index * 0.05 }}
       className={className}
     >
-      <div className={`${CARD_CLASS} max-w-[200px] md:max-w-[220px] lg:max-w-[240px] min-w-0`}>
+      <div className={`${CARD_CLASS} max-w-[200px] md:max-w-[280px] lg:max-w-[320px] min-w-0`}>
         <h3 className="text-base font-semibold text-blue-600 dark:text-blue-400 mb-3">{group.category}</h3>
         <ul className="flex flex-wrap gap-2">
           {group.items.map((item, itemIndex) => {
@@ -105,9 +105,9 @@ export function Skills() {
   const activeLabel = activeIndex !== null ? ORBIT_LOGOS[activeIndex].label : undefined;
 
   return (
-    <section id="skills" className="section-pad">
+    <section id="skills" className="section-pad py-12 sm:py-14 lg:py-16">
       <div className="container-narrow">
-        <SectionHeading className="mb-10">Skills</SectionHeading>
+        <SectionHeading className="mb-6 lg:mb-8">Skills</SectionHeading>
 
         {/* Mobile/tablet: orbit on top, then 2-col grid of cards */}
         <div className="md:hidden space-y-8">
@@ -149,7 +149,7 @@ export function Skills() {
           initial={{ opacity: 0, scale: 0.98 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          className="hidden md:flex items-stretch justify-center gap-4 lg:gap-6 max-w-[900px] mx-auto"
+          className="hidden md:flex items-stretch justify-center gap-4 lg:gap-6 w-full max-w-[1200px] mx-auto"
         >
           <div className={`flex flex-col items-end ${CARD_GAP}`}>
             {[skills[0], skills[2], skills[4]].map((group, i) => (
@@ -157,7 +157,7 @@ export function Skills() {
             ))}
           </div>
           <div className="relative flex flex-col items-center justify-center self-stretch min-h-0">
-            <div className="relative flex size-[340px] lg:size-[400px] shrink-0 items-center justify-center">
+            <div className="relative flex size-[300px] lg:size-[340px] shrink-0 items-center justify-center">
               <OrbitingCircles
                 radius={120}
                 duration={24}
