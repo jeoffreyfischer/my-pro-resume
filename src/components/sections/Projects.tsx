@@ -1,9 +1,9 @@
-import { motion } from "framer-motion";
-import { BentoGrid } from "@/components/ui/bento-grid";
+import { CardStack } from "@/components/ui/card-stack";
 import { MagicCard, MAGIC_CARD_DARK_PROPS, MAGIC_CARD_OVERLAY_CLASS } from "@/components/ui/magic-card";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { useTheme } from "@/hooks/useTheme";
 import { projects } from "@/data/resume";
+import { cn } from "@/lib/utils";
 import { SECTION_CARD_BASE } from "@/lib/constants";
 
 const CARD_CLASS = `${SECTION_CARD_BASE} p-5 sm:p-6`;
@@ -17,28 +17,6 @@ const CATEGORY_PILL: Record<string, string> = {
     "inline-flex shrink-0 text-xs font-medium px-2.5 py-1 rounded-md border text-green-700 dark:text-green-300 bg-green-100 dark:bg-green-950/50 border-green-200 dark:border-green-800/50",
 };
 
-function isShortContent(project: (typeof projects)[number]): boolean {
-  return (
-    project.description.length <= 55 ||
-    (project.description.length <= 75 && project.tech.length <= 4)
-  );
-}
-
-/** Internal: one row, all same width (3-col grid, each col-span-1). */
-function getInternalSpan(): string {
-  return "lg:col-span-1";
-}
-
-/** Client: uniform width (all same size). */
-function getClientSpan(): string {
-  return "lg:col-span-1";
-}
-
-/** Workshop: single row, content-based. */
-function getWorkshopSpan(project: (typeof projects)[number]): string {
-  return isShortContent(project) ? "lg:col-span-1" : "lg:col-span-2";
-}
-
 function getCategoryPillClass(category: string): string {
   const c = category.toLowerCase();
   if (c.includes("internal")) return CATEGORY_PILL.internal;
@@ -46,13 +24,19 @@ function getCategoryPillClass(category: string): string {
   return CATEGORY_PILL.client;
 }
 
+function ProjectCardTitleStrip({ project }: { project: (typeof projects)[number] }) {
+  return (
+    <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2">
+      <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">{project.title}</h3>
+      <span className={getCategoryPillClass(project.category)}>{project.category}</span>
+    </div>
+  );
+}
+
 function ProjectCardBody({ project }: { project: (typeof projects)[number] }) {
   return (
     <>
-      <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2">
-        <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">{project.title}</h3>
-        <span className={getCategoryPillClass(project.category)}>{project.category}</span>
-      </div>
+      <ProjectCardTitleStrip project={project} />
       <p className="mt-2 text-zinc-600 dark:text-zinc-400 text-sm leading-relaxed">{project.description}</p>
       {project.tech.length > 0 && (
         <div className="mt-3 flex flex-wrap gap-1.5">
@@ -70,35 +54,24 @@ function ProjectCardBody({ project }: { project: (typeof projects)[number] }) {
   );
 }
 
-function ProjectCard({
-  project,
-  index,
-  gridSpan = "",
-  isDark,
-}: {
-  project: (typeof projects)[number];
-  index: number;
-  gridSpan?: string;
-  isDark: boolean;
-}) {
-  const body = <ProjectCardBody project={project} />;
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 12 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: index * 0.05 }}
-      className={gridSpan}
-    >
-      {isDark ? (
-        <MagicCard {...MAGIC_CARD_DARK_PROPS}>
-          <div className={MAGIC_CARD_OVERLAY_CLASS} aria-hidden />
-          <div className="relative z-10 p-5 sm:p-6">{body}</div>
-        </MagicCard>
-      ) : (
-        <article className={CARD_CLASS}>{body}</article>
-      )}
-    </motion.div>
+/** Renders project card content for CardStack. When isExpanded is false, only title + category. */
+function renderProjectCard(
+  project: (typeof projects)[number],
+  isDark: boolean,
+  isExpanded: boolean
+) {
+  const body = isExpanded ? (
+    <ProjectCardBody project={project} />
+  ) : (
+    <ProjectCardTitleStrip project={project} />
+  );
+  return isDark ? (
+    <MagicCard {...MAGIC_CARD_DARK_PROPS} className={cn(MAGIC_CARD_DARK_PROPS.className, "h-full")}>
+      <div className={MAGIC_CARD_OVERLAY_CLASS} aria-hidden />
+      <div className="relative z-10 p-5 sm:p-6 h-full flex flex-col">{body}</div>
+    </MagicCard>
+  ) : (
+    <article className={`${CARD_CLASS} h-full flex flex-col`}>{body}</article>
   );
 }
 
@@ -108,75 +81,53 @@ const internalProjects = projects.filter((p) =>
 const clientProjects = projects.filter((p) => p.category.toLowerCase().includes("client"));
 const workshopProjects = projects.filter((p) => p.category.toLowerCase().includes("workshop"));
 
-function SectionDivider({ label }: { label: string }) {
+function PileLabel({ label }: { label: string }) {
   return (
-    <div className="flex items-center gap-4 py-6 sm:py-8" aria-hidden>
-      <span className="flex-1 h-px bg-gradient-to-r from-transparent via-zinc-300 dark:via-zinc-600 to-transparent" />
-      <span className="text-xs font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500 shrink-0">
-        {label}
-      </span>
-      <span className="flex-1 h-px bg-gradient-to-l from-transparent via-zinc-300 dark:via-zinc-600 to-transparent" />
-    </div>
+    <h4 className="text-xs font-semibold uppercase tracking-widest text-zinc-500 dark:text-zinc-400 mb-3 sm:mb-4">
+      {label}
+    </h4>
   );
 }
 
 export function WorkProjects() {
   const { theme } = useTheme();
   const isDark = theme === "dark";
-  const clientIndexStart = internalProjects.length;
-  const workshopIndexStart = clientIndexStart + clientProjects.length;
+
   return (
     <div id="work-projects">
       <SectionHeading as="h3" className="mb-8">
         Work Projects
       </SectionHeading>
 
-      <div className="space-y-8 sm:space-y-10">
-          <SectionDivider label="Internal" />
+      {/* 3 piles: Client | Internal | Workshop. Stack on small screens, columns on lg+ */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-6 items-start">
+        <section className="min-w-0" aria-label="Client projects">
+          <PileLabel label="Client" />
+          <CardStack
+            items={clientProjects}
+            itemLabel="Client project"
+            renderCard={(project, _i, isExpanded) => renderProjectCard(project, isDark, isExpanded)}
+          />
+        </section>
 
-          {/* Internal: all on one row, similar width (3-col grid) */}
-          <BentoGrid className="lg:grid-cols-3">
-            {internalProjects.map((project, i) => (
-              <ProjectCard
-                key={project.title}
-                project={project}
-                index={i}
-                gridSpan={getInternalSpan()}
-                isDark={isDark}
-              />
-            ))}
-          </BentoGrid>
+        <section className="min-w-0" aria-label="Internal projects">
+          <PileLabel label="Internal" />
+          <CardStack
+            items={internalProjects}
+            itemLabel="Internal project"
+            renderCard={(project, _i, isExpanded) => renderProjectCard(project, isDark, isExpanded)}
+          />
+        </section>
 
-          <SectionDivider label="Client" />
-
-          {/* Client: several rows */}
-          <BentoGrid>
-            {clientProjects.map((project, i) => (
-              <ProjectCard
-                key={project.title}
-                project={project}
-                index={clientIndexStart + i}
-                gridSpan={getClientSpan()}
-                isDark={isDark}
-              />
-            ))}
-          </BentoGrid>
-
-          <SectionDivider label="Workshop" />
-
-          {/* Workshop: new line */}
-          <BentoGrid>
-            {workshopProjects.map((project, i) => (
-              <ProjectCard
-                key={project.title}
-                project={project}
-                index={workshopIndexStart + i}
-                gridSpan={getWorkshopSpan(project)}
-                isDark={isDark}
-              />
-            ))}
-          </BentoGrid>
-        </div>
+        <section className="min-w-0 md:col-span-2 lg:col-span-1" aria-label="Workshop projects">
+          <PileLabel label="Workshop" />
+          <CardStack
+            items={workshopProjects}
+            itemLabel="Workshop"
+            renderCard={(project, _i, isExpanded) => renderProjectCard(project, isDark, isExpanded)}
+          />
+        </section>
+      </div>
     </div>
   );
 }
