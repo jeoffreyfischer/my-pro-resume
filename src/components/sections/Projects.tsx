@@ -81,14 +81,6 @@ const internalProjects = projects.filter((p) =>
 const clientProjects = projects.filter((p) => p.category.toLowerCase().includes("client"));
 const workshopProjects = projects.filter((p) => p.category.toLowerCase().includes("workshop"));
 
-function PileLabel({ label }: { label: string }) {
-  return (
-    <h4 className="text-xs font-semibold uppercase tracking-widest text-zinc-500 dark:text-zinc-400 mb-3 sm:mb-4">
-      {label}
-    </h4>
-  );
-}
-
 export function WorkProjects() {
   const { theme } = useTheme();
   const isDark = theme === "dark";
@@ -99,10 +91,9 @@ export function WorkProjects() {
         Work Projects
       </SectionHeading>
 
-      {/* 3 piles: Client | Internal | Workshop. Stack on small screens, columns on lg+ */}
+      {/* 3 piles: Client | Internal | Workshop. md: 2 cols (Client | Internal+Workshop). lg: 3 cols. */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-6 items-start">
         <section className="min-w-0" aria-label="Client projects">
-          <PileLabel label="Client" />
           <CardStack
             items={clientProjects}
             itemLabel="Client project"
@@ -110,23 +101,23 @@ export function WorkProjects() {
           />
         </section>
 
-        <section className="min-w-0" aria-label="Internal projects">
-          <PileLabel label="Internal" />
-          <CardStack
-            items={internalProjects}
-            itemLabel="Internal project"
-            renderCard={(project, _i, isExpanded) => renderProjectCard(project, isDark, isExpanded)}
-          />
-        </section>
+        <div className="flex flex-col gap-8 lg:contents min-w-0">
+          <section className="min-w-0" aria-label="Internal projects">
+            <CardStack
+              items={internalProjects}
+              itemLabel="Internal project"
+              renderCard={(project, _i, isExpanded) => renderProjectCard(project, isDark, isExpanded)}
+            />
+          </section>
 
-        <section className="min-w-0 md:col-span-2 lg:col-span-1" aria-label="Workshop projects">
-          <PileLabel label="Workshop" />
-          <CardStack
-            items={workshopProjects}
-            itemLabel="Workshop"
-            renderCard={(project, _i, isExpanded) => renderProjectCard(project, isDark, isExpanded)}
-          />
-        </section>
+          <section className="min-w-0" aria-label="Workshop projects">
+            <CardStack
+              items={workshopProjects}
+              itemLabel="Workshop"
+              renderCard={(project, _i, isExpanded) => renderProjectCard(project, isDark, isExpanded)}
+            />
+          </section>
+        </div>
       </div>
     </div>
   );
