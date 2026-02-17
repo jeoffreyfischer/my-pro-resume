@@ -16,10 +16,6 @@ const ORBIT_LOGOS: Array<{ label: string; logoSrc: string }> = [
   { label: "MATLAB", logoSrc: "/images/logo-matlab.png" },
 ];
 
-function isStrongSkill(item: string): boolean {
-  return ORBIT_LOGOS.some(({ label }) => item === label || item.startsWith(label));
-}
-
 function isActiveOrbitSkill(item: string, activeLabel: string): boolean {
   return item === activeLabel || item.startsWith(activeLabel);
 }
@@ -77,9 +73,9 @@ function SkillCard({
       <div className={`${CARD_CLASS} max-w-[200px] md:max-w-[220px] lg:max-w-[240px] min-w-0`}>
         <h3 className="text-base font-semibold text-blue-600 dark:text-blue-400 mb-3">{group.category}</h3>
         <ul className="flex flex-wrap gap-2">
-          {group.items.map((item) => {
-            const strong = isStrongSkill(item);
+          {group.items.map((item, itemIndex) => {
             const active = activeLabel != null && isActiveOrbitSkill(item, activeLabel);
+            const isFirst = itemIndex === 0;
             return (
               <motion.li
                 key={item}
@@ -90,9 +86,7 @@ function SkillCard({
                 className={
                   active
                     ? "text-base font-semibold text-yellow-900 dark:text-yellow-100 bg-yellow-200 dark:bg-yellow-900/60 border-2 border-yellow-500 dark:border-yellow-400 px-3 py-1.5 rounded-md origin-center"
-                    : strong
-                      ? "text-base font-semibold text-blue-700 dark:text-blue-300 bg-blue-100 dark:bg-blue-950/50 border-2 border-blue-300/60 dark:border-blue-700/50 px-3 py-1.5 rounded-md origin-center"
-                      : "text-base text-zinc-600 dark:text-zinc-300 bg-zinc-200/80 dark:bg-zinc-700/40 border-2 border-transparent px-3 py-1.5 rounded-md origin-center"
+                    : `text-base ${isFirst ? "font-semibold" : ""} text-zinc-600 dark:text-zinc-300 bg-zinc-200/80 dark:bg-zinc-700/40 border-2 border-transparent px-3 py-1.5 rounded-md origin-center`
                 }
               >
                 {item}
