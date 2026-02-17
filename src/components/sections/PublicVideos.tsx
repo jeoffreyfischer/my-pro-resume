@@ -8,11 +8,11 @@ const IFRAME_ALLOW =
 
 export function PublicVideos() {
   return (
-    <section id="public-videos" className="section-pad">
+    <section id="public-videos" className="section-pad py-10 sm:py-12 lg:py-14">
       <div className="container-narrow">
-        <SectionHeading className="mb-6">Public videos</SectionHeading>
-        {/* Responsive grid: 1 col mobile, 2 cols sm+ */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-8">
+        <SectionHeading className="mb-4 sm:mb-5">Public videos</SectionHeading>
+        {/* Grid: 1 col mobile, 2 cols sm+; video height capped so all 4 + captions fit in view */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 lg:gap-5 mb-5 sm:mb-6">
           {publicVideos.map((video, i) => (
             <motion.figure
               key={video.id}
@@ -22,7 +22,7 @@ export function PublicVideos() {
               transition={{ delay: i * 0.06 }}
               className="min-w-0"
             >
-              <div className="aspect-video w-full rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-700/50 bg-zinc-50 dark:bg-zinc-800/80 shadow-sm">
+              <div className="aspect-video w-full max-h-[200px] sm:max-h-[220px] md:max-h-[200px] lg:max-h-[240px] xl:max-h-[26vh] 2xl:max-h-[280px] rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-700/50 bg-zinc-50 dark:bg-zinc-800/80 shadow-sm">
                 <iframe
                   src={`https://www.youtube.com/embed/${video.id}`}
                   title={video.title}
@@ -31,7 +31,7 @@ export function PublicVideos() {
                   className="w-full h-full"
                 />
               </div>
-              <figcaption className="mt-2 text-base font-bold text-zinc-700 dark:text-zinc-300">
+              <figcaption className="mt-1.5 sm:mt-2 text-sm sm:text-base font-bold text-zinc-700 dark:text-zinc-300 line-clamp-2">
                 {video.title}
               </figcaption>
             </motion.figure>
