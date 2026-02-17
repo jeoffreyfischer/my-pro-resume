@@ -21,18 +21,18 @@ export function PersonalProjects() {
               href={EMBED_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
+              aria-label="Open Latest Stack in new tab"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-semibold text-white bg-blue-600 hover:bg-blue-500 transition-colors shadow-sm"
             >
               Open in new tab
-              <HiArrowTopRightOnSquare className="size-4 shrink-0" aria-hidden />
+              <HiArrowTopRightOnSquare className="size-5 shrink-0" aria-hidden />
             </a>
           </div>
-          <div className="aspect-video min-h-[400px] sm:min-h-[500px] w-full">
-            <iframe
-              src={EMBED_URL}
-              title="Latest Stack Versions"
-              className="w-full h-full min-h-[400px] sm:min-h-[500px] border-0"
-              allow="fullscreen"
+          <div className="w-full">
+            <img
+              src="/images/latest-stack.png"
+              alt="Latest Stack Versions screenshot"
+              className="w-full h-auto block"
               loading="lazy"
             />
           </div>
