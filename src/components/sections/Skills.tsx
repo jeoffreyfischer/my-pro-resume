@@ -70,7 +70,7 @@ function SkillCard({
       transition={{ delay: index * 0.05 }}
       className={className}
     >
-      <div className={`${CARD_CLASS} max-w-[200px] md:max-w-[280px] lg:max-w-[320px] min-w-0`}>
+      <div className={`${CARD_CLASS} max-w-[200px] md:max-w-[280px] lg:max-w-[320px] xl:max-w-[360px] min-w-0`}>
         <h3 className="text-base font-semibold text-blue-600 dark:text-blue-400 mb-3">{group.category}</h3>
         <ul className="flex flex-wrap gap-2">
           {group.items.map((item, itemIndex) => {
@@ -149,7 +149,7 @@ export function Skills() {
           initial={{ opacity: 0, scale: 0.98 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          className="hidden md:flex items-stretch justify-center gap-4 lg:gap-6 w-full max-w-[1200px] mx-auto"
+          className="hidden md:flex items-stretch justify-center gap-4 lg:gap-6 xl:gap-8 w-full max-w-[1200px] xl:max-w-[1400px] 2xl:max-w-[1500px] mx-auto"
         >
           <div className={`flex flex-col items-end ${CARD_GAP}`}>
             {[skills[0], skills[2], skills[4]].map((group, i) => (

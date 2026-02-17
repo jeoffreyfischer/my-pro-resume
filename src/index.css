@@ -42,7 +42,7 @@
   }
 }
 
-/* Narrow container for readable content; expands on large screens */
+/* Narrow container for readable content; expands on large screens up to 1920+ */
 .container-narrow {
   @apply mx-auto w-full px-4 sm:px-6 lg:px-8;
   max-width: 56rem; /* 896px, max-w-4xl */
@@ -62,10 +62,32 @@
     max-width: 80rem; /* 1280px, max-w-7xl */
   }
 }
+@media (min-width: 90rem) {
+  /* 1440px viewport: use more width */
+  .container-narrow {
+    max-width: 85rem; /* 1360px */
+  }
+}
+@media (min-width: 120rem) {
+  /* 1920px viewport: comfortable width without over-stretching line length */
+  .container-narrow {
+    max-width: 90rem; /* 1440px */
+  }
+}
 
-/* Section spacing */
+/* Section spacing; scales up on very large screens */
 .section-pad {
   @apply py-16 sm:py-20 lg:py-24;
+}
+@media (min-width: 90rem) {
+  .section-pad {
+    @apply py-20 lg:py-28;
+  }
+}
+@media (min-width: 120rem) {
+  .section-pad {
+    @apply py-24 lg:py-32;
+  }
 }
 
 /* Organic blob shape for profile photo – uneven rounded edges (8-value border-radius); top-left gentler to keep more of photo */

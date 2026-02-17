@@ -25,7 +25,7 @@ export function Intro() {
         />
       </div>
       <div className="container-narrow relative z-10">
-        <div className="flex flex-col lg:grid lg:grid-cols-[18rem_1fr] lg:items-stretch lg:gap-16 gap-10">
+        <div className="flex flex-col lg:grid lg:grid-cols-[18rem_1fr] xl:grid-cols-[20rem_1fr] 2xl:grid-cols-[22rem_1fr] lg:items-stretch lg:gap-16 xl:gap-20 2xl:gap-24 gap-10">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -64,7 +64,7 @@ export function Intro() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.05 }}
-              className="text-3xl sm:text-4xl lg:text-5xl font-bold text-zinc-900 dark:text-zinc-100 tracking-tight"
+              className="text-3xl sm:text-4xl lg:text-5xl 2xl:text-6xl font-bold text-zinc-900 dark:text-zinc-100 tracking-tight"
             >
               {site.name}
               {site.suffix && (
