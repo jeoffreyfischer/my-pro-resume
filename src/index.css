@@ -20,6 +20,11 @@
   html {
     scroll-behavior: smooth;
   }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
   body {
     font-family: var(--font-sans), system-ui, sans-serif;
     background-color: var(--color-surface);
@@ -90,6 +95,18 @@
 .skip-link:focus {
   top: 0.5rem;
   outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+/* WCAG 2.4.7 Focus Visible: clear focus ring for keyboard users */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+[data-theme="dark"] a:focus-visible,
+[data-theme="dark"] button:focus-visible {
+  outline-color: rgb(96 165 250);
   outline-offset: 2px;
 }
 

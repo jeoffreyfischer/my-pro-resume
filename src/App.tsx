@@ -22,10 +22,26 @@ const SECTIONS = [
 ];
 
 function App() {
+  const handleSkipToContent = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const main = document.getElementById("main-content");
+    if (main) {
+      e.preventDefault();
+      main.focus({ preventScroll: true });
+      main.scrollIntoView();
+    }
+  };
+
   return (
     <div className="min-h-screen">
+      <a
+        href="#main-content"
+        className="skip-link"
+        onClick={handleSkipToContent}
+      >
+        Skip to content
+      </a>
       <Nav />
-      <main>
+      <main id="main-content" tabIndex={-1}>
         {SECTIONS.map((Section, index) => (
           <div
             key={Section.name}

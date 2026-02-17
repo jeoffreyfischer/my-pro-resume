@@ -31,6 +31,7 @@ export function Contact() {
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-medium transition-colors"
+            aria-label="Email (opens in new tab)"
           >
             Email
           </a>
@@ -39,6 +40,7 @@ export function Contact() {
             target="_blank"
             rel="noopener noreferrer"
             className={CONTACT_LINK_CLASS}
+            aria-label="LinkedIn (opens in new tab)"
           >
             <SiLinkedin className="size-5 shrink-0" aria-hidden />
             LinkedIn
@@ -48,6 +50,7 @@ export function Contact() {
             target="_blank"
             rel="noopener noreferrer"
             className={CONTACT_LINK_CLASS}
+            aria-label="GitHub (opens in new tab)"
           >
             <SiGithub className="size-5 shrink-0" aria-hidden />
             GitHub
@@ -57,6 +60,7 @@ export function Contact() {
             target="_blank"
             rel="noopener noreferrer"
             className={CONTACT_LINK_CLASS}
+            aria-label="SSW profile (opens in new tab)"
           >
             <img src="/images/ssw-logo.svg" alt="" className="size-5 shrink-0" aria-hidden />
             SSW profile
@@ -66,6 +70,7 @@ export function Contact() {
             target="_blank"
             rel="noopener noreferrer"
             className={CONTACT_LINK_CLASS}
+            aria-label="Public videos (opens in new tab)"
           >
             <SiYoutube className="size-5 shrink-0" aria-hidden />
             Public videos
@@ -75,6 +80,7 @@ export function Contact() {
             target="_blank"
             rel="noopener noreferrer"
             className={CONTACT_LINK_CLASS}
+            aria-label="Publications (opens in new tab)"
           >
             <SiGooglescholar className="size-5 shrink-0" aria-hidden />
             Publications

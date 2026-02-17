@@ -9,6 +9,7 @@
 - Use React 19 with TypeScript: functional components and hooks (e.g. `useState`, custom hooks in `src/hooks/`).
 - Use Tailwind CSS v4 for layout and utilities; keep custom CSS in `src/index.css` (e.g. `@layer base`, `@theme`, `@custom-variant dark`).
 - Use Framer Motion for section and element animations; follow existing patterns (e.g. `motion.div`, `whileInView`, `viewport={{ once: true }}`).
+- **Accessibility:** Follow [WCAG](https://www.w3.org/WAI/WCAG21/quickref/) (Web Content Accessibility Guidelines) so the resume is perceivable, operable, and understandable (e.g. semantic HTML, sufficient contrast, visible focus, skip link, reduced motion support, meaningful alt text and labels).
 - **Keep the resume modern and responsive:** For every UI change, consider mobile → tablet → desktop; use responsive utilities and fluid/adaptive layouts so the page looks and works well at every breakpoint.
 - Prefer small, focused components and small diffs.
 - Reuse existing patterns (e.g. section components in `src/components/sections/`, data in `src/data/resume.ts`, theme via `useTheme` and `data-theme` on `<html>`).
@@ -69,6 +70,7 @@ Deployment (e.g. GitHub Pages) can be added via `.github/workflows/`; document o
 - Lint passes (`npm run lint`).
 - Build passes (`npm run build`).
 - For UI/layout changes: confirm the page is responsive (e.g. quick check at narrow and wide viewports).
+- For UI changes: consider accessibility (focus visible, contrast, labels, reduced motion).
 - Keep the diff small with a short summary.
 
 ### When stuck
