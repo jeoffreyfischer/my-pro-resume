@@ -11,8 +11,8 @@ export function PublicVideos() {
     <section id="public-videos" className="section-pad py-10 sm:py-12 lg:py-14">
       <div className="container-narrow">
         <SectionHeading className="mb-4 sm:mb-5">Public videos</SectionHeading>
-        {/* Grid: 1 col mobile, 2 cols sm+; video height capped so all 4 + captions fit in view */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 lg:gap-5 mb-5 sm:mb-6">
+        {/* Grid: 1 col mobile, 2 cols sm+; cap width on lg+ so videos keep same aspect/size as <1024px */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 lg:gap-5 mb-5 sm:mb-6 lg:max-w-5xl lg:mx-auto">
           {publicVideos.map((video, i) => (
             <motion.figure
               key={video.id}
