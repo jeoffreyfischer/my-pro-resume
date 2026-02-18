@@ -7,6 +7,11 @@ import { StarsBackground } from "@/components/ui/stars-background";
 import { site } from "@/data/resume";
 import { useTheme } from "@/hooks/useTheme";
 import { BTN_PRIMARY, BTN_SECONDARY } from "@/lib/constants";
+import { cn } from "@/lib/utils";
+
+/** Intro background colors so theme switch has no flash (section + base layer match theme) */
+const INTRO_BG_DARK = "bg-[#0f172a]";
+const INTRO_BG_LIGHT = "bg-background";
 
 export function Intro() {
   const { theme } = useTheme();
@@ -18,23 +23,31 @@ export function Intro() {
   return (
     <section
       id="intro"
-      className="relative flex min-h-screen min-h-[100dvh] w-full flex-col justify-center overflow-hidden py-12 sm:py-16 lg:py-20"
+      className={cn(
+        "relative flex min-h-screen min-h-[100dvh] w-full flex-col justify-center overflow-hidden py-12 sm:py-16 lg:py-20",
+        isDark ? INTRO_BG_DARK : INTRO_BG_LIGHT
+      )}
     >
       <div className="absolute inset-0 z-0 pointer-events-none">
-        {isDark ? (
-          <StarsBackground className="size-full" />
-        ) : (
-          <Confetti
-          className="w-full h-full block"
-          style={{ width: "100%", height: "100%", minHeight: "100%" }}
-          options={{
-            particleCount: 80,
-            spread: 70,
-            origin: { x: 0.5, y: 0.4 },
-            startVelocity: 30,
-          }}
+        {/* Base layer: correct theme color so switching never shows wrong background */}
+        <div
+          className={cn("absolute inset-0", isDark ? INTRO_BG_DARK : INTRO_BG_LIGHT)}
+          aria-hidden
         />
-        )}
+        {isDark && <StarsBackground className="size-full" />}
+        {/* Single Confetti instance so it only fires on initial load, not when switching theme */}
+        <div className="absolute inset-0 z-[1]">
+          <Confetti
+            className="size-full block"
+            style={{ width: "100%", height: "100%", minHeight: "100%" }}
+            options={{
+              particleCount: 80,
+              spread: 70,
+              origin: { x: 0.5, y: 0.4 },
+              startVelocity: 30,
+            }}
+          />
+        </div>
       </div>
       <div className="container-narrow relative z-10">
         <div className="flex flex-col lg:grid lg:grid-cols-[18rem_1fr] xl:grid-cols-[20rem_1fr] 2xl:grid-cols-[22rem_1fr] lg:items-stretch lg:gap-16 xl:gap-20 2xl:gap-24 gap-10">

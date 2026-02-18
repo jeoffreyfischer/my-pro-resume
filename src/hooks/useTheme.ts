@@ -1,4 +1,10 @@
-import { useState, useEffect, useCallback } from "react";
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 
 const STORAGE_KEY = "resume-theme";
 export type Theme = "light" | "dark";
@@ -15,7 +21,15 @@ function applyTheme(theme: Theme) {
   localStorage.setItem(STORAGE_KEY, theme);
 }
 
-export function useTheme() {
+type ThemeContextValue = {
+  theme: Theme;
+  setTheme: (next: Theme | ((prev: Theme) => Theme)) => void;
+  toggle: () => void;
+};
+
+const ThemeContext = createContext<ThemeContextValue | null>(null);
+
+export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = useState<Theme>(getInitialTheme);
 
   useEffect(() => {
@@ -30,5 +44,19 @@ export function useTheme() {
     setThemeState((prev) => (prev === "dark" ? "light" : "dark"));
   }, []);
 
-  return { theme, setTheme, toggle };
+  const value: ThemeContextValue = { theme, setTheme, toggle };
+
+  return React.createElement(
+    ThemeContext.Provider,
+    { value },
+    children
+  );
+}
+
+export function useTheme(): ThemeContextValue {
+  const ctx = useContext(ThemeContext);
+  if (ctx == null) {
+    throw new Error("useTheme must be used within a ThemeProvider");
+  }
+  return ctx;
 }
