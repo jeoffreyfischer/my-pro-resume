@@ -23,10 +23,7 @@ export function useTheme() {
   }, [theme]);
 
   const setTheme = useCallback((next: Theme | ((prev: Theme) => Theme)) => {
-    setThemeState((prev) => {
-      const value = typeof next === "function" ? next(prev) : next;
-      return value;
-    });
+    setThemeState((prev) => (typeof next === "function" ? next(prev) : next));
   }, []);
 
   const toggle = useCallback(() => {

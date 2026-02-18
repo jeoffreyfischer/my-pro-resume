@@ -119,7 +119,7 @@ export const projects = [
   {
     title: "SSW EagleEye",
     category: "Internal",
-    description: "AI-based reporting solution for emails and GitHub that intergrates with PowerBI",
+    description: "AI-based reporting solution for emails and GitHub that integrates with PowerBI",
     tech: [".NET", "Semantic Kernel", "SQL Server", "Next.js", "Azure", "PowerBI"],
   },
   {
@@ -187,6 +187,16 @@ export const projects = [
     category: "Workshop",
     description: "Ran Angular workshops for clients.",
     tech: ["Angular"],
+  },
+];
+
+export const personalProjects = [
+  {
+    title: "Latest Stack",
+    description: "Versions of popular frameworks and tools",
+    url: "https://lateststack.com/",
+    imageSrc: "/images/latest-stack.png",
+    imageAlt: "Latest Stack Versions screenshot",
   },
 ];
 

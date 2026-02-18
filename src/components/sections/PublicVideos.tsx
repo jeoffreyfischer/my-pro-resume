@@ -1,32 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { HiArrowTopRightOnSquare } from "react-icons/hi2";
 import { site, publicVideos } from "@/data/resume";
 import { SectionHeading } from "@/components/ui/section-heading";
-
-const IFRAME_ALLOW =
-  "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
-
-function useColumnCount(): 1 | 2 | 3 {
-  const [cols, setCols] = useState<1 | 2 | 3>(3);
-  useEffect(() => {
-    const sm = window.matchMedia("(min-width: 640px)");
-    const xl = window.matchMedia("(min-width: 1280px)");
-    const update = () => {
-      if (xl.matches) setCols(3);
-      else if (sm.matches) setCols(2);
-      else setCols(1);
-    };
-    update();
-    sm.addEventListener("change", update);
-    xl.addEventListener("change", update);
-    return () => {
-      sm.removeEventListener("change", update);
-      xl.removeEventListener("change", update);
-    };
-  }, []);
-  return cols;
-}
+import { useColumnCount } from "@/hooks/useColumnCount";
+import { IFRAME_ALLOW, BTN_PRIMARY } from "@/lib/constants";
 
 export function PublicVideos() {
   const [expanded, setExpanded] = useState(false);
@@ -89,7 +67,7 @@ export function PublicVideos() {
             href={site.links.publicVideos}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-semibold text-white bg-blue-600 hover:bg-blue-500 transition-colors shadow-sm"
+            className={`${BTN_PRIMARY} px-4 py-2.5 font-semibold shadow-sm`}
           >
             Watch full playlist
             <HiArrowTopRightOnSquare className="size-5 shrink-0" aria-hidden />

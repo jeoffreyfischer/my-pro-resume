@@ -4,6 +4,7 @@ import { AU, FR } from "country-flag-icons/react/3x2";
 import { Confetti } from "@/components/ui/confetti";
 import { Highlight } from "@/components/ui/hero-highlight";
 import { site } from "@/data/resume";
+import { BTN_PRIMARY, BTN_SECONDARY } from "@/lib/constants";
 
 export function Intro() {
   const [summaryBefore, summaryAfter] = site.summary.split("problem solving");
@@ -135,7 +136,7 @@ export function Intro() {
                 href={site.links.email}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium transition-colors"
+                className={BTN_PRIMARY}
                 aria-label="Contact by email (opens in new tab)"
               >
                 Contact
@@ -144,7 +145,7 @@ export function Intro() {
                 href={site.links.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-zinc-300 dark:border-zinc-600 bg-zinc-50 dark:bg-zinc-800/30 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800/50 text-sm transition-colors"
+                className={BTN_SECONDARY}
                 aria-label="GitHub (opens in new tab)"
               >
                 <SiGithub className="size-5 shrink-0" aria-hidden />
@@ -154,7 +155,7 @@ export function Intro() {
                 href={site.links.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-zinc-300 dark:border-zinc-600 bg-zinc-50 dark:bg-zinc-800/30 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800/50 text-sm transition-colors"
+                className={BTN_SECONDARY}
                 aria-label="LinkedIn (opens in new tab)"
               >
                 <SiLinkedin className="size-5 shrink-0" aria-hidden />

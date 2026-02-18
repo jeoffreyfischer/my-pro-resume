@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { hobbies } from "@/data/resume";
 import { SectionHeading } from "@/components/ui/section-heading";
-import { SECTION_CARD_BASE } from "@/lib/constants";
+import { SECTION_CARD_BASE, IFRAME_ALLOW } from "@/lib/constants";
 
 /** Vertical (portrait) media - guitar video & fitness/salsa photos */
 const VERTICAL_MEDIA = hobbies.filter(
@@ -35,7 +35,7 @@ export function Hobbies() {
                   <iframe
                     src={hobby.embedUrl}
                     title={hobby.title}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allow={IFRAME_ALLOW}
                     allowFullScreen
                     className="w-full h-full object-cover"
                   />
