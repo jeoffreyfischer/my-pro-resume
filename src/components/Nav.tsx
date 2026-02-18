@@ -97,9 +97,16 @@ export function Nav() {
     >
       <nav className="container-narrow flex h-14 sm:h-16 items-center justify-between">
         <a
-          href="#intro"
+          href="/"
           className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50 hover:text-zinc-600 dark:hover:text-zinc-200 transition-colors"
           aria-label="Back to top"
+          onClick={(e) => {
+            // Keep SPA feel: go to root and ensure we're at top.
+            // (If hosted under a sub-path, "/" will still resolve correctly with proper base.)
+            e.preventDefault();
+            window.history.pushState({}, "", "/");
+            window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+          }}
         >
           JF
         </a>
