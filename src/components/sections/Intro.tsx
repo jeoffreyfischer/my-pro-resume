@@ -3,6 +3,7 @@ import { SiGithub, SiLinkedin } from "react-icons/si";
 import { AU, FR } from "country-flag-icons/react/3x2";
 import { Confetti } from "@/components/ui/confetti";
 import { Highlight } from "@/components/ui/hero-highlight";
+import { SkyCloudsBackground } from "@/components/ui/sky-clouds-background";
 import { StarsBackground } from "@/components/ui/stars-background";
 import { site } from "@/data/resume";
 import { useTheme } from "@/hooks/useTheme";
@@ -35,6 +36,7 @@ export function Intro() {
           aria-hidden
         />
         {isDark && <StarsBackground className="size-full" />}
+        {!isDark && <SkyCloudsBackground className="size-full" />}
         {/* Single Confetti instance so it only fires on initial load, not when switching theme */}
         <div className="absolute inset-0 z-[1]">
           <Confetti
