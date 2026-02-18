@@ -16,6 +16,10 @@ interface CardStackProps<T> {
   cardClassName?: string;
   /** Optional label for screen readers (e.g. "Client project") */
   itemLabel?: string;
+  /** Horizontal alignment of the pile within its container (default: center) */
+  stackAlign?: "start" | "center" | "end";
+  /** Max width of the pile container (default: max-w-sm) */
+  stackMaxWidth?: string;
 }
 
 /**
@@ -29,6 +33,8 @@ export function CardStack<T extends { title?: string }>({
   className,
   cardClassName,
   itemLabel = "Project",
+  stackAlign = "center",
+  stackMaxWidth = "max-w-sm",
 }: CardStackProps<T>) {
   const [topIndex, setTopIndex] = useState(0);
   /** When set, this card is expanded and forward pile is pushed down to reveal it. */
@@ -70,7 +76,11 @@ export function CardStack<T extends { title?: string }>({
       style={{ minHeight: containerMinHeight }}
     >
       <div
-        className="relative w-full max-w-sm mx-auto"
+        className={cn(
+          "relative w-full",
+          stackMaxWidth,
+          stackAlign === "start" ? "mr-auto" : stackAlign === "end" ? "ml-auto" : "mx-auto"
+        )}
         style={{ minHeight: containerMinHeight }}
       >
         {items.map((item, i) => {

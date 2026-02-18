@@ -91,29 +91,35 @@ export function WorkProjects() {
         Work Projects
       </SectionHeading>
 
-      {/* 3 piles: Client | Internal | Workshop. md: 2 cols (Client | Internal+Workshop). lg: 3 cols. */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-6 items-start">
-        <section className="min-w-0" aria-label="Client projects">
+      {/* 3 piles: Client | Internal | Workshop. Full-width flex so left pile aligns with heading; flex-1 keeps center pile centered. */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10 xl:gap-12 2xl:gap-14 w-full">
+        <section className="min-w-0 lg:flex lg:flex-col" aria-label="Client projects">
           <CardStack
             items={clientProjects}
             itemLabel="Client project"
+            stackAlign="start"
+            stackMaxWidth="max-w-md lg:max-w-lg xl:max-w-xl"
             renderCard={(project, _i, isExpanded) => renderProjectCard(project, isDark, isExpanded)}
           />
         </section>
 
         <div className="flex flex-col gap-8 lg:contents min-w-0">
-          <section className="min-w-0" aria-label="Internal projects">
-            <CardStack
-              items={internalProjects}
-              itemLabel="Internal project"
-              renderCard={(project, _i, isExpanded) => renderProjectCard(project, isDark, isExpanded)}
-            />
-          </section>
+          <section className="min-w-0 lg:flex lg:flex-col lg:items-center" aria-label="Internal projects">
+          <CardStack
+            items={internalProjects}
+            itemLabel="Internal project"
+            stackAlign="center"
+            stackMaxWidth="max-w-md lg:max-w-lg xl:max-w-xl"
+            renderCard={(project, _i, isExpanded) => renderProjectCard(project, isDark, isExpanded)}
+          />
+        </section>
 
-          <section className="min-w-0" aria-label="Workshop projects">
+          <section className="min-w-0 lg:flex lg:flex-col lg:items-end" aria-label="Workshop projects">
             <CardStack
               items={workshopProjects}
               itemLabel="Workshop"
+              stackAlign="end"
+              stackMaxWidth="max-w-md lg:max-w-lg xl:max-w-xl"
               renderCard={(project, _i, isExpanded) => renderProjectCard(project, isDark, isExpanded)}
             />
           </section>
