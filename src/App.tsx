@@ -8,7 +8,7 @@ import { PublicVideos } from "@/components/sections/PublicVideos";
 import { Hobbies } from "@/components/sections/Hobbies";
 import { Contact } from "@/components/sections/Contact";
 
-const SECTION_ALTERNATE_BG = "bg-zinc-100 dark:bg-zinc-900/30";
+const SECTION_ALTERNATE_BG = "bg-sky-50 dark:bg-zinc-900/30";
 
 const SECTIONS = [
   Intro,
@@ -45,7 +45,13 @@ function App() {
         {SECTIONS.map((Section, index) => (
           <div
             key={Section.name}
-            className={index % 2 === 1 ? SECTION_ALTERNATE_BG : undefined}
+            className={
+              index === 3
+                ? undefined
+                : [2, 5, 7].includes(index)
+                  ? SECTION_ALTERNATE_BG
+                  : undefined
+            }
           >
             <Section />
           </div>
