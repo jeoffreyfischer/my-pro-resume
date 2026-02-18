@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { HiArrowTopRightOnSquare } from "react-icons/hi2";
 import { site, publicVideos } from "@/data/resume";
@@ -6,37 +7,81 @@ import { SectionHeading } from "@/components/ui/section-heading";
 const IFRAME_ALLOW =
   "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
 
+function useColumnCount(): 1 | 2 | 3 {
+  const [cols, setCols] = useState<1 | 2 | 3>(3);
+  useEffect(() => {
+    const sm = window.matchMedia("(min-width: 640px)");
+    const xl = window.matchMedia("(min-width: 1280px)");
+    const update = () => {
+      if (xl.matches) setCols(3);
+      else if (sm.matches) setCols(2);
+      else setCols(1);
+    };
+    update();
+    sm.addEventListener("change", update);
+    xl.addEventListener("change", update);
+    return () => {
+      sm.removeEventListener("change", update);
+      xl.removeEventListener("change", update);
+    };
+  }, []);
+  return cols;
+}
+
 export function PublicVideos() {
+  const [expanded, setExpanded] = useState(false);
+  const cols = useColumnCount();
+  const collapsedCount = cols === 3 ? publicVideos.length : cols === 2 ? 4 : 3;
+  const visibleCount = expanded ? publicVideos.length : collapsedCount;
+  const videosToShow = publicVideos.slice(0, visibleCount);
+  const canToggle = publicVideos.length > collapsedCount;
+
   return (
     <section id="public-videos" className="section-pad py-10 sm:py-12 lg:py-14">
       <div className="container-narrow">
         <SectionHeading className="mb-4 sm:mb-5">Public videos</SectionHeading>
-        {/* Grid: 1 col mobile, 2 cols sm+; cap width on lg+ so videos keep same aspect/size as <1024px */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 lg:gap-5 mb-5 sm:mb-6 lg:max-w-5xl lg:mx-auto">
-          {publicVideos.map((video, i) => (
-            <motion.figure
-              key={video.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.06 }}
-              className="min-w-0"
-            >
-              <div className="aspect-video w-full max-h-[200px] sm:max-h-[220px] md:max-h-[200px] lg:max-h-[240px] xl:max-h-[26vh] 2xl:max-h-[280px] rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-700/50 bg-zinc-50 dark:bg-zinc-800/80 shadow-sm">
-                <iframe
-                  src={`https://www.youtube.com/embed/${video.id}`}
-                  title={video.title}
-                  allow={IFRAME_ALLOW}
-                  allowFullScreen
-                  className="w-full h-full"
-                />
-              </div>
-              <figcaption className="mt-1.5 sm:mt-2 text-sm sm:text-base font-bold text-zinc-700 dark:text-zinc-300 line-clamp-2">
-                {video.title}
-              </figcaption>
-            </motion.figure>
-          ))}
+        {/* Full-width grid: 1 col mobile, 2 cols sm+, 3 cols xl (~1440px). Left col aligns with section name; embeds capped so they fit video size. */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-4 lg:gap-5 mb-5 sm:mb-6 w-full">
+          {videosToShow.map((video, i) => {
+            const alignClass =
+              i % 3 === 0 ? "xl:items-start" : i % 3 === 1 ? "xl:items-center" : "xl:items-end";
+            return (
+              <motion.figure
+                key={video.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.06 }}
+                className={`flex flex-col min-w-0 items-start sm:items-start ${alignClass}`}
+              >
+                <div className="w-full max-w-[520px] xl:max-w-[420px] aspect-video rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-700/50 bg-zinc-50 dark:bg-zinc-800/80 shadow-sm">
+                  <iframe
+                    src={`https://www.youtube.com/embed/${video.id}`}
+                    title={video.title}
+                    allow={IFRAME_ALLOW}
+                    allowFullScreen
+                    className="w-full h-full"
+                  />
+                </div>
+                <figcaption className="mt-1.5 sm:mt-2 text-sm sm:text-base font-bold text-zinc-700 dark:text-zinc-300 line-clamp-2">
+                  {video.title}
+                </figcaption>
+              </motion.figure>
+            );
+          })}
         </div>
+
+        {canToggle && (
+          <div className="flex justify-center mb-5 sm:mb-6">
+            <button
+              type="button"
+              onClick={() => setExpanded((v) => !v)}
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-base font-medium text-zinc-700 dark:text-zinc-300 bg-zinc-100 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-700/50 hover:bg-zinc-200 dark:hover:bg-zinc-700/50 transition-colors"
+            >
+              {expanded ? "See less" : "See more"}
+            </button>
+          </div>
+        )}
 
         <motion.div
           initial={{ opacity: 0, y: 12 }}

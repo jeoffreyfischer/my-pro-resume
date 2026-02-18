@@ -24,9 +24,11 @@ export const site = {
 /** Public video embeds (id = YouTube video ID). */
 export const publicVideos = [
   { id: "IwvCTwz0C7M", title: "Do you share secrets securely?" },
-  { id: "-0PUveZg3wk", title: "3 tips to a clean Sprint board" },
   { id: "K-YUqVTyU3k", title: "SSW TimePro - Create a new tenant" },
+  { id: "-0PUveZg3wk", title: "3 tips to a clean Sprint board" },
+  { id: "BMecjTmdFA0", title: "Angular workshop migration - Docusaurus VS TinaDocs" },
   { id: "IjsXSMOAMCA", title: "Do you know to stretch when working at a desk?" },
+  { id: "AxBS6JYcLIQ", title: "YakShaver - fix the broken Coffee Machine ☕️ ❌ - English" },
 ] as const;
 
 export const skills = [
