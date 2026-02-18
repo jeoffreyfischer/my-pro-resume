@@ -122,7 +122,7 @@ export function Nav() {
                   aria-haspopup="true"
                   aria-controls="projects-dropdown"
                   id="projects-menu-button"
-                  className="inline-flex items-center px-3 py-2 text-sm text-zinc-600 dark:text-zinc-200 hover:text-zinc-900 dark:hover:text-white transition-colors rounded-md"
+                  className="inline-flex items-center px-3 py-2 text-sm text-zinc-600 dark:text-zinc-200 hover:text-zinc-900 dark:hover:text-white transition-colors rounded-md cursor-pointer"
                 >
                   {link.label}
                   <ChevronDownIcon open={projectsOpen} />
@@ -148,7 +148,7 @@ export function Nav() {
                           onClick={() => {
                             setProjectsOpen(false);
                           }}
-                          className="block px-3 py-2 text-sm text-zinc-600 dark:text-zinc-200 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 first:rounded-t-md last:rounded-b-md"
+                          className="block px-3 py-2 text-sm text-zinc-600 dark:text-zinc-200 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 first:rounded-t-md last:rounded-b-md cursor-pointer"
                         >
                           {child.label}
                         </a>
@@ -225,7 +225,7 @@ export function Nav() {
                       onClick={() => setProjectsMobileOpen((o) => !o)}
                       aria-expanded={projectsMobileOpen}
                       aria-controls="projects-mobile-submenu"
-                      className="flex items-center justify-between w-full px-3 py-2.5 text-zinc-600 dark:text-zinc-200 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg text-left"
+                      className="flex items-center justify-between w-full px-3 py-2.5 text-zinc-600 dark:text-zinc-200 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg text-left cursor-pointer"
                     >
                       {link.label}
                       <ChevronDownIcon open={projectsMobileOpen} />
@@ -263,7 +263,7 @@ export function Nav() {
                     <a
                       href={`#${link.id}`}
                       onClick={() => setOpen(false)}
-                      className="block px-3 py-2.5 text-zinc-600 dark:text-zinc-200 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg"
+                      className="block px-3 py-2.5 text-zinc-600 dark:text-zinc-200 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg cursor-pointer"
                     >
                       {link.label}
                     </a>

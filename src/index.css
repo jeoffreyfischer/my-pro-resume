@@ -17,6 +17,14 @@
 }
 
 @layer base {
+  /* Ensure all interactive elements show pointer on hover */
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]) {
+    cursor: pointer;
+  }
+  a[href] {
+    cursor: pointer;
+  }
   html {
     scroll-behavior: smooth;
   }

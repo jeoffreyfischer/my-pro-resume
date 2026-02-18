@@ -160,7 +160,7 @@ export function CardStack<T extends { title?: string }>({
                 setTopIndex(i);
               }}
               className={cn(
-                "h-1.5 rounded-full transition-all duration-200",
+                "h-1.5 rounded-full transition-all duration-200 cursor-pointer",
                 isFocused
                   ? "w-5 bg-zinc-900 dark:bg-zinc-100"
                   : "w-1.5 bg-zinc-300 dark:bg-zinc-600 hover:bg-zinc-400 dark:hover:bg-zinc-500"

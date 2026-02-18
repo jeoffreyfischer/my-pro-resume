@@ -2,7 +2,7 @@ import { ChevronsLeft, ChevronsRight, Pause, Play, Square } from "lucide-react";
 import type { SkillsHighlightApi } from "@/hooks/useSkillsHighlight";
 
 const BUTTON_CLASS =
-  "rounded-md p-1.5 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-700 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors disabled:opacity-50 disabled:pointer-events-none";
+  "rounded-md p-1.5 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-700 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors disabled:opacity-50 disabled:pointer-events-none cursor-pointer";
 
 export function SkillsOrbitControls({
   isPlaying,
