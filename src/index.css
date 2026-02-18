@@ -20,6 +20,17 @@
   html {
     scroll-behavior: smooth;
   }
+  /* Subsections (Projects dropdown): scroll margin = nav height so section name is first line below header */
+  #work-projects,
+  #personal-projects {
+    scroll-margin-top: 3.5rem; /* h-14 */
+  }
+  @media (min-width: 640px) {
+    #work-projects,
+    #personal-projects {
+      scroll-margin-top: 4rem; /* sm:h-16 */
+    }
+  }
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;
