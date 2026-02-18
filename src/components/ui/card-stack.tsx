@@ -40,12 +40,6 @@ export function CardStack<T extends { title?: string }>({
   /** When set, this card is expanded and forward pile is pushed down to reveal it. */
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
 
-  const cycle = useCallback(() => {
-    if (items.length <= 1) return;
-    setExpandedIndex(null);
-    setTopIndex((prev) => (prev + 1) % items.length);
-  }, [items.length]);
-
   if (items.length === 0) return null;
 
   const visibleCount = Math.min(items.length, MAX_VISIBLE);
@@ -56,16 +50,12 @@ export function CardStack<T extends { title?: string }>({
   const handleClick = useCallback(
     (index: number, stackOrder: number) => {
       if (stackOrder === 0) {
-        if (expandedIndex !== null) {
-          setExpandedIndex(null);
-        } else {
-          cycle();
-        }
-      } else {
-        setExpandedIndex(expandedIndex === index ? null : index);
+        /* Front card: no action (nothing in front to move). */
+        return;
       }
+      setExpandedIndex(expandedIndex === index ? null : index);
     },
-    [expandedIndex, cycle]
+    [expandedIndex]
   );
 
   return (
@@ -111,7 +101,7 @@ export function CardStack<T extends { title?: string }>({
               key={item.title ?? i}
               role="button"
               tabIndex={showFullContent ? 0 : -1}
-              aria-label={`${item.title ?? `Item ${i + 1}`}. ${stackOrder + 1} of ${items.length}. Click to ${showFullContent ? "view next" : "view this card"}.`}
+              aria-label={`${item.title ?? `Item ${i + 1}`}. ${stackOrder + 1} of ${items.length}. ${stackOrder === 0 ? "Front card." : "Click to view this card."}`}
               onClick={() => handleClick(i, stackOrder)}
               onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === " ") {
@@ -132,7 +122,8 @@ export function CardStack<T extends { title?: string }>({
                 damping: 30,
               }}
               className={cn(
-                "absolute left-0 right-0 top-0 cursor-pointer select-none touch-manipulation overflow-hidden",
+                "absolute left-0 right-0 top-0 select-none touch-manipulation overflow-hidden",
+                stackOrder === 0 ? "cursor-default" : "cursor-pointer",
                 "h-[220px] sm:h-[240px]",
                 "focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-50 dark:focus-visible:ring-offset-zinc-900",
                 "rounded-xl shadow-lg",
