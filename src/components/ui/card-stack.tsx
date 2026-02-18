@@ -4,6 +4,8 @@ import { cn } from "@/lib/utils";
 
 /** Vertical offset so each card's title peeks out above the one in front. */
 const TITLE_STRIP_OFFSET = 52;
+/** When expanding a covered card, push the forward pile down by this amount to reveal content. */
+const REVEAL_OFFSET = 200;
 const MAX_VISIBLE = 12;
 
 interface CardStackProps<T> {
@@ -17,7 +19,8 @@ interface CardStackProps<T> {
 }
 
 /**
- * Stacked cards that overlap. Click to cycle: top card goes to back, next comes to front.
+ * Stacked cards that overlap. Click front card to cycle; click a covered card to expand it
+ * (forward pile moves down so you can read it; cards stay in place).
  * Accessible: keyboard (Enter/Space), aria, reduced motion.
  */
 export function CardStack<T extends { title?: string }>({
@@ -28,21 +31,36 @@ export function CardStack<T extends { title?: string }>({
   itemLabel = "Project",
 }: CardStackProps<T>) {
   const [topIndex, setTopIndex] = useState(0);
+  /** When set, this card is expanded and forward pile is pushed down to reveal it. */
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
 
   const cycle = useCallback(() => {
     if (items.length <= 1) return;
+    setExpandedIndex(null);
     setTopIndex((prev) => (prev + 1) % items.length);
   }, [items.length]);
 
   if (items.length === 0) return null;
 
   const visibleCount = Math.min(items.length, MAX_VISIBLE);
-  const containerMinHeight =
-    240 + (visibleCount - 1) * TITLE_STRIP_OFFSET;
+  const baseMinHeight = 240 + (visibleCount - 1) * TITLE_STRIP_OFFSET;
+  const isExpanded = expandedIndex !== null;
+  const containerMinHeight = isExpanded ? baseMinHeight + REVEAL_OFFSET : baseMinHeight;
 
-  const goTo = useCallback((index: number) => {
-    setTopIndex(index);
-  }, []);
+  const handleClick = useCallback(
+    (index: number, stackOrder: number) => {
+      if (stackOrder === 0) {
+        if (expandedIndex !== null) {
+          setExpandedIndex(null);
+        } else {
+          cycle();
+        }
+      } else {
+        setExpandedIndex(expandedIndex === index ? null : index);
+      }
+    },
+    [expandedIndex, cycle]
+  );
 
   return (
     <div
@@ -64,29 +82,31 @@ export function CardStack<T extends { title?: string }>({
           if (!isVisible) return null;
 
           // Cascade: front card at bottom, cards behind above with titles peeking out
-          const offsetY = (items.length - 1 - stackOrder) * TITLE_STRIP_OFFSET;
+          let offsetY = (items.length - 1 - stackOrder) * TITLE_STRIP_OFFSET;
+          // When a covered card is expanded, push forward pile (lower stackOrder) down
+          const expandedStackOrder =
+            expandedIndex != null
+              ? (expandedIndex - topIndex + items.length) % items.length
+              : -1;
+          if (expandedStackOrder >= 0 && stackOrder < expandedStackOrder) {
+            offsetY += REVEAL_OFFSET;
+          }
           const zIndex = items.length - stackOrder;
           const scale = 1 - stackOrder * 0.01;
-
-          const handleClick = () => {
-            if (isTop) {
-              cycle();
-            } else {
-              goTo(i);
-            }
-          };
+          const isThisExpanded = expandedIndex === i;
+          const showFullContent = isTop || isThisExpanded;
 
           return (
             <motion.div
               key={item.title ?? i}
               role="button"
-              tabIndex={isTop ? 0 : -1}
-              aria-label={`${item.title ?? `Item ${i + 1}`}. ${stackOrder + 1} of ${items.length}. Click to ${isTop ? "view next" : "view this card"}.`}
-              onClick={handleClick}
+              tabIndex={showFullContent ? 0 : -1}
+              aria-label={`${item.title ?? `Item ${i + 1}`}. ${stackOrder + 1} of ${items.length}. Click to ${showFullContent ? "view next" : "view this card"}.`}
+              onClick={() => handleClick(i, stackOrder)}
               onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === " ") {
                   e.preventDefault();
-                  handleClick();
+                  handleClick(i, stackOrder);
                 }
               }}
               initial={false}
@@ -112,7 +132,7 @@ export function CardStack<T extends { title?: string }>({
                 pointerEvents: "auto",
               }}
             >
-              {renderCard(item, i, isTop)}
+              {renderCard(item, i, showFullContent)}
             </motion.div>
           );
         })}
@@ -126,21 +146,26 @@ export function CardStack<T extends { title?: string }>({
           aria-live="polite"
           aria-label={`Showing ${topIndex + 1} of ${items.length}`}
         >
-          {items.map((_, i) => (
+          {items.map((_, i) => {
+            const isFocused = i === (expandedIndex ?? topIndex);
+            return (
             <button
               key={i}
               type="button"
               aria-label={`Go to ${itemLabel} ${i + 1}`}
-              aria-current={i === topIndex}
-              onClick={() => setTopIndex(i)}
+              aria-current={isFocused}
+              onClick={() => {
+                setExpandedIndex(null);
+                setTopIndex(i);
+              }}
               className={cn(
                 "h-1.5 rounded-full transition-all duration-200",
-                i === topIndex
+                isFocused
                   ? "w-5 bg-zinc-900 dark:bg-zinc-100"
                   : "w-1.5 bg-zinc-300 dark:bg-zinc-600 hover:bg-zinc-400 dark:hover:bg-zinc-500"
               )}
             />
-          ))}
+          );})}
         </div>
       )}
     </div>
