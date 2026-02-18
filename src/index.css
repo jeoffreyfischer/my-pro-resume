@@ -199,6 +199,22 @@ button:focus-visible {
     transform: rotate(calc(var(--angle) * 1deg + 360deg)) translateY(calc(var(--radius) * 1px)) rotate(calc((var(--angle) * -1deg) - 360deg));
     }
   }
+  @keyframes shooting-star {
+    0% {
+      opacity: 0;
+      transform: translate(-30%, -30%) rotate(-45deg);
+    }
+    15% {
+      opacity: 1;
+    }
+    85% {
+      opacity: 0.5;
+    }
+    100% {
+      opacity: 0;
+      transform: translate(130%, 130%) rotate(-45deg);
+    }
+  }
 }
 
 :root {

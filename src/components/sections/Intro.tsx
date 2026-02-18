@@ -3,18 +3,28 @@ import { SiGithub, SiLinkedin } from "react-icons/si";
 import { AU, FR } from "country-flag-icons/react/3x2";
 import { Confetti } from "@/components/ui/confetti";
 import { Highlight } from "@/components/ui/hero-highlight";
+import { StarsBackground } from "@/components/ui/stars-background";
 import { site } from "@/data/resume";
+import { useTheme } from "@/hooks/useTheme";
 import { BTN_PRIMARY, BTN_SECONDARY } from "@/lib/constants";
 
 export function Intro() {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
   const [summaryBefore, summaryAfter] = site.summary.split("problem solving");
   const [specialtyBefore, specialtyAfter] = site.specialty.split(".NET");
   const [passionBefore, passionAfter] = site.passion.split("Scrum");
 
   return (
-    <section id="intro" className="section-pad min-h-[90vh] flex flex-col justify-center relative overflow-hidden">
+    <section
+      id="intro"
+      className="relative flex min-h-screen min-h-[100dvh] w-full flex-col justify-center overflow-hidden py-12 sm:py-16 lg:py-20"
+    >
       <div className="absolute inset-0 z-0 pointer-events-none">
-        <Confetti
+        {isDark ? (
+          <StarsBackground className="size-full" />
+        ) : (
+          <Confetti
           className="w-full h-full block"
           style={{ width: "100%", height: "100%", minHeight: "100%" }}
           options={{
@@ -24,6 +34,7 @@ export function Intro() {
             startVelocity: 30,
           }}
         />
+        )}
       </div>
       <div className="container-narrow relative z-10">
         <div className="flex flex-col lg:grid lg:grid-cols-[18rem_1fr] xl:grid-cols-[20rem_1fr] 2xl:grid-cols-[22rem_1fr] lg:items-stretch lg:gap-16 xl:gap-20 2xl:gap-24 gap-10">
