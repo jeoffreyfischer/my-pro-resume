@@ -17,7 +17,7 @@ export function PublicVideos() {
   return (
     <section id="public-videos" className="section-pad py-10 sm:py-12 lg:py-14">
       <div className="container-narrow">
-        <SectionHeading className="mb-4 sm:mb-5">Public videos</SectionHeading>
+        <SectionHeading className="mb-4 sm:mb-5">Videos</SectionHeading>
         {/* Full-width grid: 1 col mobile, 2 cols sm+, 3 cols xl (~1440px). Left col aligns with section name; embeds capped so they fit video size. */}
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-4 lg:gap-5 mb-5 sm:mb-6 w-full">
           {videosToShow.map((video, i) => (
