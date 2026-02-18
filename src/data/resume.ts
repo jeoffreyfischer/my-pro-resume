@@ -28,7 +28,7 @@ export const publicVideos = [
   { id: "-0PUveZg3wk", title: "3 tips to a clean Sprint board" },
   { id: "BMecjTmdFA0", title: "Angular workshop migration - Docusaurus VS TinaDocs" },
   { id: "IjsXSMOAMCA", title: "Do you know to stretch when working at a desk?" },
-  { id: "AxBS6JYcLIQ", title: "YakShaver - fix the broken Coffee Machine ☕️ ❌ - English" },
+  { id: "AxBS6JYcLIQ", title: "YakShaver - Fix the broken Coffee Machine ☕️ ❌" },
 ] as const;
 
 export const skills = [

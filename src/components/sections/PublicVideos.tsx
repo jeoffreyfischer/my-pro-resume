@@ -42,17 +42,14 @@ export function PublicVideos() {
         <SectionHeading className="mb-4 sm:mb-5">Public videos</SectionHeading>
         {/* Full-width grid: 1 col mobile, 2 cols sm+, 3 cols xl (~1440px). Left col aligns with section name; embeds capped so they fit video size. */}
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-4 lg:gap-5 mb-5 sm:mb-6 w-full">
-          {videosToShow.map((video, i) => {
-            const alignClass =
-              i % 3 === 0 ? "xl:items-start" : i % 3 === 1 ? "xl:items-center" : "xl:items-end";
-            return (
+          {videosToShow.map((video, i) => (
               <motion.figure
                 key={video.id}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.06 }}
-                className={`flex flex-col min-w-0 items-start sm:items-start ${alignClass}`}
+                className="flex flex-col min-w-0 items-start"
               >
                 <div className="w-full max-w-[520px] xl:max-w-[420px] aspect-video rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-700/50 bg-zinc-50 dark:bg-zinc-800/80 shadow-sm">
                   <iframe
@@ -63,12 +60,11 @@ export function PublicVideos() {
                     className="w-full h-full"
                   />
                 </div>
-                <figcaption className="mt-1.5 sm:mt-2 text-sm sm:text-base font-bold text-zinc-700 dark:text-zinc-300 line-clamp-2">
+                <figcaption className="mt-1.5 sm:mt-2 text-left text-sm sm:text-base font-bold text-zinc-700 dark:text-zinc-300 line-clamp-2 w-full">
                   {video.title}
                 </figcaption>
               </motion.figure>
-            );
-          })}
+          ))}
         </div>
 
         {canToggle && (
