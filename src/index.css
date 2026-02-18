@@ -92,7 +92,8 @@
 
 /* Organic blob shape for profile photo – uneven rounded edges (8-value border-radius); top-left gentler to keep more of photo */
 .profile-photo-shape {
-  border-radius: 100% 100% 100% 100% / 100% 100% 100% 100%;
+  /* Guitar-pick style: rounded top (no flat), wider shoulders, narrower bottom */
+  border-radius: 150% 150% 200% 200% / 80% 80% 300% 300%;
 }
 
 /* Torch cursor on MagicCard in dark mode (hover) */
