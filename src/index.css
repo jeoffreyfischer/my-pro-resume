@@ -92,7 +92,7 @@
 
 /* Organic blob shape for profile photo – uneven rounded edges (8-value border-radius); top-left gentler to keep more of photo */
 .profile-photo-shape {
-  border-radius: 50% 37% 54% 46% / 34% 48% 52% 45%;
+  border-radius: 100% 100% 100% 100% / 100% 100% 100% 100%;
 }
 
 /* Torch cursor on MagicCard in dark mode (hover) */
