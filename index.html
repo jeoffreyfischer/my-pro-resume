@@ -18,6 +18,14 @@
     </script>
   </head>
   <body>
+    <svg aria-hidden="true" width="0" height="0" style="position:absolute">
+      <defs>
+        <clipPath id="guitar-pick-clip" clipPathUnits="objectBoundingBox">
+          <!-- Inset ~2% to avoid flat edges where path meets element bounds -->
+          <path d="M.5 .02 C.865 .02 .98 .116 .98 .289 C.98 .519 .807 .865 .5 .98 C.193 .865 .02 .519 .02 .289 C.02 .116 .135 .02 .5 .02 Z" />
+        </clipPath>
+      </defs>
+    </svg>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

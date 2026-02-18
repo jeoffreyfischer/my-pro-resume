@@ -90,10 +90,9 @@
   }
 }
 
-/* Organic blob shape for profile photo – uneven rounded edges (8-value border-radius); top-left gentler to keep more of photo */
+/* Guitar-pick shape for profile photo – matches SVG silhouette (rounded top, tapered sides, pointed tip) */
 .profile-photo-shape {
-  /* Guitar-pick style: rounded top (no flat), wider shoulders, narrower bottom */
-  border-radius: 150% 150% 200% 200% / 80% 80% 300% 300%;
+  clip-path: url(#guitar-pick-clip);
 }
 
 /* Torch cursor on MagicCard in dark mode (hover) */
