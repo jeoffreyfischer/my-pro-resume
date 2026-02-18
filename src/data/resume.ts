@@ -195,7 +195,8 @@ export const personalProjects = [
     title: "Latest Stack",
     description: "Versions of popular frameworks and tools",
     url: "https://lateststack.com/",
-    imageSrc: "/images/latest-stack.png",
+    imageSrcLight: "/images/latest-stack-light.png",
+    imageSrcDark: "/images/latest-stack-dark.png",
     imageAlt: "Latest Stack Versions screenshot",
   },
 ];
