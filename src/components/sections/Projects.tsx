@@ -5,6 +5,7 @@ import { useTheme } from "@/hooks/useTheme";
 import { projects } from "@/data/resume";
 import { cn } from "@/lib/utils";
 import { SECTION_CARD_BASE } from "@/lib/constants";
+import { HiArrowTopRightOnSquare } from "react-icons/hi2";
 
 const CARD_CLASS = `${SECTION_CARD_BASE} p-5 sm:p-6`;
 
@@ -24,10 +25,37 @@ function getCategoryPillClass(category: string): string {
   return CATEGORY_PILL.client;
 }
 
-function ProjectCardTitleStrip({ project }: { project: (typeof projects)[number] }) {
+function ProjectCardTitleStrip({
+  project,
+  isExpanded = false,
+}: {
+  project: (typeof projects)[number];
+  isExpanded?: boolean;
+}) {
+  const url = "url" in project ? (project as { url?: string }).url : undefined;
   return (
     <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2">
-      <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">{project.title}</h3>
+      <div className="flex items-center gap-2 min-w-0">
+        <h3
+          className={cn(
+            "text-lg font-semibold text-zinc-900 dark:text-zinc-100",
+            !isExpanded && "truncate"
+          )}
+        >
+          {project.title}
+        </h3>
+        {url && (
+          <a
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="shrink-0 p-0.5 rounded text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200 transition-colors"
+            aria-label={`Open ${project.title} in new tab`}
+          >
+            <HiArrowTopRightOnSquare className="size-4" aria-hidden />
+          </a>
+        )}
+      </div>
       <span className={getCategoryPillClass(project.category)}>{project.category}</span>
     </div>
   );
@@ -36,7 +64,7 @@ function ProjectCardTitleStrip({ project }: { project: (typeof projects)[number]
 function ProjectCardBody({ project }: { project: (typeof projects)[number] }) {
   return (
     <>
-      <ProjectCardTitleStrip project={project} />
+      <ProjectCardTitleStrip project={project} isExpanded />
       <p className="mt-2 text-zinc-600 dark:text-zinc-400 text-sm leading-relaxed">{project.description}</p>
       {project.tech.length > 0 && (
         <div className="mt-3 flex flex-wrap gap-1.5">
