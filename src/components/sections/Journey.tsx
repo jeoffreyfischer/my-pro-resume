@@ -2,21 +2,23 @@ import { MagicCard, MAGIC_CARD_DARK_PROPS, MAGIC_CARD_OVERLAY_CLASS } from "@/co
 import { SectionHeading } from "@/components/ui/section-heading";
 import { useTheme } from "@/hooks/useTheme";
 import { timeline } from "@/data/resume";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { SECTION_CARD_BASE } from "@/lib/constants";
 
-/** True when viewport < 1024px: line left, all branches and cards on the right. */
-function useIsCompact() {
-  const [compact, setCompact] = useState(false);
+function useMediaQuery(query: string): boolean {
+  const [matches, setMatches] = useState(false);
   useEffect(() => {
-    const mq = window.matchMedia("(max-width: 1023px)");
-    const update = () => setCompact(mq.matches);
+    const mq = window.matchMedia(query);
+    const update = () => setMatches(mq.matches);
     update();
     mq.addEventListener("change", update);
     return () => mq.removeEventListener("change", update);
-  }, []);
-  return compact;
+  }, [query]);
+  return matches;
 }
+
+const MQ_COMPACT = "(max-width: 1023px)";   /* line left, branches + cards right */
+const MQ_NARROW = "(max-width: 639px)";       /* flow-based layout, dynamic card heights */
 
 type TimelineItem = (typeof timeline)[number];
 
@@ -217,14 +219,61 @@ const MAIN_LINE_TOP = 24;
 const GAP_SIZE = 320;
 const GAPS_COUNT = 6;
 const MAIN_LINE_BOTTOM = MAIN_LINE_TOP + GAPS_COUNT * GAP_SIZE;
-/** Min height for compact layout so card % positioning matches diagram (6 rows × ~220px). */
+/** Fixed height for compact SVG layout (640px–1023px) so card % positioning matches diagram. */
 const COMPACT_MIN_HEIGHT_PX = 1320;
+
+/** < 640px: flow-based diagram – line + circles, one row per card; spacing follows card height. */
+function CompactFlowDiagram({ cardsInOrder, isDark }: { cardsInOrder: TimelineItem[]; isDark: boolean }) {
+  const diagramColWidth = "4rem";
+  const lineClass = "absolute left-1/2 top-0 bottom-0 w-1 -translate-x-1/2 bg-zinc-700 dark:bg-zinc-600";
+  const circleBaseClass = "absolute left-1/2 top-1/2 w-7 h-7 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-zinc-700 dark:border-zinc-600";
+  const mainNodeCircleClass = "absolute left-1/2 w-7 h-7 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-zinc-700 dark:border-zinc-600 bg-blue-200 dark:bg-blue-300";
+  const labelClass = "text-zinc-800 dark:text-zinc-200 text-base font-semibold text-center";
+  const cellCol1 = "col-start-1";
+  const cellCol2 = "col-start-2";
+
+  return (
+    <figure className="my-10 sm:my-12 px-0 overflow-visible" aria-hidden>
+      <div className="grid gap-x-6" style={{ gridTemplateColumns: `${diagramColWidth} 1fr` } as React.CSSProperties}>
+        <div className={`relative flex flex-col items-center pt-16 pb-4 min-h-[3rem] ${cellCol1}`}>
+          <div className={lineClass} aria-hidden />
+          <div className={`${mainNodeCircleClass} top-0`} aria-hidden style={{ zIndex: 1 }} />
+          <span className={`${labelClass} absolute left-1/2 top-0 -translate-x-1/2 -translate-y-[calc(100%+1rem)]`} style={{ zIndex: 1 }}>HEAD</span>
+        </div>
+        <div className={cellCol2} />
+        {cardsInOrder.map((item, i) => {
+          if (!item) return null;
+          const circleFillClass = item.type === "work" ? "bg-blue-300 dark:bg-blue-400" : "bg-violet-400 dark:bg-violet-500";
+          return (
+            <React.Fragment key={i}>
+              <div className={`relative flex items-stretch min-h-[120px] py-4 ${cellCol1}`}>
+                <div className={lineClass} aria-hidden />
+                <div className={`${circleBaseClass} ${circleFillClass}`} aria-hidden style={{ zIndex: 1 }} />
+              </div>
+              <div className={`min-w-0 flex items-center py-2 ${cellCol2}`}>
+                <TimelineCard item={item} isDark={isDark} />
+              </div>
+            </React.Fragment>
+          );
+        })}
+        <div className={`relative flex flex-col items-center pt-4 pb-16 min-h-[3.5rem] ${cellCol1}`}>
+          <div className={lineClass} aria-hidden />
+          <div className={`${mainNodeCircleClass} bottom-0 translate-y-1/2`} aria-hidden style={{ zIndex: 1 }} />
+          <span className={`${labelClass} absolute left-1/2 bottom-0 -translate-x-1/2 translate-y-[calc(100%+1rem)]`} style={{ zIndex: 1 }}>Initial</span>
+          <span className={`${labelClass} absolute left-1/2 bottom-0 -translate-x-1/2 translate-y-[calc(100%+2.25rem)] text-sm`} style={{ zIndex: 1 }}>commit</span>
+        </div>
+        <div className={cellCol2} />
+      </div>
+    </figure>
+  );
+}
 
 /** Git-branch style diagram: main vertical line, nodes, and reusable right/left branches. */
 function BranchDiagram() {
   const { theme } = useTheme();
   const isDark = theme === "dark";
-  const isCompact = useIsCompact();
+  const isCompact = useMediaQuery(MQ_COMPACT);
+  const isNarrow = useMediaQuery(MQ_NARROW);
   const { cx, mainStroke, mainNodeFill, nodeStroke } = DIAGRAM;
   const mainNodes = [
     MAIN_LINE_TOP,
@@ -269,11 +318,17 @@ function BranchDiagram() {
   const diagramMinX = DIAGRAM.cx - DIAGRAM.branchRadius - DIAGRAM.nodeR - diagramPadding;
   const diagramWidth = 2 * (DIAGRAM.branchRadius + DIAGRAM.nodeR) + 2 * diagramPadding;
   const verticalPadding = 16; /* ~1rem from top/bottom circle edge */
+  const labelOffset = 18; /* gap between circle edge and HEAD label */
+  const bottomLabelOffset = 36; /* gap between bottom circle and Initial Commit */
+  const labelSpace = 20; /* extra space for top label */
+  const bottomLabelSpace = bottomLabelOffset + 52; /* room for two-line "Initial" / "commit" */
   const topCircleEdge = mainNodes[0] - DIAGRAM.nodeR;
   const bottomCircleEdge = mainNodes[mainNodes.length - 1] + DIAGRAM.nodeR;
-  const viewBoxMinY = topCircleEdge - verticalPadding;
-  const viewBoxHeight = bottomCircleEdge + verticalPadding - viewBoxMinY;
+  const viewBoxMinY = topCircleEdge - verticalPadding - labelSpace;
+  const viewBoxHeight = bottomCircleEdge + verticalPadding + Math.max(labelSpace, bottomLabelSpace) - viewBoxMinY;
   const viewBox = `${diagramMinX} ${viewBoxMinY} ${diagramWidth} ${viewBoxHeight}`;
+  const topLabelY = mainNodes[0] - DIAGRAM.nodeR - labelOffset;
+  const bottomLabelY = mainNodes[mainNodes.length - 1] + DIAGRAM.nodeR + bottomLabelOffset;
 
   /* Card vertical position as % of column height so it aligns with branch circle in SVG */
   const branchTopPercent = (branchY: number) => ((branchY - viewBoxMinY) / viewBoxHeight) * 100;
@@ -287,68 +342,70 @@ function BranchDiagram() {
       <circle cx={cx} cy={y} r={DIAGRAM.nodeR} fill={mainNodeFill} stroke={nodeStroke} strokeWidth="5" />
     </g>
   ));
+  const mainLineLabels = (
+    <>
+      <text x={cx} y={topLabelY} textAnchor="middle" className="fill-current text-2xl font-semibold" style={{ fontFamily: "inherit" }}>HEAD</text>
+      <text textAnchor="middle" className="fill-current text-2xl font-semibold" style={{ fontFamily: "inherit" }}>
+        <tspan x={cx} y={bottomLabelY}>Initial</tspan>
+        <tspan x={cx} dy="1.2em">commit</tspan>
+      </text>
+    </>
+  );
 
-  /* Compact (< 1024px): line left, all branches and cards on the right; viewBox includes full main circles */
+  /* Compact (< 1024px): < 640px = flow-based (dynamic heights); 640–1023px = SVG with fixed height */
   if (isCompact) {
-    const compactViewBoxMinX = cx - DIAGRAM.nodeR - diagramPadding;
-    const compactViewBoxWidth = DIAGRAM.branchRadius + 2 * DIAGRAM.nodeR + 2 * diagramPadding;
-    const viewBoxCompact = `${compactViewBoxMinX} ${viewBoxMinY} ${compactViewBoxWidth} ${viewBoxHeight}`;
     const cardsInOrder = branches.map((_, i) => leftColByGap[i] ?? rightColByGap[i]) as TimelineItem[];
     const circleFillCompact = (i: number) =>
       (DIAGRAM_CARDS.find((c) => c.gapIndex === i)!.item.type === "work" ? RIGHT_FILL : LEFT_FILL);
+
+    if (isNarrow) return <CompactFlowDiagram cardsInOrder={cardsInOrder} isDark={isDark} />;
+
+    /* 640px–1023px: SVG compact – fixed height, diagram + absolute-positioned cards */
+    const compactExtraLeft = 48;
+    const compactViewBoxMinX = cx - DIAGRAM.nodeR - diagramPadding - compactExtraLeft;
+    const compactViewBoxWidth = DIAGRAM.branchRadius + 2 * DIAGRAM.nodeR + 2 * diagramPadding + compactExtraLeft;
+    const viewBoxCompact = `${compactViewBoxMinX} ${viewBoxMinY} ${compactViewBoxWidth} ${viewBoxHeight}`;
     const compactMinH = COMPACT_MIN_HEIGHT_PX;
+    const compactDiagramMinWidthPx = Math.ceil((compactMinH * compactViewBoxWidth) / viewBoxHeight);
+
     return (
       <figure
-        className="flex flex-row gap-2 my-10 sm:my-12 px-0 overflow-visible items-stretch"
-        style={{ minHeight: compactMinH } as React.CSSProperties}
+        className="flex flex-row gap-6 my-10 sm:my-12 px-0 overflow-visible items-stretch"
+        style={{ height: compactMinH } as React.CSSProperties}
         aria-hidden
       >
-        <div className={`relative w-20 flex-shrink-0 flex justify-start items-stretch z-10`} style={{ minHeight: compactMinH } as React.CSSProperties}>
+        <div
+          className="relative flex-shrink-0 flex justify-start items-stretch z-10 h-full"
+          style={{ height: "100%", minWidth: compactDiagramMinWidthPx } as React.CSSProperties}
+        >
           <svg
             viewBox={viewBoxCompact}
-            className="h-full w-auto text-zinc-800 dark:text-zinc-200 flex-shrink-0"
-            style={{ minHeight: compactMinH } as React.CSSProperties}
+            className="h-full w-auto text-zinc-800 dark:text-zinc-200 flex-shrink-0 max-w-full"
+            style={{ height: "100%" } as React.CSSProperties}
             fill="none"
             strokeWidth="2.5"
             strokeLinecap="round"
             strokeLinejoin="round"
             preserveAspectRatio="xMinYMid meet"
           >
-            {/* Paths first, then circles so circles are on top */}
             {mainLine}
             {branches.map((b, i) => (
-              <RightBranch
-                key={`path-${i}`}
-                part="paths"
-                nodeBelowY={b.nodeBelowY}
-                nodeAboveY={b.nodeAboveY}
-                branchY={b.branchY}
-                label=""
-                circleFill={circleFillCompact(i)}
-              />
+              <RightBranch key={`path-${i}`} part="paths" nodeBelowY={b.nodeBelowY} nodeAboveY={b.nodeAboveY} branchY={b.branchY} label="" circleFill={circleFillCompact(i)} />
             ))}
             {mainNodeCircles}
+            {mainLineLabels}
             {branches.map((b, i) => (
-              <RightBranch
-                key={`circle-${i}`}
-                part="circle"
-                nodeBelowY={b.nodeBelowY}
-                nodeAboveY={b.nodeAboveY}
-                branchY={b.branchY}
-                label=""
-                circleFill={circleFillCompact(i)}
-                hideLabel
-              />
+              <RightBranch key={`circle-${i}`} part="circle" nodeBelowY={b.nodeBelowY} nodeAboveY={b.nodeAboveY} branchY={b.branchY} label="" circleFill={circleFillCompact(i)} hideLabel />
             ))}
           </svg>
         </div>
-        <div className="relative flex-1 min-w-0" style={{ minHeight: compactMinH } as React.CSSProperties}>
+        <div className="relative flex-1 min-w-0 pl-8 h-full" style={{ height: "100%" } as React.CSSProperties}>
           {cardsInOrder.map(
             (item, i) =>
               item && (
                 <div
                   key={i}
-                  className="absolute left-0 right-0 flex justify-start pointer-events-none pl-2"
+                  className="absolute left-0 right-0 flex justify-start pointer-events-none"
                   style={{ top: `${branchTopPercent(branches[i].branchY)}%`, transform: "translateY(-50%)" } as React.CSSProperties}
                 >
                   <div className="w-full max-w-[calc(100%-1rem)] pointer-events-auto">
@@ -431,6 +488,7 @@ function BranchDiagram() {
             )
           )}
           {mainNodeCircles}
+          {mainLineLabels}
           {branches.map((b) =>
             b.side === "right" ? (
               <RightBranch

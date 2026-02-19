@@ -61,27 +61,27 @@ export const skills = [
 export const timeline = [
   {
     type: "education" as const,
-    title: "🚀 PhD (Aerospace Engineering)",
+    title: "🚀 PhD",
     org: "University of Poitiers, France",
     period: "Sep 2009 – Mar 2013",
     description:
-      "Conducted doctoral research in aerospace engineering, focusing on experimental and computational fluid dynamics.",
+      "Aerospace Engineering - Conducted doctoral research, focusing on experimental and computational fluid dynamics.",
   },
   {
     type: "work" as const,
-    title: "🧑‍🏫 Lecturer (Civil Engineering)",
+    title: "🧑‍🏫 Lecturer",
     org: "IUT Civil Engineering, Bordeaux, France",
     period: "Sep 2013 – Aug 2015",
     description:
-      "Delivered undergraduate courses in fluid mechanics, acoustics, and lighting. Developed course materials and assessed student performance.",
+      "Civil Engineering - Delivered undergraduate courses in fluid mechanics, acoustics, lighting, and more.",
   },
   {
     type: "work" as const,
-    title: "🚀 Research Associate (Aerospace Engineering)",
-    org: "University of New South Wales (UNSW), Sydney, Australia",
+    title: "🚀 Research Associate",
+    org: "University of New South Wales, Sydney, Australia",
     period: "May 2015 – Oct 2022",
     description:
-      "Led experimental research and data analysis using MATLAB. Published in leading peer-reviewed journals and collaborated with industry partners.",
+      "Aerospace Engineering - Led experimental research and data analysis using MATLAB. Published in leading peer-reviewed journals and collaborated with industry partners.",
   },
   {
     type: "education" as const,
@@ -93,15 +93,15 @@ export const timeline = [
   },
   {
     type: "education" as const,
-    title: "💻 Developer Internship (Full-Stack)",
+    title: "💻 Developer Internship",
     org: "SSW, Sydney, Australia",
     period: "May 2023 – Oct 2023",
     description:
-      "Developed full-stack features using .NET and modern front-end frameworks within an Agile team environment using Scrum.",
+      "Developed a full-stack application using .NET, Angular and SQL Server within an Agile team environment using Scrum.",
   },
   {
     type: "work" as const,
-    title: "💻 Software Engineer (Full-Stack)",
+    title: "💻 Software Engineer",
     org: "SSW, Sydney, Australia",
     period: "Oct 2023 – Present",
     description:
