@@ -77,7 +77,6 @@ const DIAGRAM = {
   cx: 180, /* center line; viewBox is tight around branch circles */
   cornerR: 38, /* larger radius = rounder, less sharp curves */
   branchRadius: 88,
-  viewBoxWidth: 360,
   mainStroke: "#3f3f46", /* zinc-700 */
   curveStroke: "#3f3f46", /* zinc-700, same as mainStroke so overlaps are invisible */
   mainNodeFill: "#93c5fd", /* blue-300 */
