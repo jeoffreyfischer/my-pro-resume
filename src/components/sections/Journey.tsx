@@ -38,6 +38,34 @@ const DIAGRAM_CARDS: Array<{ side: "left" | "right"; gapIndex: number; item: Tim
   { side: "left", gapIndex: 5, item: timeline[0] }, /* 6. PhD - Aerospace Engineering */
 ];
 
+/** Renders description text, turning [label](url) into a real link. */
+function DescriptionWithLinks({ text }: { text: string }) {
+  const parts: React.ReactNode[] = [];
+  const linkRe = /\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g;
+  let lastIndex = 0;
+  let m: RegExpExecArray | null;
+  while ((m = linkRe.exec(text)) !== null) {
+    if (m.index > lastIndex) {
+      parts.push(text.slice(lastIndex, m.index));
+    }
+    parts.push(
+      <a
+        key={m.index}
+        href={m[2]}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-blue-600 dark:text-blue-400 underline hover:no-underline"
+      >
+        {m[1]}
+      </a>
+    );
+    lastIndex = linkRe.lastIndex;
+  }
+  if (parts.length === 0) return <>{text}</>;
+  if (lastIndex < text.length) parts.push(text.slice(lastIndex));
+  return <>{parts}</>;
+}
+
 function TimelineCardBody({ item }: { item: TimelineItem }) {
   const isWork = item.type === "work";
   return (
@@ -54,7 +82,9 @@ function TimelineCardBody({ item }: { item: TimelineItem }) {
       </div>
       <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100 mt-1">{item.title}</h3>
       <p className="text-sm text-zinc-500 mt-0.5">{item.org}</p>
-      <p className="text-sm text-zinc-600 dark:text-zinc-400 mt-2 leading-relaxed">{item.description}</p>
+      <p className="text-sm text-zinc-600 dark:text-zinc-400 mt-2 leading-relaxed">
+        <DescriptionWithLinks text={item.description} />
+      </p>
     </>
   );
 }

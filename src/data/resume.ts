@@ -8,7 +8,7 @@ export const site = {
   summary:
     "Full-Stack Software Engineer with a PhD in Aerospace. After 10+ years in academia, I transitioned into software development, applying rigorous problem solving to build scalable web applications, APIs, and Cloud solutions.",
   specialty:
-    "I specialize in .NET, Angular, and Azure, leveraging AI tools to improve development efficiency - and occasionally write awesome resumes.",
+    "I specialize in .NET, Angular, React, Next.js and Azure, leveraging AI tools like Cursor and ChatGPT to improve development efficiency.",
   passion:
     "I'm passionate about applying Scrum practices to strengthen team communication and continuously improve product quality.",
   links: {
@@ -61,7 +61,7 @@ export const skills = [
 export const timeline = [
   {
     type: "education" as const,
-    title: "🚀 PhD - Aerospace Engineering",
+    title: "🚀 PhD (Aerospace Engineering)",
     org: "University of Poitiers, France",
     period: "Sep 2009 – Mar 2013",
     description:
@@ -69,19 +69,19 @@ export const timeline = [
   },
   {
     type: "work" as const,
-    title: "🧑‍🏫 Lecturer (Full-Time, Fixed-Term)",
+    title: "🧑‍🏫 Lecturer (Civil Engineering)",
     org: "IUT Civil Engineering, Bordeaux, France",
     period: "Sep 2013 – Aug 2015",
     description:
-      "Delivered undergraduate courses in fluid mechanics, acoustics, and lighting; developed course materials and assessed student performance.",
+      "Delivered undergraduate courses in fluid mechanics, acoustics, and lighting. Developed course materials and assessed student performance.",
   },
   {
     type: "work" as const,
-    title: "🚀 Research Associate – Aerospace Engineering",
+    title: "🚀 Research Associate (Aerospace Engineering)",
     org: "University of New South Wales (UNSW), Sydney, Australia",
     period: "May 2015 – Oct 2022",
     description:
-      "Led experimental research and data analysis using MATLAB; published in leading peer-reviewed journals and collaborated with industry partners.",
+      "Led experimental research and data analysis using MATLAB. Published in leading peer-reviewed journals and collaborated with industry partners.",
   },
   {
     type: "education" as const,
@@ -93,19 +93,19 @@ export const timeline = [
   },
   {
     type: "education" as const,
-    title: "💻 Full-Stack Developer Internship",
+    title: "💻 Developer Internship (Full-Stack)",
     org: "SSW, Sydney, Australia",
     period: "May 2023 – Oct 2023",
     description:
-      "Developed full-stack features using .NET and modern front-end frameworks within an agile team environment.",
+      "Developed full-stack features using .NET and modern front-end frameworks within an Agile team environment using Scrum.",
   },
   {
     type: "work" as const,
-    title: "💻 Software Engineer",
+    title: "💻 Software Engineer (Full-Stack)",
     org: "SSW, Sydney, Australia",
     period: "Oct 2023 – Present",
     description:
-      "Build full-stack applications using .NET, EF Core, Angular, React, Next.js, Power Apps, Duende IdentityServer, and Azure. Serve as Scrum Master for teams of 3–8 and promote AI-assisted development practices. Major contributor to SSW Rules.",
+      "Built full-stack applications using .NET, EF Core, Angular, React, Next.js, and Azure. Serve as Scrum Master for teams of 3 to 8 people. Promote AI-assisted development practices. Major contributor to [SSW Rules](https://www.ssw.com.au/rules).",
   },  
 ];
 
