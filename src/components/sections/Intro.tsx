@@ -35,7 +35,7 @@ export function Intro() {
           className={cn("absolute inset-0", isDark ? INTRO_BG_DARK : INTRO_BG_LIGHT)}
           aria-hidden
         />
-        {isDark && <StarsBackground className="size-full" />}
+        {isDark && <StarsBackground className="size-full" shootingStars={false} />}
         {!isDark && <SkyCloudsBackground className="size-full" />}
         {/* Single Confetti instance so it only fires on initial load, not when switching theme */}
         <div className="absolute inset-0 z-[1]">
