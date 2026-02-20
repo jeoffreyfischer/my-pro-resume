@@ -1,7 +1,7 @@
 import { MagicCard, MAGIC_CARD_DARK_PROPS, MAGIC_CARD_OVERLAY_CLASS } from "@/components/ui/magic-card";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { useTheme } from "@/hooks/useTheme";
-import { timeline } from "@/data/resume";
+import { useLocale } from "@/hooks/useLocale";
 import React, { useState, useEffect } from "react";
 import { SECTION_CARD_BASE } from "@/lib/constants";
 
@@ -20,7 +20,13 @@ function useMediaQuery(query: string): boolean {
 const MQ_COMPACT = "(max-width: 1023px)";   /* line left, branches + cards right */
 const MQ_NARROW = "(max-width: 639px)";       /* flow-based layout, dynamic card heights */
 
-type TimelineItem = (typeof timeline)[number];
+type TimelineItem = {
+  type: "work" | "education";
+  title: string;
+  org: string;
+  period: string;
+  description: string;
+};
 
 const CARD_CLASS = `${SECTION_CARD_BASE} p-4 sm:p-5`;
 
@@ -30,15 +36,16 @@ const CARD_CLASS = `${SECTION_CARD_BASE} p-4 sm:p-5`;
  * gapIndex: 0 = between circles 1–2, 1 = between 2–3, … (top to bottom).
  * Work → right (blue); Education → left (purple).
  */
-/* Order top→bottom: 1.Software Eng(R) 2.Full-stack(L) 3.Certificate(L) 4.Research Assoc(R) 5.Lecturer(R) 6.PhD(L). Diagram branches R,L,L,R,R,L. */
-const DIAGRAM_CARDS: Array<{ side: "left" | "right"; gapIndex: number; item: TimelineItem }> = [
-  { side: "right", gapIndex: 0, item: timeline[5] }, /* 1. Software Engineer */
-  { side: "left", gapIndex: 1, item: timeline[4] }, /* 2. Full-Stack Developer Internship */
-  { side: "left", gapIndex: 2, item: timeline[3] }, /* 3. Certificate III & IV in Fitness */
-  { side: "right", gapIndex: 3, item: timeline[2] }, /* 4. Research Associate – Aerospace Engineering */
-  { side: "right", gapIndex: 4, item: timeline[1] }, /* 5. Lecturer (Full-Time, Fixed-Term) */
-  { side: "left", gapIndex: 5, item: timeline[0] }, /* 6. PhD - Aerospace Engineering */
-];
+function getDiagramCards(timeline: TimelineItem[]): Array<{ side: "left" | "right"; gapIndex: number; item: TimelineItem }> {
+  return [
+    { side: "right", gapIndex: 0, item: timeline[5] },
+    { side: "left", gapIndex: 1, item: timeline[4] },
+    { side: "left", gapIndex: 2, item: timeline[3] },
+    { side: "right", gapIndex: 3, item: timeline[2] },
+    { side: "right", gapIndex: 4, item: timeline[1] },
+    { side: "left", gapIndex: 5, item: timeline[0] },
+  ];
+}
 
 /** Renders description text, turning [label](url) into a real link. */
 function DescriptionWithLinks({ text }: { text: string }) {
@@ -68,7 +75,7 @@ function DescriptionWithLinks({ text }: { text: string }) {
   return <>{parts}</>;
 }
 
-function TimelineCardBody({ item }: { item: TimelineItem }) {
+function TimelineCardBody({ item, workLabel, educationLabel }: { item: TimelineItem; workLabel: string; educationLabel: string }) {
   const isWork = item.type === "work";
   return (
     <>
@@ -78,7 +85,7 @@ function TimelineCardBody({ item }: { item: TimelineItem }) {
             isWork ? "text-blue-600 dark:text-blue-400" : "text-violet-600 dark:text-violet-400"
           }`}
         >
-          {isWork ? "Work" : "Education"}
+          {isWork ? workLabel : educationLabel}
         </span>
         <span className="text-xs text-zinc-500">{item.period}</span>
       </div>
@@ -91,8 +98,8 @@ function TimelineCardBody({ item }: { item: TimelineItem }) {
   );
 }
 
-function TimelineCard({ item, isDark }: { item: TimelineItem; isDark: boolean }) {
-  const body = <TimelineCardBody item={item} />;
+function TimelineCard({ item, isDark, workLabel, educationLabel }: { item: TimelineItem; isDark: boolean; workLabel: string; educationLabel: string }) {
+  const body = <TimelineCardBody item={item} workLabel={workLabel} educationLabel={educationLabel} />;
   if (isDark) {
     return (
       <MagicCard {...MAGIC_CARD_DARK_PROPS}>
@@ -222,8 +229,24 @@ const MAIN_LINE_BOTTOM = MAIN_LINE_TOP + GAPS_COUNT * GAP_SIZE;
 /** Fixed height for compact SVG layout (640px–1023px) so card % positioning matches diagram. */
 const COMPACT_MIN_HEIGHT_PX = 1320;
 
+type JourneyLabels = {
+  headLabel: string;
+  initialCommitLine1: string;
+  initialCommitLine2: string;
+  work: string;
+  education: string;
+};
+
 /** < 640px: flow-based diagram – line + circles, one row per card; spacing follows card height. */
-function CompactFlowDiagram({ cardsInOrder, isDark }: { cardsInOrder: TimelineItem[]; isDark: boolean }) {
+function CompactFlowDiagram({
+  cardsInOrder,
+  isDark,
+  labels,
+}: {
+  cardsInOrder: TimelineItem[];
+  isDark: boolean;
+  labels: JourneyLabels;
+}) {
   const diagramColWidth = "4rem";
   const lineClass = "absolute left-1/2 top-0 bottom-0 w-1 -translate-x-1/2 bg-zinc-700 dark:bg-zinc-600";
   const circleBaseClass = "absolute left-1/2 top-1/2 w-7 h-7 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-zinc-700 dark:border-zinc-600";
@@ -238,7 +261,7 @@ function CompactFlowDiagram({ cardsInOrder, isDark }: { cardsInOrder: TimelineIt
         <div className={`relative flex flex-col items-center pt-16 pb-4 min-h-[3rem] ${cellCol1}`}>
           <div className={lineClass} aria-hidden />
           <div className={`${mainNodeCircleClass} top-0`} aria-hidden style={{ zIndex: 1 }} />
-          <span className={`${labelClass} absolute left-1/2 top-0 -translate-x-1/2 -translate-y-[calc(100%+1rem)]`} style={{ zIndex: 1 }}>HEAD</span>
+          <span className={`${labelClass} absolute left-1/2 top-0 -translate-x-1/2 -translate-y-[calc(100%+1rem)]`} style={{ zIndex: 1 }}>{labels.headLabel}</span>
         </div>
         <div className={cellCol2} />
         {cardsInOrder.map((item, i) => {
@@ -251,7 +274,7 @@ function CompactFlowDiagram({ cardsInOrder, isDark }: { cardsInOrder: TimelineIt
                 <div className={`${circleBaseClass} ${circleFillClass}`} aria-hidden style={{ zIndex: 1 }} />
               </div>
               <div className={`min-w-0 flex items-center py-2 ${cellCol2}`}>
-                <TimelineCard item={item} isDark={isDark} />
+                <TimelineCard item={item} isDark={isDark} workLabel={labels.work} educationLabel={labels.education} />
               </div>
             </React.Fragment>
           );
@@ -259,8 +282,8 @@ function CompactFlowDiagram({ cardsInOrder, isDark }: { cardsInOrder: TimelineIt
         <div className={`relative flex flex-col items-center pt-4 pb-16 min-h-[3.5rem] ${cellCol1}`}>
           <div className={lineClass} aria-hidden />
           <div className={`${mainNodeCircleClass} bottom-0 translate-y-1/2`} aria-hidden style={{ zIndex: 1 }} />
-          <span className={`${labelClass} absolute left-1/2 bottom-0 -translate-x-1/2 translate-y-[calc(100%+1rem)]`} style={{ zIndex: 1 }}>Initial</span>
-          <span className={`${labelClass} absolute left-1/2 bottom-0 -translate-x-1/2 translate-y-[calc(100%+2.25rem)] text-sm`} style={{ zIndex: 1 }}>commit</span>
+          <span className={`${labelClass} absolute left-1/2 bottom-0 -translate-x-1/2 translate-y-[calc(100%+1rem)]`} style={{ zIndex: 1 }}>{labels.initialCommitLine1}</span>
+          <span className={`${labelClass} absolute left-1/2 bottom-0 -translate-x-1/2 translate-y-[calc(100%+2.25rem)] text-sm`} style={{ zIndex: 1 }}>{labels.initialCommitLine2}</span>
         </div>
         <div className={cellCol2} />
       </div>
@@ -271,9 +294,19 @@ function CompactFlowDiagram({ cardsInOrder, isDark }: { cardsInOrder: TimelineIt
 /** Git-branch style diagram: main vertical line, nodes, and reusable right/left branches. */
 function BranchDiagram() {
   const { theme } = useTheme();
+  const { t } = useLocale();
   const isDark = theme === "dark";
   const isCompact = useMediaQuery(MQ_COMPACT);
   const isNarrow = useMediaQuery(MQ_NARROW);
+  const timeline = t.timeline;
+  const DIAGRAM_CARDS = getDiagramCards(timeline);
+  const journeyLabels: JourneyLabels = {
+    headLabel: t.ui.journey.headLabel,
+    initialCommitLine1: t.ui.journey.initialCommitLine1,
+    initialCommitLine2: t.ui.journey.initialCommitLine2,
+    work: t.ui.journey.work,
+    education: t.ui.journey.education,
+  };
   const { cx, mainStroke, mainNodeFill, nodeStroke } = DIAGRAM;
   const mainNodes = [
     MAIN_LINE_TOP,
@@ -344,10 +377,10 @@ function BranchDiagram() {
   ));
   const mainLineLabels = (
     <>
-      <text x={cx} y={topLabelY} textAnchor="middle" className="fill-current text-2xl font-semibold" style={{ fontFamily: "inherit" }}>HEAD</text>
+      <text x={cx} y={topLabelY} textAnchor="middle" className="fill-current text-2xl font-semibold" style={{ fontFamily: "inherit" }}>{journeyLabels.headLabel}</text>
       <text textAnchor="middle" className="fill-current text-2xl font-semibold" style={{ fontFamily: "inherit" }}>
-        <tspan x={cx} y={bottomLabelY}>Initial</tspan>
-        <tspan x={cx} dy="1.2em">commit</tspan>
+        <tspan x={cx} y={bottomLabelY}>{journeyLabels.initialCommitLine1}</tspan>
+        <tspan x={cx} dy="1.2em">{journeyLabels.initialCommitLine2}</tspan>
       </text>
     </>
   );
@@ -358,7 +391,7 @@ function BranchDiagram() {
     const circleFillCompact = (i: number) =>
       (DIAGRAM_CARDS.find((c) => c.gapIndex === i)!.item.type === "work" ? RIGHT_FILL : LEFT_FILL);
 
-    if (isNarrow) return <CompactFlowDiagram cardsInOrder={cardsInOrder} isDark={isDark} />;
+    if (isNarrow) return <CompactFlowDiagram cardsInOrder={cardsInOrder} isDark={isDark} labels={journeyLabels} />;
 
     /* 640px–1023px: SVG compact – fixed height, diagram + absolute-positioned cards */
     const compactExtraLeft = 48;
@@ -409,7 +442,7 @@ function BranchDiagram() {
                   style={{ top: `${branchTopPercent(branches[i].branchY)}%`, transform: "translateY(-50%)" } as React.CSSProperties}
                 >
                   <div className="w-full max-w-[calc(100%-1rem)] pointer-events-auto">
-                    <TimelineCard item={item} isDark={isDark} />
+                    <TimelineCard item={item} isDark={isDark} workLabel={journeyLabels.work} educationLabel={journeyLabels.education} />
                   </div>
                 </div>
               )
@@ -437,7 +470,7 @@ function BranchDiagram() {
           <div key={`left-row-${i}`} className="lg:hidden flex items-center justify-end min-h-[220px]">
             {item ? (
               <div className="w-full max-w-[calc(100%-1rem)]">
-                <TimelineCard item={item} isDark={isDark} />
+                <TimelineCard item={item} isDark={isDark} workLabel={journeyLabels.work} educationLabel={journeyLabels.education} />
               </div>
             ) : null}
           </div>
@@ -450,7 +483,7 @@ function BranchDiagram() {
               style={{ top: `${branchTopPercent(branches[i].branchY)}%`, transform: "translateY(-50%)" } as React.CSSProperties}
             >
               <div className="w-full max-w-[calc(100%-1rem)] lg:max-w-none lg:mr-1.5 pointer-events-auto">
-                <TimelineCard item={item} isDark={isDark} />
+                <TimelineCard item={item} isDark={isDark} workLabel={journeyLabels.work} educationLabel={journeyLabels.education} />
               </div>
             </div>
           ) : null
@@ -516,7 +549,7 @@ function BranchDiagram() {
           <div key={`right-row-${i}`} className="lg:hidden flex items-center justify-start min-h-[220px]">
             {item ? (
               <div className="w-full max-w-[calc(100%-1rem)]">
-                <TimelineCard item={item} isDark={isDark} />
+                <TimelineCard item={item} isDark={isDark} workLabel={journeyLabels.work} educationLabel={journeyLabels.education} />
               </div>
             ) : null}
           </div>
@@ -529,7 +562,7 @@ function BranchDiagram() {
               style={{ top: `${branchTopPercent(branches[i].branchY)}%`, transform: "translateY(-50%)" } as React.CSSProperties}
             >
               <div className="w-full max-w-[calc(100%-1rem)] lg:max-w-none lg:ml-1.5 pointer-events-auto">
-                <TimelineCard item={item} isDark={isDark} />
+                <TimelineCard item={item} isDark={isDark} workLabel={journeyLabels.work} educationLabel={journeyLabels.education} />
               </div>
             </div>
           ) : null
@@ -540,10 +573,11 @@ function BranchDiagram() {
 }
 
 export function Journey() {
+  const { t } = useLocale();
   return (
     <section id="journey" className="section-pad">
       <div className="container-narrow">
-        <SectionHeading className="mb-12">Journey</SectionHeading>
+        <SectionHeading className="mb-12">{t.ui.sections.journey}</SectionHeading>
 
         <BranchDiagram />
       </div>

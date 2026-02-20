@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { OrbitingCircles } from "@/components/ui/orbiting-circles";
 import { SkillsOrbitControls } from "@/components/sections/SkillsOrbitControls";
 import { SectionHeading } from "@/components/ui/section-heading";
-import { skills } from "@/data/resume";
+import { useLocale } from "@/hooks/useLocale";
 import { useSkillsHighlight } from "@/hooks/useSkillsHighlight";
 import { SECTION_CARD_BASE } from "@/lib/constants";
 
@@ -57,7 +57,7 @@ function SkillCard({
   className,
   activeLabel,
 }: {
-  group: (typeof skills)[number];
+  group: { category: string; items: string[] };
   index: number;
   className?: string;
   activeLabel?: string;
@@ -100,14 +100,16 @@ function SkillCard({
 }
 
 export function Skills() {
+  const { t } = useLocale();
   const highlight = useSkillsHighlight();
   const { activeIndex } = highlight;
   const activeLabel = activeIndex !== null ? ORBIT_LOGOS[activeIndex].label : undefined;
+  const skills = t.skills;
 
   return (
     <section id="skills" className="section-pad py-12 sm:py-14 lg:py-16">
       <div className="container-narrow">
-        <SectionHeading className="mb-6 lg:mb-8">Skills</SectionHeading>
+        <SectionHeading className="mb-6 lg:mb-8">{t.ui.sections.skills}</SectionHeading>
 
         {/* Mobile/tablet: orbit on top, then 2-col grid of cards */}
         <div className="md:hidden space-y-8">

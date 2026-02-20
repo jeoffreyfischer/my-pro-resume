@@ -1,30 +1,37 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { GB, FR } from "country-flag-icons/react/3x2";
 import { useTheme } from "@/hooks/useTheme";
+import { useLocale } from "@/hooks/useLocale";
+import type { LocaleData } from "@/locales/types";
 
 type NavLink =
-  | { id: string; label: string }
-  | { id: string; label: string; children: { id: string; label: string }[] };
+  | { id: string; labelKey: keyof LocaleData["ui"]["nav"] }
+  | {
+      id: string;
+      labelKey: keyof LocaleData["ui"]["nav"];
+      children: { id: string; labelKey: "workProjects" | "personalProjects" }[];
+    };
 
 const NAV_LINKS: NavLink[] = [
-  { id: "intro", label: "Intro" },
-  { id: "skills", label: "Skills" },
-  { id: "certifications", label: "Certifications" },
+  { id: "intro", labelKey: "intro" },
+  { id: "skills", labelKey: "skills" },
+  { id: "certifications", labelKey: "certifications" },
   {
     id: "projects",
-    label: "Projects",
+    labelKey: "projects",
     children: [
-      { id: "work-projects", label: "Work projects" },
-      { id: "personal-projects", label: "Personal projects" },
+      { id: "work-projects", labelKey: "workProjects" },
+      { id: "personal-projects", labelKey: "personalProjects" },
     ],
   },
-  { id: "journey", label: "Journey" },
-  { id: "public-videos", label: "Videos" },
-  { id: "hobbies", label: "Hobbies" },
-  { id: "contact", label: "Contact" },
+  { id: "journey", labelKey: "journey" },
+  { id: "public-videos", labelKey: "videos" },
+  { id: "hobbies", labelKey: "hobbies" },
+  { id: "contact", labelKey: "contact" },
 ];
 
-function isDropdown(link: NavLink): link is NavLink & { children: { id: string; label: string }[] } {
+function isDropdown(link: NavLink): link is NavLink & { children: { id: string; labelKey: "workProjects" | "personalProjects" }[] } {
   return "children" in link && Array.isArray(link.children);
 }
 
@@ -58,6 +65,8 @@ function ChevronDownIcon({ open }: { open: boolean }) {
   );
 }
 
+const FLAG_CLASS = "h-4 w-6 sm:h-5 sm:w-7 rounded-sm border border-zinc-300/80 dark:border-zinc-600/80 object-cover";
+
 export function Nav() {
   const [open, setOpen] = useState(false);
   const [projectsOpen, setProjectsOpen] = useState(false);
@@ -65,6 +74,7 @@ export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const { theme, toggle } = useTheme();
+  const { locale, setLocale, t } = useLocale();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -124,7 +134,7 @@ export function Nav() {
                   id="projects-menu-button"
                   className="inline-flex items-center px-3 py-2 text-sm text-zinc-600 dark:text-zinc-200 hover:text-zinc-900 dark:hover:text-white transition-colors rounded-md cursor-pointer"
                 >
-                  {link.label}
+                  {t.ui.nav[link.labelKey]}
                   <ChevronDownIcon open={projectsOpen} />
                 </button>
                 <AnimatePresence>
@@ -150,7 +160,7 @@ export function Nav() {
                           }}
                           className="block px-3 py-2 text-sm text-zinc-600 dark:text-zinc-200 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 first:rounded-t-md last:rounded-b-md cursor-pointer"
                         >
-                          {child.label}
+                          {t.ui.nav[child.labelKey]}
                         </a>
                       ))}
                     </motion.div>
@@ -163,32 +173,72 @@ export function Nav() {
                 href={`#${link.id}`}
                 className="px-3 py-2 text-sm text-zinc-600 dark:text-zinc-200 hover:text-zinc-900 dark:hover:text-white transition-colors rounded-md"
               >
-                {link.label}
+                {t.ui.nav[link.labelKey]}
               </a>
             )
           )}
+          <div className="flex items-center gap-0.5 ml-1" role="group" aria-label="Language">
+            <button
+              type="button"
+              onClick={() => setLocale("en")}
+              aria-label={t.ui.nav.switchToEnglish}
+              aria-current={locale === "en" ? "true" : undefined}
+              className={`p-1.5 rounded-md transition-colors cursor-pointer ${locale === "en" ? "ring-2 ring-blue-500 dark:ring-blue-400 bg-zinc-100 dark:bg-zinc-800" : "hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200"}`}
+            >
+              <GB className={FLAG_CLASS} aria-hidden />
+            </button>
+            <button
+              type="button"
+              onClick={() => setLocale("fr")}
+              aria-label={t.ui.nav.switchToFrench}
+              aria-current={locale === "fr" ? "true" : undefined}
+              className={`p-1.5 rounded-md transition-colors cursor-pointer ${locale === "fr" ? "ring-2 ring-blue-500 dark:ring-blue-400 bg-zinc-100 dark:bg-zinc-800" : "hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200"}`}
+            >
+              <FR className={FLAG_CLASS} aria-hidden />
+            </button>
+          </div>
           <button
             type="button"
             onClick={toggle}
-            aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
-            className="ml-2 p-2 rounded-lg text-zinc-600 dark:text-zinc-200 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
+            aria-label={theme === "dark" ? t.ui.nav.switchToLight : t.ui.nav.switchToDark}
+            className="ml-1 p-2 rounded-lg text-zinc-600 dark:text-zinc-200 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
           >
             {theme === "dark" ? <SunIcon /> : <MoonIcon />}
           </button>
         </div>
 
         <div className="flex md:hidden items-center gap-1">
+          <div className="flex items-center gap-0.5" role="group" aria-label="Language">
+            <button
+              type="button"
+              onClick={() => setLocale("en")}
+              aria-label={t.ui.nav.switchToEnglish}
+              aria-current={locale === "en" ? "true" : undefined}
+              className={`p-1.5 rounded-md transition-colors cursor-pointer ${locale === "en" ? "ring-2 ring-blue-500 dark:ring-blue-400 bg-zinc-100 dark:bg-zinc-800" : "hover:bg-zinc-100 dark:hover:bg-zinc-800"}`}
+            >
+              <GB className={FLAG_CLASS} aria-hidden />
+            </button>
+            <button
+              type="button"
+              onClick={() => setLocale("fr")}
+              aria-label={t.ui.nav.switchToFrench}
+              aria-current={locale === "fr" ? "true" : undefined}
+              className={`p-1.5 rounded-md transition-colors cursor-pointer ${locale === "fr" ? "ring-2 ring-blue-500 dark:ring-blue-400 bg-zinc-100 dark:bg-zinc-800" : "hover:bg-zinc-100 dark:hover:bg-zinc-800"}`}
+            >
+              <FR className={FLAG_CLASS} aria-hidden />
+            </button>
+          </div>
           <button
             type="button"
             onClick={toggle}
-            aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+            aria-label={theme === "dark" ? t.ui.nav.switchToLight : t.ui.nav.switchToDark}
             className="p-2 rounded-lg text-zinc-600 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
           >
             {theme === "dark" ? <SunIcon /> : <MoonIcon />}
           </button>
           <button
             type="button"
-            aria-label="Toggle menu"
+            aria-label={t.ui.nav.toggleMenu}
             aria-expanded={open}
             onClick={() => {
               setOpen((o) => !o);
@@ -227,7 +277,7 @@ export function Nav() {
                       aria-controls="projects-mobile-submenu"
                       className="flex items-center justify-between w-full px-3 py-2.5 text-zinc-600 dark:text-zinc-200 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg text-left cursor-pointer"
                     >
-                      {link.label}
+                      {t.ui.nav[link.labelKey]}
                       <ChevronDownIcon open={projectsMobileOpen} />
                     </button>
                     <AnimatePresence>
@@ -250,7 +300,7 @@ export function Nav() {
                                 }}
                                 className="block px-3 py-2 text-sm text-zinc-600 dark:text-zinc-200 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg"
                               >
-                                {child.label}
+                                {t.ui.nav[child.labelKey]}
                               </a>
                             </li>
                           ))}
@@ -265,7 +315,7 @@ export function Nav() {
                       onClick={() => setOpen(false)}
                       className="block px-3 py-2.5 text-zinc-600 dark:text-zinc-200 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg cursor-pointer"
                     >
-                      {link.label}
+                      {t.ui.nav[link.labelKey]}
                     </a>
                   </li>
                 )

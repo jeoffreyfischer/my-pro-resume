@@ -1,17 +1,19 @@
 import { WorkProjects } from "@/components/sections/Projects";
 import { PersonalProjects } from "@/components/sections/PersonalProjects";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { useLocale } from "@/hooks/useLocale";
 
 const SECTION_ALTERNATE_BG = "bg-sky-50 dark:bg-zinc-900/30";
 
 export function ProjectsSection() {
+  const { t } = useLocale();
   return (
     <section id="projects">
       {/* Work Projects: white */}
       <div>
         <div className="section-pad">
           <div className="container-narrow">
-            <SectionHeading className="mb-10">Projects</SectionHeading>
+            <SectionHeading className="mb-10">{t.ui.sections.projects}</SectionHeading>
             <WorkProjects />
           </div>
         </div>

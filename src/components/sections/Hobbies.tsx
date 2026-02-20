@@ -1,24 +1,26 @@
 import { motion } from "framer-motion";
-import { hobbies } from "@/data/resume";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { useLocale } from "@/hooks/useLocale";
 import { SECTION_CARD_BASE, IFRAME_ALLOW } from "@/lib/constants";
 
-/** Vertical (portrait) media - guitar video & fitness/salsa photos */
-const VERTICAL_MEDIA = hobbies.filter(
-  (h) => (h.placeholder === "video" && "embedUrl" in h) || (h.placeholder === "image" && "imageSrc" in h)
-);
-
-type TextOnlyHobby = { title: string; detail: string };
-/** Other hobby cards (no media) */
-const OTHER_HOBBIES: TextOnlyHobby[] = hobbies.filter(
-  (h) => (h as { placeholder: string }).placeholder === "none"
-) as TextOnlyHobby[];
+type TextOnlyHobby = { title: string; detail: string; placeholder: string };
 
 export function Hobbies() {
+  const { t } = useLocale();
+  const hobbies = t.hobbies;
+  /** Vertical (portrait) media - guitar video & fitness/salsa photos */
+  const VERTICAL_MEDIA = hobbies.filter(
+    (h) => (h.placeholder === "video" && "embedUrl" in h) || (h.placeholder === "image" && "imageSrc" in h)
+  );
+  /** Other hobby cards (no media) */
+  const OTHER_HOBBIES: TextOnlyHobby[] = hobbies.filter(
+    (h) => (h as { placeholder: string }).placeholder === "none"
+  ) as TextOnlyHobby[];
+
   return (
     <section id="hobbies" className="section-pad py-10 sm:py-12 lg:py-14">
       <div className="container-narrow">
-        <SectionHeading className="mb-4 sm:mb-5">Hobbies</SectionHeading>
+        <SectionHeading className="mb-4 sm:mb-5">{t.ui.sections.hobbies}</SectionHeading>
         {/* Three hobby cards: shorter media so section fits in view; 1 col mobile, 2 cols tablet, 3 cols desktop */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 mb-6 sm:mb-8">
           {VERTICAL_MEDIA.map((hobby, i) => (

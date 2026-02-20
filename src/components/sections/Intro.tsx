@@ -5,8 +5,8 @@ import { Confetti } from "@/components/ui/confetti";
 import { Highlight } from "@/components/ui/hero-highlight";
 import { SkyCloudsBackground } from "@/components/ui/sky-clouds-background";
 import { StarsBackground } from "@/components/ui/stars-background";
-import { site } from "@/data/resume";
 import { useTheme } from "@/hooks/useTheme";
+import { useLocale } from "@/hooks/useLocale";
 import { BTN_PRIMARY, BTN_SECONDARY } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
@@ -16,10 +16,10 @@ const INTRO_BG_LIGHT = "bg-background";
 
 export function Intro() {
   const { theme } = useTheme();
+  const { t } = useLocale();
   const isDark = theme === "dark";
-  const [summaryBefore, summaryAfter] = site.summary.split("problem solving");
-  const [specialtyBefore, specialtyAfter] = site.specialty.split(".NET");
-  const [passionBefore, passionAfter] = site.passion.split("Scrum");
+  const site = t.site;
+  const { summaryParts, specialtyParts, passionParts } = site;
 
   return (
     <section
@@ -75,7 +75,7 @@ export function Intro() {
               className="text-sm font-medium text-blue-600 dark:text-blue-400 mb-2 flex flex-wrap items-center gap-x-2 gap-y-1"
             >
               <span>{site.location}</span>
-              {"citizenship" in site && site.citizenship && (
+              {site.citizenship && (
                 <>
                   <span className="text-zinc-400 dark:text-zinc-500" aria-hidden>·</span>
                   <span>{site.citizenship}</span>
@@ -125,9 +125,9 @@ export function Intro() {
               transition={{ delay: 0.2 }}
               className="mt-6 text-zinc-600 dark:text-zinc-400 leading-relaxed"
             >
-              {summaryBefore}
-              <Highlight>problem solving</Highlight>
-              {summaryAfter}
+              {summaryParts.before}
+              <Highlight>{summaryParts.highlight}</Highlight>
+              {summaryParts.after}
             </motion.p>
             <motion.p
               initial={{ opacity: 0, y: 12 }}
@@ -136,9 +136,9 @@ export function Intro() {
               transition={{ delay: 0.212 }}
               className="mt-4 text-zinc-600 dark:text-zinc-400 leading-relaxed"
             >
-              {specialtyBefore}
-              <Highlight>.NET</Highlight>
-              {specialtyAfter}
+              {specialtyParts.before}
+              <Highlight>{specialtyParts.highlight}</Highlight>
+              {specialtyParts.after}
             </motion.p>
             <motion.p
               initial={{ opacity: 0, y: 12 }}
@@ -147,9 +147,9 @@ export function Intro() {
               transition={{ delay: 0.225 }}
               className="mt-4 text-zinc-600 dark:text-zinc-400 leading-relaxed"
             >
-              {passionBefore}
-              <Highlight>Scrum</Highlight>
-              {passionAfter}
+              {passionParts.before}
+              <Highlight>{passionParts.highlight}</Highlight>
+              {passionParts.after}
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 12 }}
@@ -163,29 +163,29 @@ export function Intro() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className={BTN_PRIMARY}
-                aria-label="Contact by email (opens in new tab)"
+                aria-label={t.ui.aria.contactByEmail}
               >
-                Contact
+                {t.ui.buttons.contact}
               </a>
               <a
                 href={site.links.github}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={BTN_SECONDARY}
-                aria-label="GitHub (opens in new tab)"
+                aria-label={t.ui.aria.githubOpens}
               >
                 <SiGithub className="size-5 shrink-0" aria-hidden />
-                GitHub
+                {t.ui.buttons.github}
               </a>
               <a
                 href={site.links.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={BTN_SECONDARY}
-                aria-label="LinkedIn (opens in new tab)"
+                aria-label={t.ui.aria.linkedinOpens}
               >
                 <SiLinkedin className="size-5 shrink-0" aria-hidden />
-                LinkedIn
+                {t.ui.buttons.linkedin}
               </a>
             </motion.div>
           </div>

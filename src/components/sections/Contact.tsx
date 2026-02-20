@@ -1,23 +1,25 @@
 import { motion } from "framer-motion";
 import { SiGithub, SiGooglescholar, SiLinkedin, SiYoutube } from "react-icons/si";
-import { site } from "@/data/resume";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { useLocale } from "@/hooks/useLocale";
 
 const CONTACT_LINK_CLASS =
   "inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-zinc-300 dark:border-zinc-600 bg-white dark:bg-transparent text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800/50 font-medium transition-colors";
 
 export function Contact() {
+  const { t } = useLocale();
+  const site = t.site;
   return (
     <section id="contact" className="section-pad">
       <div className="container-narrow">
-        <SectionHeading className="mb-6">Contact</SectionHeading>
+        <SectionHeading className="mb-6">{t.ui.sections.contact}</SectionHeading>
         <motion.p
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="text-zinc-600 dark:text-zinc-400 mb-8 max-w-xl"
         >
-          Open to opportunities and collaboration. Get in touch.
+          {t.ui.contact.intro}
         </motion.p>
 
         <motion.div
@@ -31,59 +33,59 @@ export function Contact() {
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-medium transition-colors"
-            aria-label="Email (opens in new tab)"
+            aria-label={t.ui.aria.emailOpens}
           >
-            Email
+            {t.ui.buttons.email}
           </a>
           <a
             href={site.links.linkedin}
             target="_blank"
             rel="noopener noreferrer"
             className={CONTACT_LINK_CLASS}
-            aria-label="LinkedIn (opens in new tab)"
+            aria-label={t.ui.aria.linkedinOpens}
           >
             <SiLinkedin className="size-5 shrink-0" aria-hidden />
-            LinkedIn
+            {t.ui.buttons.linkedin}
           </a>
           <a
             href={site.links.github}
             target="_blank"
             rel="noopener noreferrer"
             className={CONTACT_LINK_CLASS}
-            aria-label="GitHub (opens in new tab)"
+            aria-label={t.ui.aria.githubOpens}
           >
             <SiGithub className="size-5 shrink-0" aria-hidden />
-            GitHub
+            {t.ui.buttons.github}
           </a>
           <a
             href={site.links.professionalProfile}
             target="_blank"
             rel="noopener noreferrer"
             className={CONTACT_LINK_CLASS}
-            aria-label="SSW profile (opens in new tab)"
+            aria-label={t.ui.aria.sswProfileOpens}
           >
             <img src="/images/ssw-logo.svg" alt="" className="size-5 shrink-0" aria-hidden />
-            SSW profile
+            {t.ui.buttons.sswProfile}
           </a>
           <a
             href={site.links.publicVideos}
             target="_blank"
             rel="noopener noreferrer"
             className={CONTACT_LINK_CLASS}
-            aria-label="Public videos (opens in new tab)"
+            aria-label={t.ui.aria.publicVideosOpens}
           >
             <SiYoutube className="size-5 shrink-0" aria-hidden />
-            Public videos
+            {t.ui.buttons.publicVideos}
           </a>
           <a
             href={site.links.publications}
             target="_blank"
             rel="noopener noreferrer"
             className={CONTACT_LINK_CLASS}
-            aria-label="Publications (opens in new tab)"
+            aria-label={t.ui.aria.publicationsOpens}
           >
             <SiGooglescholar className="size-5 shrink-0" aria-hidden />
-            Publications
+            {t.ui.buttons.publications}
           </a>
         </motion.div>
 

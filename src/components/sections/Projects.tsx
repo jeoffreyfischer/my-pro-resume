@@ -2,7 +2,7 @@ import { CardStack } from "@/components/ui/card-stack";
 import { MagicCard, MAGIC_CARD_DARK_PROPS, MAGIC_CARD_OVERLAY_CLASS } from "@/components/ui/magic-card";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { useTheme } from "@/hooks/useTheme";
-import { projects } from "@/data/resume";
+import { useLocale } from "@/hooks/useLocale";
 import { cn } from "@/lib/utils";
 import { SECTION_CARD_BASE } from "@/lib/constants";
 import { HiArrowTopRightOnSquare } from "react-icons/hi2";
@@ -25,14 +25,24 @@ function getCategoryPillClass(category: string): string {
   return CATEGORY_PILL.client;
 }
 
+type Project = {
+  title: string;
+  category: string;
+  description: string;
+  tech: string[];
+  url?: string;
+};
+
 function ProjectCardTitleStrip({
   project,
   isExpanded = false,
+  openInNewTabLabel,
 }: {
-  project: (typeof projects)[number];
+  project: Project;
   isExpanded?: boolean;
+  openInNewTabLabel: string;
 }) {
-  const url = "url" in project ? (project as { url?: string }).url : undefined;
+  const url = project.url;
   return (
     <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2">
       <div className="flex items-center gap-2 min-w-0">
@@ -50,7 +60,7 @@ function ProjectCardTitleStrip({
             target="_blank"
             rel="noopener noreferrer"
             className="shrink-0 p-0.5 rounded text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200 transition-colors"
-            aria-label={`Open ${project.title} in new tab`}
+            aria-label={`${openInNewTabLabel}: ${project.title}`}
           >
             <HiArrowTopRightOnSquare className="size-4" aria-hidden />
           </a>
@@ -61,10 +71,10 @@ function ProjectCardTitleStrip({
   );
 }
 
-function ProjectCardBody({ project }: { project: (typeof projects)[number] }) {
+function ProjectCardBody({ project, openInNewTabLabel }: { project: Project; openInNewTabLabel: string }) {
   return (
     <>
-      <ProjectCardTitleStrip project={project} isExpanded />
+      <ProjectCardTitleStrip project={project} isExpanded openInNewTabLabel={openInNewTabLabel} />
       <p className="mt-2 text-zinc-600 dark:text-zinc-400 text-sm leading-relaxed">{project.description}</p>
       {project.tech.length > 0 && (
         <div className="mt-3 flex flex-wrap gap-1.5">
@@ -84,14 +94,15 @@ function ProjectCardBody({ project }: { project: (typeof projects)[number] }) {
 
 /** Renders project card content for CardStack. When isExpanded is false, only title + category. */
 function renderProjectCard(
-  project: (typeof projects)[number],
+  project: Project,
   isDark: boolean,
-  isExpanded: boolean
+  isExpanded: boolean,
+  openInNewTabLabel: string
 ) {
   const body = isExpanded ? (
-    <ProjectCardBody project={project} />
+    <ProjectCardBody project={project} openInNewTabLabel={openInNewTabLabel} />
   ) : (
-    <ProjectCardTitleStrip project={project} />
+    <ProjectCardTitleStrip project={project} openInNewTabLabel={openInNewTabLabel} />
   );
   return isDark ? (
     <MagicCard {...MAGIC_CARD_DARK_PROPS} className={cn(MAGIC_CARD_DARK_PROPS.className, "h-full")}>
@@ -103,52 +114,53 @@ function renderProjectCard(
   );
 }
 
-const internalProjects = projects.filter((p) =>
-  p.category.toLowerCase().includes("internal")
-);
-const clientProjects = projects.filter((p) => p.category.toLowerCase().includes("client"));
-const workshopProjects = projects.filter((p) => p.category.toLowerCase().includes("workshop"));
-
 export function WorkProjects() {
   const { theme } = useTheme();
+  const { t } = useLocale();
   const isDark = theme === "dark";
+  const projects = t.projects;
+  const internalProjects = projects.filter((p) =>
+    p.category.toLowerCase().includes("internal")
+  );
+  const clientProjects = projects.filter((p) => p.category.toLowerCase().includes("client"));
+  const workshopProjects = projects.filter((p) => p.category.toLowerCase().includes("workshop"));
 
   return (
     <div id="work-projects">
       <SectionHeading as="h3" className="mb-8">
-        Work Projects
+        {t.ui.sections.workProjects}
       </SectionHeading>
 
       {/* 3 piles: Client | Internal | Workshop. Full-width flex so left pile aligns with heading; flex-1 keeps center pile centered. */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10 xl:gap-12 2xl:gap-14 w-full">
-        <section className="min-w-0 lg:flex lg:flex-col" aria-label="Client projects">
+        <section className="min-w-0 lg:flex lg:flex-col" aria-label={t.ui.sections.workProjects}>
           <CardStack
             items={clientProjects}
-            itemLabel="Client project"
+            itemLabel={t.ui.sections.workProjects}
             stackAlign="start"
             stackMaxWidth="max-w-md lg:max-w-lg xl:max-w-xl"
-            renderCard={(project, _i, isExpanded) => renderProjectCard(project, isDark, isExpanded)}
+            renderCard={(project, _i, isExpanded) => renderProjectCard(project, isDark, isExpanded, t.ui.aria.openInNewTab)}
           />
         </section>
 
         <div className="flex flex-col gap-8 lg:contents min-w-0">
-          <section className="min-w-0 lg:flex lg:flex-col lg:items-center" aria-label="Internal projects">
+          <section className="min-w-0 lg:flex lg:flex-col lg:items-center" aria-label={t.ui.sections.workProjects}>
           <CardStack
             items={internalProjects}
-            itemLabel="Internal project"
+            itemLabel={t.ui.sections.workProjects}
             stackAlign="center"
             stackMaxWidth="max-w-md lg:max-w-lg xl:max-w-xl"
-            renderCard={(project, _i, isExpanded) => renderProjectCard(project, isDark, isExpanded)}
+            renderCard={(project, _i, isExpanded) => renderProjectCard(project, isDark, isExpanded, t.ui.aria.openInNewTab)}
           />
         </section>
 
-          <section className="min-w-0 lg:flex lg:flex-col lg:items-end" aria-label="Workshop projects">
+          <section className="min-w-0 lg:flex lg:flex-col lg:items-end" aria-label={t.ui.sections.workProjects}>
             <CardStack
               items={workshopProjects}
-              itemLabel="Workshop"
+              itemLabel={t.ui.sections.workProjects}
               stackAlign="end"
               stackMaxWidth="max-w-md lg:max-w-lg xl:max-w-xl"
-              renderCard={(project, _i, isExpanded) => renderProjectCard(project, isDark, isExpanded)}
+              renderCard={(project, _i, isExpanded) => renderProjectCard(project, isDark, isExpanded, t.ui.aria.openInNewTab)}
             />
           </section>
         </div>

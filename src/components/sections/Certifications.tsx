@@ -3,17 +3,18 @@ import { HiArrowTopRightOnSquare } from "react-icons/hi2";
 import { MagicCard, MAGIC_CARD_DARK_PROPS, MAGIC_CARD_OVERLAY_CLASS } from "@/components/ui/magic-card";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { useTheme } from "@/hooks/useTheme";
-import { certifications } from "@/data/resume";
+import { useLocale } from "@/hooks/useLocale";
 
 export function Certifications() {
   const { theme } = useTheme();
+  const { t } = useLocale();
   const isDark = theme === "dark";
   return (
     <section id="certifications" className="section-pad">
       <div className="container-narrow">
-        <SectionHeading className="mb-10">Certifications</SectionHeading>
+        <SectionHeading className="mb-10">{t.ui.sections.certifications}</SectionHeading>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {certifications.map((cert, i) => {
+          {t.certifications.map((cert, i) => {
             const cardContent = (
               <>
                 <div className={MAGIC_CARD_OVERLAY_CLASS} aria-hidden />
@@ -23,7 +24,7 @@ export function Certifications() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="absolute top-3 right-3 z-20 cursor-pointer rounded p-2 text-zinc-400 dark:text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors"
-                    aria-label={`Open ${cert.name} in a new tab`}
+                    aria-label={`${t.ui.aria.openInNewTab}: ${cert.name}`}
                   >
                     <HiArrowTopRightOnSquare className="size-6 shrink-0" aria-hidden />
                   </a>

@@ -14,6 +14,8 @@
         var t = localStorage.getItem('resume-theme');
         if (t !== 'light' && t !== 'dark') t = 'dark';
         document.documentElement.setAttribute('data-theme', t);
+        var lang = localStorage.getItem('resume-locale');
+        if (lang === 'fr' || lang === 'en') document.documentElement.lang = lang;
       })();
     </script>
   </head>

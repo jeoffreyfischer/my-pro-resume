@@ -7,6 +7,7 @@ import { Journey } from "@/components/sections/Journey";
 import { PublicVideos } from "@/components/sections/PublicVideos";
 import { Hobbies } from "@/components/sections/Hobbies";
 import { Contact } from "@/components/sections/Contact";
+import { useLocale } from "@/hooks/useLocale";
 
 const SECTION_ALTERNATE_BG = "bg-sky-50 dark:bg-zinc-900/30";
 
@@ -22,6 +23,7 @@ const SECTIONS = [
 ];
 
 function App() {
+  const { t } = useLocale();
   const handleSkipToContent = (e: React.MouseEvent<HTMLAnchorElement>) => {
     const main = document.getElementById("main-content");
     if (main) {
@@ -38,7 +40,7 @@ function App() {
         className="skip-link"
         onClick={handleSkipToContent}
       >
-        Skip to content
+        {t.ui.skipToContent}
       </a>
       <Nav />
       <main id="main-content" tabIndex={-1}>
@@ -59,7 +61,7 @@ function App() {
       </main>
       <footer className="border-t border-zinc-200 dark:border-zinc-800/50 py-8">
         <div className="container-narrow text-center text-sm text-zinc-500">
-          © {new Date().getFullYear()} {import.meta.env.VITE_SITE_NAME ?? "Jeoffrey Fischer"}
+          {t.ui.footer.replace("{year}", String(new Date().getFullYear()))}
         </div>
       </footer>
     </div>

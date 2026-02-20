@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
 import { HiArrowTopRightOnSquare } from "react-icons/hi2";
 import { SectionHeading } from "@/components/ui/section-heading";
-import { personalProjects } from "@/data/resume";
 import { useTheme } from "@/hooks/useTheme";
+import { useLocale } from "@/hooks/useLocale";
 import { BTN_PRIMARY } from "@/lib/constants";
 
 function getProjectImageSrc(
@@ -21,14 +21,16 @@ function getProjectImageSrc(
 
 export function PersonalProjects() {
   const { theme } = useTheme();
+  const { t } = useLocale();
   const isDark = theme === "dark";
+  const personalProjects = t.personalProjects;
 
   if (personalProjects.length === 0) return null;
 
   return (
     <div id="personal-projects">
       <SectionHeading as="h3" className="mb-6">
-        Personal Projects
+        {t.ui.sections.personalProjects}
       </SectionHeading>
       <div className="space-y-6">
         {personalProjects.map((project) => {
@@ -47,10 +49,10 @@ export function PersonalProjects() {
                   href={project.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={`Open ${project.title} in new tab`}
+                  aria-label={`${t.ui.aria.openInNewTab}: ${project.title}`}
                   className={`${BTN_PRIMARY} py-2.5 font-semibold shadow-sm`}
                 >
-                  Open in new tab
+                  {t.ui.buttons.openInNewTab}
                   <HiArrowTopRightOnSquare className="size-5 shrink-0" aria-hidden />
                 </a>
               </div>
