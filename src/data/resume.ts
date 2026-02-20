@@ -16,7 +16,7 @@ export const site = {
     github: "https://github.com/jeoffreyfischer",
     linkedin: "https://www.linkedin.com/in/jeoffrey-fischer-9403b9a4/",
     professionalProfile: "https://www.ssw.com.au/people/jeoffrey-fischer/",
-    publicVideos: "https://www.youtube.com/watch?v=fGVnV1yX4Ts&list=PLpiOR7CBNvlqbUE95zfRuNDodbZI3aEJW",
+    publicVideos: "https://www.youtube.com/watch?v=IwvCTwz0C7M&list=PLZG1vgiO1reBW9z-Qj5od0vOyNXlLxdqt",
     publications: "https://scholar.google.com/citations?user=Db1P2mwAAAAJ",
   },
 } as const;
