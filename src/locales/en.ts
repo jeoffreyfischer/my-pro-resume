@@ -9,7 +9,7 @@ export const en: LocaleData = {
       certifications: "Certifications",
       projects: "Projects",
       workProjects: "Work projects",
-      personalProjects: "Personal projects",
+      personalProjects: "Personal project",
       journey: "Journey",
       videos: "Videos",
       hobbies: "Hobbies",
