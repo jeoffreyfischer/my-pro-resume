@@ -16,6 +16,16 @@ function getInitialLocale(): LocaleCode {
   if (typeof document === "undefined") return "en";
   const stored = localStorage.getItem(STORAGE_KEY) as LocaleCode | null;
   if (stored === "en" || stored === "fr") return stored;
+  // Prefer browser language so e.g. visitors in France see French by default
+  const browserLangs =
+    typeof navigator !== "undefined"
+      ? [navigator.language, ...(navigator.languages ?? [])]
+      : [];
+  for (const lang of browserLangs) {
+    const code = lang.toLowerCase().split("-")[0];
+    if (code === "fr") return "fr";
+    if (code === "en") return "en";
+  }
   return "en";
 }
 
