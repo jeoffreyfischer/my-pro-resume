@@ -71,7 +71,7 @@ export const timeline = [
     type: "work" as const,
     title: "🧑‍🏫 Lecturer",
     org: "IUT Civil Engineering, Bordeaux, France",
-    period: "Sep 2013 – Aug 2015",
+    period: "Sep 2012 – Aug 2014",
     description:
       "Civil Engineering - Delivered undergraduate courses in fluid mechanics, acoustics, lighting, and more.",
   },
