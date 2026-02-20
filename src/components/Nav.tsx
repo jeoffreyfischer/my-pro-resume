@@ -67,12 +67,15 @@ function ChevronDownIcon({ open }: { open: boolean }) {
 
 const FLAG_CLASS = "h-4 w-6 sm:h-5 sm:w-7 rounded-sm border border-zinc-300/80 dark:border-zinc-600/80 object-cover";
 
+const MOBILE_MENU_EXIT_MS = 250;
+
 export function Nav() {
   const [open, setOpen] = useState(false);
   const [projectsOpen, setProjectsOpen] = useState(false);
   const [projectsMobileOpen, setProjectsMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const pendingScrollIdRef = useRef<string | null>(null);
   const { theme, toggle } = useTheme();
   const { locale, setLocale, t } = useLocale();
 
@@ -94,9 +97,31 @@ export function Nav() {
     return () => document.removeEventListener("click", handleClickOutside);
   }, [projectsOpen]);
 
+  // After mobile menu closes, scroll to the requested section so smooth scroll isn't cancelled by layout
+  useEffect(() => {
+    if (open) return;
+    const id = pendingScrollIdRef.current;
+    if (!id) return;
+    pendingScrollIdRef.current = null;
+    const timeoutId = window.setTimeout(() => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+      window.history.pushState({}, "", `#${id}`);
+    }, MOBILE_MENU_EXIT_MS);
+    return () => window.clearTimeout(timeoutId);
+  }, [open]);
+
   const headerBg = scrolled
     ? "bg-white/80 dark:bg-zinc-900/95 dark:border-zinc-700/80 backdrop-blur-md border-b border-zinc-200/80"
     : "";
+
+  const scrollToSection = (id: string) => {
+    pendingScrollIdRef.current = id;
+    setOpen(false);
+    setProjectsMobileOpen(false);
+  };
 
   return (
     <motion.header
@@ -264,7 +289,7 @@ export function Nav() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2 }}
-            className="md:hidden overflow-hidden border-t border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900"
+            className="md:hidden overflow-hidden border-t border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 pointer-events-auto"
           >
             <ul className="container-narrow py-4 flex flex-col gap-1">
               {NAV_LINKS.map((link) =>
@@ -292,16 +317,13 @@ export function Nav() {
                         >
                           {link.children.map((child) => (
                             <li key={child.id}>
-                              <a
-                                href={`#${child.id}`}
-                                onClick={() => {
-                                  setOpen(false);
-                                  setProjectsMobileOpen(false);
-                                }}
-                                className="block px-3 py-2 text-sm text-zinc-600 dark:text-zinc-200 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg"
+                              <button
+                                type="button"
+                                onClick={() => scrollToSection(child.id)}
+                                className="block w-full text-left px-3 py-2 text-sm text-zinc-600 dark:text-zinc-200 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg cursor-pointer"
                               >
                                 {t.ui.nav[child.labelKey]}
-                              </a>
+                              </button>
                             </li>
                           ))}
                         </motion.ul>
@@ -310,13 +332,13 @@ export function Nav() {
                   </li>
                 ) : (
                   <li key={link.id}>
-                    <a
-                      href={`#${link.id}`}
-                      onClick={() => setOpen(false)}
-                      className="block px-3 py-2.5 text-zinc-600 dark:text-zinc-200 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg cursor-pointer"
+                    <button
+                      type="button"
+                      onClick={() => scrollToSection(link.id)}
+                      className="block w-full text-left px-3 py-2.5 text-zinc-600 dark:text-zinc-200 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg cursor-pointer"
                     >
                       {t.ui.nav[link.labelKey]}
-                    </a>
+                    </button>
                   </li>
                 )
               )}
